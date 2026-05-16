@@ -102,11 +102,12 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.3rem;max-w
   border-bottom: 2px solid var(--pink);
 }
 .info-container {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  grid-template-columns: 1fr 1.2fr; /* Balanced distribution for the dog profile */
+  gap: 3.5rem;
+  align-items: start;
 }
 .info-block h2 {
   color: var(--text);
@@ -121,6 +122,30 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.3rem;max-w
   color: var(--text);
   line-height: 1.7;
   font-size: 1.05rem;
+}
+
+/* Structural elements to align text and images cleanly */
+.rescue-flex-container {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+.rescue-text {
+  flex: 1;
+}
+.rescue-gallery {
+  display: flex;
+  flex-direction: column; /* Stacks the two images vertically */
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+.dog-photo {
+  width: 140px;
+  height: 140px;
+  border-radius: 12px;
+  border: 3px solid #fff;
+  object-fit: cover;
+  box-shadow: var(--shadow);
 }
 
 /* ==========================================================================
@@ -229,6 +254,14 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
   .container-layout {flex-direction: column;}
   .header-container {flex-direction: column; text-align: center;}
   .info-container {grid-template-columns: 1fr; gap: 2rem;}
+  .rescue-flex-container {flex-direction: column; text-align: left;}
+  .rescue-gallery {
+    flex-direction: row; /* Switches to side-by-side row layout on mobile screens */
+    justify-content: start;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+  .dog-photo {width: 120px; height: 120px;}
   #controls {width: 100%; border-right: none; border-bottom: 2px solid var(--surface2); padding: 1.2rem}
 }
 </style>
@@ -250,10 +283,10 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
 <!-- MAIN HEADER HERO -->
 <header>
   <div class="header-container">
-    <img src="profile.jpg" alt="Kira" class="profile-photo" onerror="this.style.display='none'">
+    <img src="https://lh3.googleusercontent.com/d/1isKRxCmOnNgHMxmNmyN3QkwC7gUZsIF-" alt="Kira Profile Image" class="profile-photo" onerror="this.style.display='none'">
     <div class="header-text">
       <h1>Blooms with a Purpose</h1>
-      <p>Certified Master Gardener growing vibrant dahlias and crafting local arrangements to support our community animal rescues.</p>
+      <p>Certified Master Gardener growing vibrant dahlias and crafting local arrangements to support our local Golden Retriever Rescue.</p>
     </div>
   </div>
 </header>
@@ -266,8 +299,18 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
       <p>As a certified Master Gardener, my passion centers around sustainable regional cultivation, trial garden tracking, and maximizing soil health to produce exceptional structural blooms. This garden layout is an ongoing space designed to test climate durability, companion grouping, and variation parameters across select tubers.</p>
     </div>
     <div class="info-block" id="bouquets">
-      <h2>Bouquets for Rescues</h2>
-      <p>Every single floral arrangement crafted from this cut garden goes directly toward making a difference. I sell seasonal handcrafted bouquets locally, and <strong>100% of the profits are donated monthly to local dog rescue organizations</strong> to help fund medical care, supplies, and housing pipelines for dogs in need.</p>
+      <h2>The "Golden Hour" Bouquets for Rescues</h2>
+      <div class="rescue-flex-container">
+        <div class="rescue-text">
+          <p>Every single floral arrangement crafted from my cut garden goes directly toward making a difference. I sell seasonal handcrafted bouquets locally, and <strong>100% of the profits are donated monthly to the senior fund of local Golden Retriever Rescue organizations</strong> to help fund medical care, supplies, and housing pipelines for senior dogs in need.</p>
+        </div>
+        
+        <!-- Two-image gallery stack -->
+        <div class="rescue-gallery">
+          <img src="https://lh3.googleusercontent.com/d/1ovYb5d0FQAPJVVqUdWOYC4mkjiwqK89h" alt="Rescue impact photo" class="dog-photo" onerror="this.style.display='none'">
+          <img src="https://lh3.googleusercontent.com/d/1e5M3QVYJK-OPwkChfn7-FrMnBWCXtLYX" alt="Dog in a flower crown" class="dog-photo" onerror="this.style.display='none'">
+        </div>
+      </div>
     </div>
   </div>
 </section>

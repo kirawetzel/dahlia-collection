@@ -7,12 +7,12 @@
 <style>
 :root{
   --bg: #2F3538;          /* Deep Charcoal */
-  --surface: #E1D5E7;     /* Soft Lavender main background */
-  --surface2: #D4C4DE;    /* Coordinating deeper lavender section background */
-  --pink: #FF7F50;        /* Vibrant Coral primary brand accent lines */
+  --surface: #F8F9FA;     /* Off-White / Alabaster main background */
+  --surface2: #E1D5E7;    /* Soft Lavender section background */
+  --pink: #D4A5A5;        /* Dusty Rose primary brand accent */
   --green: #707A8A;       /* Slate Gray structural headers/borders */
   --text: #2F3538;        /* Deep Charcoal readable text */
-  --muted: #665D6C;       /* Adjusted deep lavender-gray for readable secondary text */
+  --muted: #707A8A;       /* Slate Gray secondary text */
   --mint: #BFF2E2;        /* Pastel Mint highlight/badge pop */
   --shadow: 0 4px 18px rgba(47,53,56,.06);
 }
@@ -113,10 +113,10 @@ body{font-family:Georgia,serif;background:var(--surface);min-height:100vh;font-s
    HEADER HERO
    ========================================================================== */
 header {
-  background-image: linear-gradient(rgba(47, 53, 56, 0.5), rgba(47, 53, 56, 0.5)), url('garden-background.jpg');
+  background-image: linear-gradient(rgba(47, 53, 56, 0.5), rgba(47, 53, 56, 0.5)), url('https://lh3.googleusercontent.com/d/1CnOTNUbZYTDzdN1YsJLW2JmID00YtFqf');
   background-size: cover;
   background-position: center;
-  padding: 4.5rem 2rem;
+  padding: 3.0rem 2rem;
   border-bottom: 4px solid var(--pink);
 }
 .header-container {
@@ -223,6 +223,11 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.2rem;max-w
 .cutting{background:#e8f0fc;color:#1a3a7a}
 .tuber{background:#f3eafc;color:#4a1a7a}
 
+/* Extra card and details styling */
+.confirmed-tag { background: #e0f7fa; color: #006064; font-weight: bold; }
+.card-notes { font-size: 0.85rem; color: var(--muted); font-style: italic; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-top: 0.25rem; line-height: 1.4; }
+.card-credit { font-size: 0.75rem; color: #a0aab5; font-family: sans-serif; text-transform: uppercase; margin-top: auto; padding-top: 0.4rem; }
+
 /* ==========================================================================
    MODAL DIALOG CHANNELS
    ========================================================================== */
@@ -269,7 +274,7 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
   <div class="nav-container">
     <div class="nav-logo">Kira's Zone 9B Garden</div>
     <ul class="nav-links">
-      <li><a href="#collection">Dahlia Collection</a></li>
+      <li><a href="#collection">2026 Dahlia Collection</a></li>
     </ul>
   </div>
 </nav>
@@ -280,7 +285,7 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
     <img src="https://lh3.googleusercontent.com/d/1isKRxCmOnNgHMxmNmyN3QkwC7gUZsIF-" alt="Kira Profile Image" class="profile-photo" onerror="this.style.display='none'">
     <div class="header-text">
       <h1>Blooms with a Purpose</h1>
-      <p>Certified Master Gardener growing vegetables, fruit trees, dahlias and crafting local arrangements to support our local Golden Retriever Rescue.</p>
+      <p></p>
     </div>
   </div>
 </header>
@@ -289,8 +294,8 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
 <section class="info-section">
   <div class="info-container">
     <div class="tab-container">
-      <button class="tab-btn active" onclick="setTab('tab-ab', this)">The Garden Journal</button>
-      <button class="tab-btn" onclick="setTab('tab-re', this)">The Rescue Mission</button>
+      <button class="tab-btn active" onclick="setTab('tab-ab', this)">About Me</button>
+      <button class="tab-btn" onclick="setTab('tab-re', this)">The "Golden Hour" : Flowers for Good</button>
     </div>
     
     <!-- Tab 1: About Configuration -->
@@ -381,18 +386,21 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ==========================================================================
-   LIVE CORE REPOSITORY PIPE (Original App Logic Maintained Unchanged)
+   LIVE CORE REPOSITORY PIPE
    ========================================================================== */
 let all=[],favs=new Set(),aSt=new Set(),aForm=new Set(),aLoc=new Set(),favOnly=false,scriptUrl='https://script.google.com/macros/s/AKfycbzPyvyJZRKNBf3017gse-cNz2wBfSDRQbGMGd-lHHm0TmSMPvQjshigcY0q1s0RccFS/exec';
 
+// Property Extraction Layer mapped explicitly to ordered rules
 const gv=(d,k)=>String(d[k]??'').trim();
 const name=d=>gv(d,'Variety');
-const idNum=d=>gv(d,'Id2026');
-const height=d=>gv(d,'EstHeight');
-const formType=d=>gv(d,'Form');
-const status=d=>gv(d,'CurrentYearStatus');
-const obs=d=>gv(d,'Notes2026');
-const locationType=d=>gv(d,'Location'); 
+const status=d=>gv(d,'CurrentYearStatus') || gv(d,'CurrentYearStatus2026'); // Rule 1: Current Year Status (2026)
+const garden=d=>gv(d,'Garden') || gv(d,'2026Garden') || gv(d,'Location');     // Rule 2: 2026 Garden
+const locNum=d=>gv(d,'Loc#') || gv(d,'2026Loc#') || gv(d,'Id2026');          // Rule 3: 2026 Loc #
+const formType=d=>gv(d,'Form');                                              // Rule 4: Form
+const height=d=>gv(d,'EstHeight') || gv(d,'Est. Height');                     // Rule 5: Est. Height
+const confirmed=d=>gv(d,'Confirmed?');                                        // Rule 6: Confirmed?
+const obs=d=>gv(d,'Notes2026') || gv(d,'2026Notes');                          // Rule 7: 2026 Notes
+const photoCredit=d=>gv(d,'PhotoCredit');                                     // Rule 8: PhotoCredit
 const photo=d=>{const p=d['PhotoUrl'];return(typeof p==='string'&&p.startsWith('http'))?p:'';}
 
 function statusClass(s){
@@ -451,7 +459,7 @@ function buildFilters(){
     if(s.includes('tuber'))return 'Tuber';
     return null;
   }));
-  mkPills('location-fg','Garden Location:',uniq(all.map(d=>locationType(d))),aLoc);
+  mkPills('location-fg','Garden Location:',uniq(all.map(d=>garden(d))),aLoc);
   mkPills('status-fg','Filter Status:',statuses,aSt,d=>{
     const s=status(d).toLowerCase();
     if(s.includes('culled')||s.includes('virus'))return 'Culled';
@@ -487,7 +495,7 @@ function applyFilters(){
   let res=all.filter(d=>{
     const n=name(d).toLowerCase();
     const s=status(d).toLowerCase();
-    const loc=locationType(d);
+    const g=garden(d);
     let stCat='';
     if(s.includes('culled')||s.includes('virus'))stCat='Culled';
     else if(s.includes('died'))stCat='Died';
@@ -495,8 +503,8 @@ function applyFilters(){
     else if(s.includes('cutting'))stCat='Cutting';
     else if(s.includes('tuber'))stCat='Tuber';
 
-    if(q&&!n.includes(q)&&!obs(d).toLowerCase().includes(q)&&!idNum(d).toLowerCase().includes(q))return false;
-    if(aLoc.size&&!aLoc.has(loc))return false;
+    if(q&&!n.includes(q)&&!obs(d).toLowerCase().includes(q)&&!locNum(d).toLowerCase().includes(q))return false;
+    if(aLoc.size&&!aLoc.has(g))return false;
     if(aSt.size&&!aSt.has(stCat))return false;
     if(aForm.size&&!aForm.has(formType(d)))return false;
     if(favOnly&&!favs.has(name(d)))return false;
@@ -520,6 +528,9 @@ function cardBg(n){
   return `hsl(${h},30%,90%)`;
 }
 
+/* ==========================================================================
+   RENDER SYSTEM: INJECTING 8 SPECIFIED FIELDS IN TARGET ORDER
+   ========================================================================== */
 function render(list){
   const g=document.getElementById('grid');
   if(!list.length){
@@ -527,8 +538,24 @@ function render(list){
     return;
   }
   g.innerHTML=list.map(d=>{
-    const oi=all.indexOf(d),n=name(d),id=idNum(d),st=status(d),img=photo(d),fv=favs.has(n),loc=locationType(d);
-    const sc=statusClass(st),bg=cardBg(n);
+    const oi=all.indexOf(d);
+    const n=name(d);
+    const img=photo(d);
+    const fv=favs.has(n);
+    const bg=cardBg(n);
+    
+    // Ordered Field Extraction per Card Instance
+    const field1_status = status(d);
+    const field2_garden = garden(d);
+    const field3_locNum = locNum(d);
+    const field4_form = formType(d);
+    const field5_height = height(d);
+    const field6_confirmed = confirmed(d);
+    const field7_notes = obs(d);
+    const field8_credit = photoCredit(d);
+
+    const sc=statusClass(field1_status);
+
     return `<div class="card" onclick="openModal(${oi})">
       <button class="fbtn" onclick="event.stopPropagation();toggleFav(${oi},this)">${fv?'❤️':'🤍'}</button>
       <div class="cph" style="background:${bg};${img?'display:none':''}">🌸</div>
@@ -536,10 +563,15 @@ function render(list){
       <div class="cbody">
         <div class="cname">${esc(n)}</div>
         <div class="ctags">
-          ${id?`<span class="tag tid">#${esc(id)}</span>`:''}
-          ${sc?`<span class="tag ${sc}">${esc(statusLabel(st))}</span>`:''}
-          ${loc?`<span class="tag loc-tag">📍 ${esc(loc)}</span>`:''}
+          ${field1_status?`<span class="tag ${sc}">${esc(statusLabel(field1_status))}</span>`:''}
+          ${field2_garden?`<span class="tag loc-tag">📍 ${esc(field2_garden)}</span>`:''}
+          ${field3_locNum?`<span class="tag tid">#${esc(field3_locNum)}</span>`:''}
+          ${field4_form?`<span class="tag tl">${esc(field4_form)}</span>`:''}
+          ${field5_height?`<span class="tag ty">📏 ${esc(field5_height)}</span>`:''}
+          ${field6_confirmed?`<span class="tag confirmed-tag">✔ ${esc(field6_confirmed)}</span>`:''}
         </div>
+        ${field7_notes?`<div class="card-notes">${esc(field7_notes)}</div>`:''}
+        ${field8_credit?`<div class="card-credit">📸 ${esc(field8_credit)}</div>`:''}
       </div>
     </div>`;
   }).join('');
@@ -551,16 +583,33 @@ function toggleFav(i,btn){
   if(favOnly)applyFilters();
 }
 
+/* ==========================================================================
+   MODAL WINDOW DIALOG SETUP WITH ORDERED KEY-VALUE RENDERING
+   ========================================================================== */
 function openModal(i){
   const d=all[i];if(!d)return;
-  const n=name(d),id=idNum(d),st=status(d),h=height(d),f=formType(d),o=obs(d),img=photo(d),loc=locationType(d);
-  const rows=[[id&&'ID #',id],[loc&&'Location',loc],[f&&'Form',f],[h&&'Height',h]].filter(r=>r[0]);
+  const n=name(d);
+  
+  // Array construction enforcing order arrays [Label, Value]
+  const rows=[
+    ['Current Year Status (2026)', status(d)],
+    ['2026 Garden', garden(d)],
+    ['2026 Loc #', locNum(d)],
+    ['Form', formType(d)],
+    ['Est. Height', height(d)],
+    ['Confirmed?', confirmed(d)]
+  ].filter(r=>r[1]);
+
+  const notesField = obs(d);
+  const creditField = photoCredit(d);
+
   document.getElementById('modal').innerHTML=`
     <button class="mclose" onclick="closeModal()">✕</button>
     <div class="mbody">
       <div class="mname">${esc(n)}</div>
       <div class="mgrid">${rows.map(([k,v])=>`<div><div class="ml">${esc(k)}</div><div class="mv">${esc(v)}</div></div>`).join('')}</div>
-      ${o?`<div style="font-size:0.95rem; color:var(--muted); font-style:italic; line-height:1.6; margin-top:1rem; border-top:1px solid var(--surface2); padding-top:1rem;">${esc(o)}</div>`:''}
+      ${notesField?`<div style="font-size:0.95rem; color:var(--muted); font-style:italic; line-height:1.6; margin-top:1rem; border-top:1px solid var(--surface2); padding-top:1rem;"><strong>2026 Notes:</strong><br>${esc(notesField)}</div>`:''}
+      ${creditField?`<div style="font-size:0.8rem; color:#a0aab5; margin-top:0.8rem; text-transform:uppercase; font-family:sans-serif;"><strong>Photo Credit:</strong> ${esc(creditField)}</div>`:''}
     </div>`;
   document.getElementById('overlay').classList.add('open');
 }

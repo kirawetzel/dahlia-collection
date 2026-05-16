@@ -22,19 +22,27 @@ body{font-family:Georgia,serif;background:var(--surface);min-height:100vh;font-s
 /* ==========================================================================
    TINKER BENCH: YOUR CUSTOM TUNING STATION
    ========================================================================== */
-.rescue-gallery {
+.rescue-layout {
   display: flex;
-  flex-wrap: wrap;       /* Keeps layout responsive (stacks on small screens) */
+  gap: 2rem;             /* Spacing between the photo block and the text block */
+  align-items: flex-start;
+}
+.rescue-images {
+  display: flex;
+  flex-wrap: wrap;       /* Allows photos to stack under each other if container shrinks */
   gap: 1.2rem;           /* Spacing between the photos */
-  margin-top: 1.5rem;    /* Distance from the paragraphs above */
+  flex-shrink: 0;        /* Prevents the image container from compressing */
 }
 .dog-photo {
-  width: 225px;          /* TINKER HERE: Photo Width */
-  height: 225px;         /* TINKER HERE: Photo Height */
+  width: 225px;          
+  height: 225px;         
   border-radius: 12px;   /* Curvature of photo edges */
   border: 4px solid #fff;/* Thick white border frame */
   object-fit: cover;     /* Forces image to scale perfectly without distorting */
   box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+.rescue-text {
+  flex: 1;               /* Takes up the remaining horizontal space on the plane */
 }
 .garden-network {
   margin-top: 1.2rem;
@@ -127,8 +135,7 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.2rem;max-w
    ========================================================================== */
 .info-section { 
   background: var(--surface); 
-  padding: 2.5rem 2rem 0; 
-  border-bottom: none; 
+  padding: 2.5rem 2rem 2.5rem; /* Re-balanced lower padding */
 }
 .info-container { 
   max-width: 1200px; 
@@ -138,7 +145,7 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.2rem;max-w
   display: flex;
   gap: 0.5rem;
   border-bottom: 2px solid var(--surface2);
-  margin-bottom: 1rem;
+  margin-bottom: 0rem; /* Flushed completely to the content frame panel */
 }
 .tab-btn {
   padding: 0.75rem 1.5rem;
@@ -160,8 +167,10 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.2rem;max-w
 }
 .tab-content { 
   display: none; 
-  padding: 1.5rem 0 2rem; 
-  max-width: 950px; 
+  padding: 2rem;               /* Inner spacing for panel presentation */
+  background: var(--surface2); /* RESTORED: Beautiful lavender background dashboard space */
+  border-radius: 0 12px 12px 12px;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.02);
   animation: fadeIn 0.3s ease; 
 }
 .tab-content.active { display: block; }
@@ -171,7 +180,7 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.2rem;max-w
 /* ==========================================================================
    COLLECTION REPOSITORY INTERFACE GRID
    ========================================================================== */
-.container-layout { display: flex; background: var(--surface); }
+.container-layout { display: flex; background: var(--surface); border-top: 2px solid var(--surface2); }
 #controls {
   width: 300px;
   padding: 2rem 1.5rem;
@@ -241,6 +250,8 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
 @media(max-width:920px){
   .container-layout { flex-direction: column; }
   #controls { width: 100%; border-right: none; border-bottom: 2px solid var(--surface2); }
+  .rescue-layout { flex-direction: column; gap: 1rem; }
+  .tab-content { border-radius: 0 0 12px 12px; }
 }
 </style>
 </head>
@@ -293,10 +304,14 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
     
     <!-- Tab 2: Rescue Configuration -->
     <div id="tab-re" class="tab-content">
-      <p>Dahlias are a hobby. Every single floral arrangement crafted from my cut garden goes directly toward making a difference. I sell seasonal handcrafted bouquets locally, and <strong>100% of the profits are donated monthly to the senior fund of local Golden Retriever Rescue organizations</strong> to help fund medical care, supplies, and housing pipelines for senior dogs in need. At the end of the season, I dig & divide my tubers, doing a one time fall tuber sale, with proceeds that also go to a charity.</p>
-      <div class="rescue-gallery">
-        <img src="https://lh3.googleusercontent.com/d/1ovYb5d0FQAPJVVqUdWOYC4mkjiwqK89h" alt="Rescue impact photo" class="dog-photo" onerror="this.style.display='none'">
-        <img src="https://lh3.googleusercontent.com/d/1e5M3QVYJK-OPwkChfn7-FrMnBWCXtLYX" alt="Dog in a flower crown" class="dog-photo" onerror="this.style.display='none'">
+      <div class="rescue-layout">
+        <div class="rescue-images">
+          <img src="https://lh3.googleusercontent.com/d/1ovYb5d0FQAPJVVqUdWOYC4mkjiwqK89h" alt="Rescue impact photo" class="dog-photo" onerror="this.style.display='none'">
+          <img src="https://lh3.googleusercontent.com/d/1e5M3QVYJK-OPwkChfn7-FrMnBWCXtLYX" alt="Dog in a flower crown" class="dog-photo" onerror="this.style.display='none'">
+        </div>
+        <div class="rescue-text">
+          <p>Dahlias are a hobby. Every single floral arrangement crafted from my cut garden goes directly toward making a difference. I sell seasonal handcrafted bouquets locally, and <strong>100% of the profits are donated monthly to the senior fund of local Golden Retriever Rescue organizations</strong> to help fund medical care, supplies, and housing pipelines for senior dogs in need. At the end of the season, I dig & divide my tubers, doing a one time fall tuber sale, with proceeds that also go to a charity.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -482,7 +497,7 @@ function applyFilters(){
   });
 
   render(res);
-  document.getElementById('count').textContent=`Displaying ${res.length} of ${all.length} registered varieties`;
+  document.getElementById('count').textContent=$`Displaying ${res.length} of ${all.length} registered varieties`$;
 }
 
 function cardBg(n){

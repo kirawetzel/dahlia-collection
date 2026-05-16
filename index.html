@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dahlia Collection</title>
+<title>Kira's 2026 Dahlia Collection</title>
 <style>
 :root{
   --bg:#1c2e1c;--surface:#f6f2ec;--surface2:#e8dfd3;
@@ -11,108 +11,111 @@
   --shadow:0 4px 18px rgba(0,0,0,.1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Georgia,serif;background:var(--bg);min-height:100vh}
+body{font-family:Georgia,serif;background:var(--bg);min-height:100vh;font-size:18px} /* Bumped overall text size */
 header{padding:2.2rem 2rem 1.6rem;text-align:center;border-bottom:3px solid var(--pink)}
-header h1{color:#f0ebe4;font-size:2.6rem;font-weight:normal;letter-spacing:.05em}
-header p{color:#9abf9a;font-style:italic;margin-top:.35rem}
+header h1{color:#f0ebe4;font-size:2.8rem;font-weight:normal;letter-spacing:.05em} /* Increased 2pt */
+header p{color:#9abf9a;font-style:italic;margin-top:.35rem;font-size:1.2rem} /* Increased 2pt */
 
-/* Setup */
-#setup{background:#fffdf5;border:2px solid #e8c840;border-radius:10px;padding:1.2rem 1.5rem;
-  margin:1.5rem auto;max-width:680px;font-family:sans-serif;font-size:.9rem}
-#setup h3{margin-bottom:.4rem;color:#5a4a00}
-#setup input{width:100%;padding:.5rem .8rem;border:1px solid #ccc;border-radius:6px;
-  margin:.5rem 0;font-size:.9rem}
-#setup button{padding:.4rem 1.1rem;background:var(--bg);color:#fff;border:none;
-  border-radius:6px;cursor:pointer;font-size:.9rem}
+/* Page layout split for left-hand filters */
+.container-layout {
+  display: flex;
+  flex-direction: row;
+  min-height: 80vh;
+  background: var(--surface);
+}
 
-/* Controls */
-#controls{background:var(--surface);padding:1.1rem 1.5rem;display:none;flex-wrap:wrap;
-  gap:.7rem;align-items:center;position:sticky;top:0;z-index:10;
-  box-shadow:0 2px 12px rgba(0,0,0,.2)}
-.search{flex:1;min-width:180px;position:relative}
-.search input{width:100%;padding:.5rem 1rem .5rem 2.2rem;border:2px solid var(--surface2);
-  border-radius:25px;font-size:.88rem;font-family:inherit;outline:none;transition:border .2s}
+/* Sidebar Controls on the Left */
+#controls{
+  background: var(--surface);
+  width: 320px;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border-right: 2px solid var(--surface2);
+  flex-shrink: 0;
+}
+.search{position:relative;width:100%}
+.search input{width:100%;padding:.6rem 1rem .6rem 2.2rem;border:2px solid var(--surface2);
+  border-radius:25px;font-size:1.02rem;font-family:inherit;outline:none;transition:border .2s} /* Increased 2pt */
 .search input:focus{border-color:var(--green)}
-.search::before{content:'🔍';position:absolute;left:.7rem;top:50%;transform:translateY(-50%);font-size:.78rem}
-.fg{display:flex;flex-wrap:wrap;gap:.3rem;align-items:center}
-.flbl{font-size:.72rem;color:var(--muted);font-family:sans-serif;text-transform:uppercase;letter-spacing:.05em}
-.pill{padding:.26rem .7 rails;border-radius:20px;border:2px solid var(--surface2);background:#fff;
-  font-size:.78rem;cursor:pointer;transition:all .15s;font-family:sans-serif;color:var(--text)}
+.search::before{content:'🔍';position:absolute;left:.7rem;top:50%;transform:translateY(-50%);font-size:.9rem}
+.fg{display:flex;flex-direction:column;gap:.4rem;align-items:flex-start;width:100%}
+.fg-pills {display:flex;flex-wrap:wrap;gap:.4rem}
+.flbl{font-size:.85rem;color:var(--muted);font-family:sans-serif;text-transform:uppercase;letter-spacing:.05em;font-weight:bold} /* Increased 2pt */
+.pill{padding:.35rem .8rem;border-radius:20px;border:2px solid var(--surface2);background:#fff;
+  font-size:.9rem;cursor:pointer;transition:all .15s;font-family:sans-serif;color:var(--text)} /* Increased 2pt */
 .pill:hover{border-color:var(--green)}
 .pill.on{background:var(--green);color:#fff;border-color:var(--green)}
 .pill.fon{background:var(--pink);color:#fff;border-color:var(--pink)}
-select#srt{padding:.42rem .65rem;border:2px solid var(--surface2);border-radius:8px;
-  font-size:.8rem;font-family:inherit;background:#fff;cursor:pointer;outline:none}
+select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);border-radius:8px;
+  font-size:.92rem;font-family:inherit;background:#fff;cursor:pointer;outline:none} /* Increased 2pt */
 
-/* Main */
-#main{padding:1.5rem 2rem;background:var(--surface);min-height:60vh}
-#count{font-family:sans-serif;font-size:.8rem;color:var(--muted);margin-bottom:1.1rem}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.3rem}
+/* Main Content Panel on the Right */
+#main{padding:2rem;flex:1}
+#count{font-family:sans-serif;font-size:1rem;color:var(--muted);margin-bottom:1.1rem} /* Increased 2pt */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.5rem}
 
-/* Card */
+/* Card Visuals */
 .card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);
   cursor:pointer;position:relative;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column}
 .card:hover{transform:translateY(-3px);box-shadow:0 8px 26px rgba(0,0,0,.14)}
-.cph{width:100%;height:190px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;flex-shrink:0}
-.cimg{width:100%;height:190px;object-fit:cover;display:block;flex-shrink:0}
-.cbody{padding:.9rem 1rem 1.1rem;flex:1;display:flex;flex-direction:column;gap:.4rem}
-.cname{font-size:1.05rem;font-weight:bold;font-style:italic;color:var(--text);line-height:1.3}
-.ctags{display:flex;flex-wrap:wrap;gap:.3rem}
-.tag{padding:.14rem .52rem;border-radius:12px;font-size:.7rem;font-family:sans-serif}
-.ts{background:#e6f0e6;color:#2e5e2e}
+.cph{width:100%;height:210px;display:flex;align-items:center;justify-content:center;font-size:4rem;flex-shrink:0}
+.cimg{width:100%;height:210px;object-fit:cover;display:block;flex-shrink:0}
+.cbody{padding:1.1rem;flex:1;display:flex;flex-direction:column;gap:.5rem}
+.cname{font-size:1.2rem;font-weight:bold;font-style:italic;color:var(--text);line-height:1.3} /* Increased 2pt */
+.ctags{display:flex;flex-wrap:wrap;gap:.35rem}
+.tag{padding:.2rem .6rem;border-radius:12px;font-size:.8rem;font-family:sans-serif} /* Increased 2pt */
 .tl{background:#e8eef8;color:#2a3e6e}
 .ty{background:#fff3e0;color:#7a4a00}
 .tid{background:#f0e6ff;color:#4b0082;font-weight:bold}
-.cmeta{font-family:sans-serif;font-size:.76rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:.6rem}
-.cobs{font-size:.78rem;color:var(--muted);font-style:italic;line-height:1.5;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cobs{font-size:.9rem;color:var(--muted);font-style:italic;line-height:1.5;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden} /* Increased 2pt */
 .fbtn{position:absolute;top:.55rem;right:.55rem;background:rgba(255,255,255,.92);border:none;
-  border-radius:50%;width:32px;height:32px;font-size:.95rem;cursor:pointer;
+  border-radius:50%;width:34px;height:34px;font-size:1.1rem;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
   box-shadow:0 2px 5px rgba(0,0,0,.14);z-index:2;transition:transform .15s}
-.fbtn:hover{transform:scale(1.15)}
 
-/* Status colors */
+/* Status Badges */
 .planted{background:#e6f4e6;color:#1a5c1a}
 .died{background:#fce8e8;color:#8c1a1a}
 .culled{background:#fdf3e6;color:#7a4a00}
 .cutting{background:#e8f0fc;color:#1a3a7a}
 .tuber{background:#f3eafc;color:#4a1a7a}
 
-/* Modal */
+/* Modal Overlay */
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;
   align-items:center;justify-content:center;padding:1rem}
 .overlay.open{display:flex}
 .modal{background:#fff;border-radius:16px;max-width:600px;width:100%;max-height:92vh;overflow-y:auto;position:relative}
 .mph{width:100%;height:160px;display:flex;align-items:center;justify-content:center;
   font-size:4.5rem;border-radius:16px 16px 0 0;background:linear-gradient(135deg,#e8ddd0,#d4c4b0)}
-.mimg{width:100%;max-height:280px;object-fit:cover;border-radius:16px 16px 0 0;display:block}
-.mbody{padding:1.3rem 1.8rem 1.8rem}
-.mname{font-size:1.65rem;font-style:italic;margin-bottom:.7rem;line-height:1.3}
+.mimg{width:100%;max-height:300px;object-fit:cover;border-radius:16px 16px 0 0;display:block}
+.mbody{padding:1.5rem 2rem 2rem}
+.mname{font-size:1.8rem;font-style:italic;margin-bottom:.7rem;line-height:1.3} /* Increased 2pt */
 .mtags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1rem}
-.mtag{padding:.26rem .72rem;border-radius:20px;font-size:.8rem;font-family:sans-serif}
-.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;background:var(--surface);
-  border-radius:10px;padding:.9rem;margin-bottom:1rem;font-family:sans-serif}
-.ml{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-.mv{font-weight:bold;font-size:.88rem;margin-top:.1rem}
-.mobs{font-size:.9rem;line-height:1.75;color:var(--muted);font-style:italic;white-space:pre-line}
+.mtag{padding:.3rem .8rem;border-radius:20px;font-size:.9rem;font-family:sans-serif} /* Increased 2pt */
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;background:var(--surface);
+  border-radius:10px;padding:1.1rem;margin-bottom:1rem;font-family:sans-serif}
+.ml{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em} /* Increased 2pt */
+.mv{font-weight:bold;font-size:1rem;margin-top:.1rem} /* Increased 2pt */
+.mobs{font-size:1.02rem;line-height:1.75;color:var(--muted);font-style:italic;white-space:pre-line} /* Increased 2pt */
 .mclose{position:absolute;top:.7rem;right:.7rem;background:rgba(255,255,255,.92);border:none;
-  border-radius:50%;width:34px;height:34px;font-size:1.1rem;cursor:pointer;
+  border-radius:50%;width:36px;height:36px;font-size:1.2rem;cursor:pointer;
   display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}
-.msect{font-family:sans-serif;font-size:.78rem;font-weight:bold;color:var(--muted);
-  text-transform:uppercase;letter-spacing:.06em;margin:1rem 0 .4rem;border-top:1px solid var(--surface2);padding-top:.8rem}
+.msect{font-family:sans-serif;font-size:.88rem;font-weight:bold;color:var(--muted);
+  text-transform:uppercase;letter-spacing:#06em;margin:1.2rem 0 .5rem;border-top:1px solid var(--surface2);padding-top:1rem} /* Increased 2pt */
 
-/* Loading/empty */
-#loading{text-align:center;padding:3rem;font-family:sans-serif;color:var(--muted);display:none}
-.spin{width:36px;height:36px;border:3px solid var(--surface2);border-top-color:var(--green);
-  border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
+/* Dynamic Load Animations */
+#loading{text-align:center;padding:5rem 2rem;font-family:sans-serif;color:var(--muted);width:100%}
+.spin{width:42px;height:42px;border:3px solid var(--surface2);border-top-color:var(--green);
+  border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1.2rem}
 @keyframes spin{to{transform:rotate(360deg)}}
-.empty{grid-column:1/-1;text-align:center;padding:3rem;font-family:sans-serif;color:var(--muted)}
+.empty{grid-column:1/-1;text-align:center;padding:4rem 2rem;font-family:sans-serif;color:var(--muted)}
 
-@media(max-width:560px){
-  header h1{font-size:1.9rem}
-  #main,#controls{padding:1rem}
-  .mbody{padding:1rem 1.2rem 1.5rem}
+@media(max-width:820px){
+  .container-layout {flex-direction: column;}
+  #controls {width: 100%; border-right: none; border-bottom: 2px solid var(--surface2); padding: 1.2rem}
 }
 </style>
 </head>
@@ -123,30 +126,30 @@ select#srt{padding:.42rem .65rem;border:2px solid var(--surface2);border-radius:
   <p>Browse, search, and discover</p>
 </header>
 
-<div id="setup">
-  <h3>⚙️ Connect Your Google Sheet</h3>
-  <p>Your setup is ready. Click the button below to stream your live 2026 data collection.</p>
-  <input id="url-input" type="text" value="https://script.google.com/macros/s/AKfycbzPyvyJZRKNBf3017gse-cNz2wBfSDRQbGMGd-lHHm0TmSMPvQjshigcY0q1s0RccFS/exec" style="display:none;">
-  <button onclick="load()">Load 2026 Dahlias</button>
-</div>
+<div class="container-layout">
+  <!-- Left Side Controller Bar -->
+  <div id="controls">
+    <div class="search"><input id="search" type="text" placeholder="Search by name or notes…" oninput="applyFilters()"></div>
+    <div class="fg" id="status-fg"></div>
+    <div class="fg" id="form-fg"></div>
+    <div class="fg">
+      <span class="flbl">Sort Sequence</span>
+      <select id="srt" onchange="applyFilters()">
+        <option value="name">Sort: Name A–Z</option>
+        <option value="nz">Name Z–A</option>
+        <option value="ha">Height ↑</option>
+        <option value="hd">Height ↓</option>
+      </select>
+    </div>
+    <button class="pill" id="favbtn" onclick="toggleFavFilter()" style="width:100%; text-align:center; margin-top:0.5rem;">❤️ Favorites Only</button>
+  </div>
 
-<div id="controls">
-  <div class="search"><input id="search" type="text" placeholder="Search by name or notes…" oninput="applyFilters()"></div>
-  <div class="fg" id="status-fg"></div>
-  <div class="fg" id="form-fg"></div>
-  <select id="srt" onchange="applyFilters()">
-    <option value="name">Sort: Name A–Z</option>
-    <option value="nz">Name Z–A</option>
-    <option value="ha">Height ↑</option>
-    <option value="hd">Height ↓</option>
-  </select>
-  <button class="pill" id="favbtn" onclick="toggleFavFilter()">❤️ Favorites</button>
-</div>
-
-<div id="main">
-  <div id="loading"><div class="spin"></div><p>Loading your dahlias…</p></div>
-  <div id="count"></div>
-  <div class="grid" id="grid"></div>
+  <!-- Right Side Content Output -->
+  <div id="main">
+    <div id="loading"><div class="spin"></div><p>Syncing data from live collection repository…</p></div>
+    <div id="count"></div>
+    <div class="grid" id="grid"></div>
+  </div>
 </div>
 
 <div class="overlay" id="overlay" onclick="closeModal(event)">
@@ -156,7 +159,7 @@ select#srt{padding:.42rem .65rem;border:2px solid var(--surface2);border-radius:
 <script>
 let all=[],favs=new Set(),aSt=new Set(),aForm=new Set(),favOnly=false,scriptUrl='https://script.google.com/macros/s/AKfycbzPyvyJZRKNBf3017gse-cNz2wBfSDRQbGMGd-lHHm0TmSMPvQjshigcY0q1s0RccFS/exec';
 
-// FIXED: Updated field getters to align precisely with the new Apps Script keys
+// Field getters matching specific object payloads
 const gv=(d,k)=>String(d[k]??'').trim();
 const name=d=>gv(d,'Variety');
 const idNum=d=>gv(d,'Id2026');
@@ -192,38 +195,34 @@ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 function num(s){const m=String(s||'').match(/(\d+\.?\d*)/);return m?parseFloat(m[1]):0}
 
 function load(){
-  document.getElementById('setup').style.display='none';
   document.getElementById('loading').style.display='block';
-  document.getElementById('controls').style.display='none';
   document.getElementById('grid').innerHTML='';
 
   const cb='_dl_'+Date.now();
   let s=null;
   const done=()=>{if(s?.parentNode)s.parentNode.removeChild(s);delete window[cb];};
-  const t=setTimeout(()=>{done();showErr('Request timed out. Make sure you redeployed the script as a New Version with "Anyone" access.');},12000);
+  const t=setTimeout(()=>{done();showErr('Connection pipeline timed out.');},12000);
 
   window[cb]=d=>{
     clearTimeout(t);done();
-    if(!Array.isArray(d)){showErr('Got unexpected data. Check your Apps Script code.');return;}
-    all=d.filter(r=>name(r));  // skip rows with no variety name
+    if(!Array.isArray(d)){showErr('Invalid server data format returned.');return;}
+    all=d.filter(r=>name(r));
     buildFilters();applyFilters();
-    document.getElementById('controls').style.display='flex';
     document.getElementById('loading').style.display='none';
   };
 
   s=document.createElement('script');
   s.src=scriptUrl+(scriptUrl.includes('?')?'&':'?')+'callback='+cb;
-  s.onerror=()=>{clearTimeout(t);done();showErr('Could not load script. Did you redeploy with the new Apps Script code and set access to "Anyone"?');};
+  s.onerror=()=>{clearTimeout(t);done();showErr('Could not open endpoint bridge connection.');};
   document.head.appendChild(s);
 }
 
 function showErr(msg){
-  document.getElementById('loading').innerHTML=`<div style="font-size:2rem;margin-bottom:.8rem">⚠️</div>
-    <p><strong>Could not connect.</strong></p>
-    <p style="margin:.5rem auto;max-width:420px;font-size:.85rem;opacity:.8">${esc(msg)}</p>
-    <button onclick="retry()" style="margin-top:1rem;padding:.45rem 1.2rem;background:#1c2e1c;color:#fff;border:none;border-radius:6px;cursor:pointer">Try Again</button>`;
+  document.getElementById('loading').innerHTML=`<div style="font-size:2.5rem;margin-bottom:.8rem">⚠️</div>
+    <p><strong>Cloud sync interrupted.</strong></p>
+    <p style="margin:.5rem auto;max-width:420px;font-size:.9rem;opacity:.8">${esc(msg)}</p>
+    <button onclick="load()" style="margin-top:1rem;padding:.5rem 1.4rem;background:#1c2e1c;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:0.95rem">Retry Handshake</button>`;
 }
-function retry(){document.getElementById('loading').style.display='none';document.getElementById('setup').style.display='block';}
 
 function uniq(arr){return[...new Set(arr.filter(Boolean))].sort();}
 
@@ -239,7 +238,7 @@ function buildFilters(){
   }));
   const forms=uniq(all.map(d=>formType(d)));
 
-  mkPills('status-fg','Status:',statuses,aSt,d=>{
+  mkPills('status-fg','Filter Status:',statuses,aSt,d=>{
     const s=status(d).toLowerCase();
     if(s.includes('culled')||s.includes('virus'))return 'Culled';
     if(s.includes('died'))return 'Died';
@@ -248,18 +247,19 @@ function buildFilters(){
     if(s.includes('tuber'))return 'Tuber';
     return '';
   });
-  mkPills('form-fg','Form:',forms,aForm,d=>formType(d));
+  mkPills('form-fg','Filter Form:',forms,aForm,d=>formType(d));
 }
 
 function mkPills(id,lbl,vals,set,getFn){
   const el=document.getElementById(id);
   if(!vals.length){el.innerHTML='';return;}
-  el.innerHTML=`<span class="flbl">${lbl}</span>`;
+  el.innerHTML=`<span class="flbl">${lbl}</span><div class="fg-pills"></div>`;
+  const pContainer = el.querySelector('.fg-pills');
   vals.forEach(v=>{
     const b=document.createElement('button');
     b.className='pill';b.textContent=v;
     b.onclick=()=>{set.has(v)?(set.delete(v),b.classList.remove('on')):(set.add(v),b.classList.add('on'));applyFilters();};
-    el.appendChild(b);
+    pContainer.appendChild(b);
   });
 }
 
@@ -295,7 +295,7 @@ function applyFilters(){
   });
 
   render(res);
-  document.getElementById('count').textContent=`Showing ${res.length} of ${all.length} active 2026 items`;
+  document.getElementById('count').textContent=`Displaying ${res.length} of ${all.length} registered varieties`;
 }
 
 function cardBg(n){
@@ -306,7 +306,7 @@ function cardBg(n){
 function render(list){
   const g=document.getElementById('grid');
   if(!list.length){
-    g.innerHTML='<div class="empty"><div style="font-size:2.5rem;margin-bottom:.8rem">🌿</div><p>No plants match your current criteria.</p></div>';
+    g.innerHTML='<div class="empty"><div style="font-size:2.5rem;margin-bottom:.8rem">🌿</div><p>No active cultivars map to your current configuration.</p></div>';
     return;
   }
   g.innerHTML=list.map(d=>{
@@ -345,7 +345,7 @@ function openModal(i){
     [id&&'2026 ID #',id],
     [f&&'Form / Classification',f],
     [h&&'Estimated Height',`📏 ${h}`],
-    [conf&&'Confirmed?',conf]
+    [conf&&'Confirmed Extraction',conf]
   ].filter(r=>r[0]);
 
   document.getElementById('modal').innerHTML=`
@@ -358,7 +358,7 @@ function openModal(i){
         ${sc?`<span class="mtag ${sc}">${esc(statusLabel(st))}</span>`:''}
       </div>
       ${rows.length?`<div class="mgrid">${rows.map(([k,v])=>`<div><div class="ml">${esc(k)}</div><div class="mv">${esc(v)}</div></div>`).join('')}</div>`:''}
-      ${o?`<div class="msect">2026 Notes & Observations</div><div class="mobs">${esc(o)}</div>`:''}
+      ${o?`<div class="msect">2026 Notes & Field Observations</div><div class="mobs">${esc(o)}</div>`:''}
     </div>`;
 
   document.getElementById('overlay').classList.add('open');
@@ -371,6 +371,9 @@ function closeModal(e){
   document.body.style.overflow='';
 }
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+// AUTO-RUN EVENT INTERCEPTOR: Fires off immediate data request on system load loop
+window.addEventListener("DOMContentLoaded", load);
 </script>
 </body>
 </html>

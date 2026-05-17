@@ -17,21 +17,34 @@
   --shadow: 0 4px 18px rgba(47,53,56,.06);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Georgia,serif;background:var(--surface);min-height:100vh;font-size:18px;color:var(--text);scroll-behavior: smooth;}
+body{font-family:Georgia,serif;background:var(--surface);min-height:100vh;font-size:23.32px;color:var(--text);scroll-behavior: smooth;}
 
 /* ==========================================================================
    TINKER BENCH: YOUR CUSTOM TUNING STATION
-   ========================================================================== */
+   ========================================================================= */
 .rescue-layout {
   display: flex;
-  gap: 2rem;             
+  gap: 2rem;       
   align-items: flex-start;
 }
 .rescue-images {
   display: flex;
-  flex-wrap: wrap;       
-  gap: 1.2rem;           
+  flex-direction: column;   /* Vertical structural flow for images */
+  gap: 1.2rem;            
   flex-shrink: 0;        
+}
+.rescue-gallery-row {
+  display: flex;
+  gap: 1.2rem;
+}
+.dog-photo-hero {
+  width: 462px;             /* Balanced to match total row width */
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;   
+  border: 4px solid #fff;
+  object-fit: cover;     
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
 }
 .dog-photo {
   width: 225px;          
@@ -42,7 +55,7 @@ body{font-family:Georgia,serif;background:var(--surface);min-height:100vh;font-s
   box-shadow: 0 6px 20px rgba(0,0,0,0.08);
 }
 .rescue-text {
-  flex: 1;               
+  flex: 1;              
 }
 .rescue-text p {
   margin-bottom: 1rem;
@@ -60,7 +73,7 @@ body{font-family:Georgia,serif;background:var(--surface);min-height:100vh;font-s
   align-items: center;
   gap: 0.6rem;
   margin-bottom: 0.6rem;
-  font-size: 1.05rem;
+  font-size: 1.46rem;
 }
 .network-link {
   color: var(--text);
@@ -71,8 +84,8 @@ body{font-family:Georgia,serif;background:var(--surface);min-height:100vh;font-s
   transition: color 0.2s;
 }
 .network-link:hover { color: var(--green); }
-.ig-icon { width: 18px; height: 18px; fill: currentColor; color: #e1306c; display: inline-block; vertical-align: middle; }
-.web-icon { width: 18px; height: 18px; fill: currentColor; color: var(--green); display: inline-block; vertical-align: middle; }
+.ig-icon { width: 22px; height: 22px; fill: currentColor; color: #e1306c; display: inline-block; vertical-align: middle; }
+.web-icon { width: 22px; height: 22px; fill: currentColor; color: var(--green); display: inline-block; vertical-align: middle; }
 
 /* ==========================================================================
    NAVIGATION BAR STYLES
@@ -91,7 +104,7 @@ body{font-family:Georgia,serif;background:var(--surface);min-height:100vh;font-s
 }
 .nav-logo {
   color: #F8F9FA;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   font-weight: bold;
   letter-spacing: 0.05em;
 }
@@ -104,7 +117,7 @@ body{font-family:Georgia,serif;background:var(--surface);min-height:100vh;font-s
   color: #E1D5E7;
   text-decoration: none;
   font-family: sans-serif;
-  font-size: 0.95rem;
+  font-size: 1.36rem;
   font-weight: 600;
 }
 .nav-links a:hover { color: var(--mint); }
@@ -134,8 +147,8 @@ header {
   object-fit: cover;
   flex-shrink: 0;
 }
-header h1{color:#F8F9FA;font-size: 2.8rem;font-weight:normal;letter-spacing:.03em}
-header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.2rem;max-width:800px;line-height:1.4}
+header h1{color:#F8F9FA;font-size: 3.26rem;font-weight:normal;letter-spacing:.03em}
+header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.6rem;max-width:800px;line-height:1.4}
 
 /* ==========================================================================
    TABBED CONTAINER COMPONENT
@@ -159,7 +172,7 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.2rem;max-w
   background: transparent;
   border: none;
   font-family: sans-serif;
-  font-size: 1rem;
+  font-size: 1.41rem;
   cursor: pointer;
   color: var(--muted);
   border-bottom: 3px solid transparent;
@@ -181,7 +194,7 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.2rem;max-w
   animation: fadeIn 0.3s ease; 
 }
 .tab-content.active { display: block; }
-.tab-content p { line-height: 1.8; font-size: 1.05rem; }
+.tab-content p { line-height: 1.8; font-size: 1.46rem; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
 /* ==========================================================================
@@ -189,7 +202,7 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.2rem;max-w
    ========================================================================== */
 .container-layout { display: flex; background: var(--surface); border-top: 2px solid var(--surface2); }
 #controls {
-  width: 300px;
+  width: 340px;
   padding: 2rem 1.5rem;
   display: flex;
   flex-direction: column;
@@ -198,28 +211,56 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.2rem;max-w
   flex-shrink: 0;
 }
 #main { padding: 2rem; flex: 1; }
-#count { font-family: sans-serif; font-size: 1rem; color: var(--muted); margin-bottom: 1.1rem; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+#count { font-family: sans-serif; font-size: 1.41rem; color: var(--muted); margin-bottom: 1.1rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.5rem; }
 
 .card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);
   cursor:pointer;position:relative;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column;border:1px solid var(--surface2)}
 .card:hover{transform:translateY(-3px);box-shadow:0 8px 26px rgba(47,53,56,.12)}
-.cph{width:100%;height:210px;display:flex;align-items:center;justify-content:center;font-size:4rem;flex-shrink:0}
+.cph{width:100%;height:210px;display:flex;align-items:center;justify-content:center;font-size:4.75rem;flex-shrink:0}
 .cimg{width:100%;height:210px;object-fit:cover;display:block;flex-shrink:0}
 
-/* Balanced grid content layout with strict top alignment */
 .cbody{padding:1.2rem;flex:1;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;text-align:center;gap:.6rem}
-.cname{font-size:1.25rem;font-weight:bold;font-style:italic;color:var(--text);line-height:1.3; width: 100%; text-align: center;}
-.ctags{display:flex;flex-wrap:wrap;gap:.35rem;justify-content:center;align-items:center; width: 100%;}
-.tag{padding:.2rem .6rem;border-radius:12px;font-size:.8rem;font-family:sans-serif;display:inline-flex;align-items:center;justify-content:center;text-align:center;}
+.cname{font-size:1.66rem;font-weight:bold;font-style:italic;color:var(--text);line-height:1.3; width: 100%; text-align: center;}
+
+/* STRUCTURED TAG STACKS DEFINED BY LINE REQUIREMENTS */
+.ctags {display:flex;flex-direction:column;gap:.5rem;justify-content:center;align-items:stretch; width: 100%;}
+.tag-row-1, .tag-row-2, .tag-row-3 { display:flex; justify-content:center; align-items:stretch; gap:.35rem; width:100%; }
+
+.tag{padding:.25rem .7rem;border-radius:12px;font-size:1.21rem;font-family:sans-serif;display:inline-flex;align-items:center;justify-content:center;text-align:center;}
 
 .tl{background:var(--surface2);color:var(--text)}
 .ty{background:#fff3e0;color:#7a4a00}
-.tid{background:#f0e6ff;color:#4b0082;font-weight:bold}
 .fbtn{position:absolute;top:.55rem;right:.55rem;background:rgba(255,255,255,.92);border:none;
-  border-radius:50%;width:34px;height:34px;font-size:1.1rem;cursor:pointer;
+  border-radius:50%;width:38px;height:38px;font-size:1.51rem;cursor:pointer;
   display:flex;align-items:center;justify-content:center;z-index:2}
-.loc-tag {background:var(--mint);color:#1c3d33;font-weight:bold}
+
+/* EXPLICIT FORMATTING INSTRUCTIONAL BADGE */
+.loc-badge {
+  background: #f0e6ff;
+  color: #4b0082;
+  padding: .3rem .8rem;
+  border-radius: 12px;
+  font-family: sans-serif;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+  width: 100%;
+}
+.loc-lbl {
+  font-size: 1.01rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  opacity: 0.85;
+}
+.loc-val {
+  font-size: 1.36rem;
+  font-weight: bold;
+}
+
+.loc-tag {background:var(--mint);color:#1c3d33;font-weight:bold; width:100%;}
 .planted{background:#e6f4e6;color:#1a5c1a}
 .died{background:#fce8e8;color:#8c1a1a}
 .culled{background:#fdf3e6;color:#7a4a00}
@@ -227,8 +268,8 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.2rem;max-w
 .tuber{background:#f3eafc;color:#4a1a7a}
 
 .confirmed-tag { background: #e0f7fa; color: #006064; font-weight: bold; }
-.card-notes { font-size: 0.85rem; color: var(--muted); font-style: italic; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-top: 0.25rem; line-height: 1.4; width: 100%; text-align: center; }
-.card-credit { font-size: 0.75rem; color: #a0aab5; font-family: sans-serif; text-transform: uppercase; margin-top: 0.2rem; width: 100%; text-align: center; }
+.card-notes { font-size: 1.26rem; color: var(--muted); font-style: italic; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-top: 0.25rem; line-height: 1.4; width: 100%; text-align: center; }
+.card-credit { font-size: 1.11rem; color: #a0aab5; font-family: sans-serif; text-transform: uppercase; margin-top: 0.2rem; width: 100%; text-align: center; }
 
 /* ==========================================================================
    MODAL DIALOG CHANNELS
@@ -237,11 +278,11 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.2rem;max-w
 .overlay.open{display:flex}
 .modal{background:#fff;border-radius:16px;max-width:600px;width:100%;max-height:92vh;overflow-y:auto;position:relative}
 .mbody{padding:1.5rem 2rem 2rem}
-.mname{font-size:1.8rem;font-style:italic;margin-bottom:.7rem;line-height:1.3}
+.mname{font-size:2.26rem;font-style:italic;margin-bottom:.7rem;line-height:1.3}
 .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;background:var(--surface2);border-radius:10px;padding:1.1rem;margin-bottom:1rem;font-family:sans-serif}
-.ml{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-.mv{font-weight:bold;font-size:1rem;margin-top:.1rem}
-.mclose{position:absolute;top:.7rem;right:.7rem;background:rgba(255,255,255,.92);border:none;border-radius:50%;width:36px;height:36px;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.ml{font-size:1.21rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.mv{font-weight:bold;font-size:1.41rem;margin-top:.1rem}
+.mclose{position:absolute;top:.7rem;right:.7rem;background:rgba(255,255,255,.92);border:none;border-radius:50%;width:42px;height:42px;font-size:1.61rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}
 
 /* ==========================================================================
    FILTER ENGINE FRAMEWORKS
@@ -251,21 +292,33 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.2rem;max-w
 @keyframes spin{to{transform:rotate(360deg)}}
 .empty{grid-column:1/-1;text-align:center;padding:4rem 2rem;font-family:sans-serif;color:var(--muted)}
 .search{position:relative;width:100%}
-.search input{width:100%;padding:.6rem 1rem .6rem 2.2rem;border:2px solid var(--surface2);border-radius:25px;font-size:1.02rem;font-family:inherit;outline:none;color:var(--text)}
-.search::before{content:'🔍';position:absolute;left:.7rem;top:50%;transform:translateY(-50%);font-size:.9rem}
+.search input{width:100%;padding:.6rem 1rem .6rem 2.2rem;border:2px solid var(--surface2);border-radius:25px;font-size:1.41rem;font-family:inherit;outline:none;color:var(--text)}
+.search::before{content:'🔍';position:absolute;left:.7rem;top:50%;transform:translateY(-50%);font-size:1.31rem}
 .fg{display:flex;flex-direction:column;gap:.4rem;align-items:flex-start;width:100%}
-.fg-pills {display:flex;flex-wrap:wrap;gap:.4rem}
-.flbl{font-size:.85rem;color:var(--muted);font-family:sans-serif;text-transform:uppercase;letter-spacing:.05em;font-weight:bold}
-.pill{padding:.35rem .8rem;border-radius:20px;border:2px solid var(--surface2);background:#fff;font-size:.9rem;cursor:pointer;transition:all .15s;font-family:sans-serif;color:var(--text)}
+.fg-pills {display:flex;flex-wrap:wrap;gap:.4rem;align-items:stretch;}
+.flbl{font-size:1.24rem;color:var(--muted);font-family:sans-serif;text-transform:uppercase;letter-spacing:.05em;font-weight:bold}
+.pill{padding:.4rem .9rem;border-radius:20px;border:2px solid var(--surface2);background:#fff;font-size:1.28rem;cursor:pointer;transition:all .15s;font-family:sans-serif;color:var(--text);display:inline-flex;align-items:center;justify-content:center;}
 .pill.on{background:var(--pink);color:#fff;border-color:var(--pink)}
 .pill.fon{background:var(--bg);color:#fff;border-color:var(--bg)}
-select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);border-radius:8px;font-size:.92rem;font-family:inherit;background:#fff;color:var(--text);outline:none}
+select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);border-radius:8px;font-size:1.31rem;font-family:inherit;background:#fff;color:var(--text);outline:none}
 
+/* ==========================================================================
+   RESPONSIVE DESIGN BREAKPOINTS & MOBILE OVERRIDES
+   ========================================================================== */
 @media(max-width:920px){
   .container-layout { flex-direction: column; }
   #controls { width: 100%; border-right: none; border-bottom: 2px solid var(--surface2); }
-  .rescue-layout { flex-direction: column; gap: 1rem; }
-  .tab-content { border-radius: 0 0 12px 12px; }
+  
+  /* Stack layouts and force text centering inside tab blocks */
+  .rescue-layout { flex-direction: column; gap: 1.5rem; align-items: center; text-align: center; }
+  .rescue-images { justify-content: center; align-items: center; width: 100%; }
+  .rescue-gallery-row { justify-content: center; width: 100%; }
+  .dog-photo-hero { max-width: 225px; } /* Scales look beautiful inline with square thumbnails on mobile */
+  .tab-content { border-radius: 0 0 12px 12px; padding: 1.5rem; }
+  
+  /* Force text centering for About Me and Golden Hour copy on mobile views */
+  .tab-content p { text-align: center; }
+  .garden-network { padding-left: 0; display: inline-block; text-align: left; margin: 1rem auto 0; }
 }
 </style>
 </head>
@@ -285,7 +338,6 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
     <img src="https://lh3.googleusercontent.com/d/1isKRxCmOnNgHMxmNmyN3QkwC7gUZsIF-" alt="Kira Profile Image" class="profile-photo" onerror="this.style.display='none'">
     <div class="header-text">
       <h1>Blooms with a Purpose</h1>
-      <p></p>
     </div>
   </div>
 </header>
@@ -298,16 +350,21 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
     </div>
     
     <div id="tab-ab" class="tab-content active">
-      <p style="margin-bottom: 20px;">As a certified Master Gardener through the University of California, my passion centers around educating my community on sustainable home horticulture. More specifically, my interests are in sustainable regional cultivation, trial garden tracking, and maximizing soil health to produce fruit, vegetable, and flower crops. 2026 kicks off my journey in dahlia hybridizing.</P>
-        
-        <P>I'm also a partner to a wonderful husband, a dog mom, traveler, book reader, and during the day I work in technology leading a team of amazing engineers while also teaching Machine Learning to graduate students at UC Berkeley.</p>
+      <p style="margin-bottom: 20px;">As a certified Master Gardener through the University of California, my passion centers around educating my community on sustainable home horticulture. More specifically, my interests are in sustainable regional cultivation, trial garden tracking, and maximizing soil health to produce fruit, vegetable, and flower crops. 2026 kicks off my journey in dahlia hybridizing.</p>
+      <p>I'm also a partner to a wonderful husband, a dog mom, traveler, book reader, and during the day I work in technology leading a team of amazing engineers while also teaching Machine Learning to graduate students at UC Berkeley.</p>
     </div>
     
     <div id="tab-re" class="tab-content">
       <div class="rescue-layout">
         <div class="rescue-images">
-          <img src="https://lh3.googleusercontent.com/d/1ovYb5d0FQAPJVVqUdWOYC4mkjiwqK89h" alt="Rescue impact photo" class="dog-photo" onerror="this.style.display='none'">
-          <img src="https://lh3.googleusercontent.com/d/1e5M3QVYJK-OPwkChfn7-FrMnBWCXtLYX" alt="Dog in a flower crown" class="dog-photo" onerror="this.style.display='none'">
+          <!-- Your new highlighted image placed cleanly on top -->
+          <img src="https://lh3.googleusercontent.com/d/1Sms0-9WNWU6fYNo5-DePr_GrGl0as4Mm" alt="Golden Hour primary image" class="dog-photo-hero" onerror="this.style.display='none'">
+          
+          <!-- The existing row of two square photo slots underneath -->
+          <div class="rescue-gallery-row">
+            <img src="https://lh3.googleusercontent.com/d/1ovYb5d0FQAPJVVqUdWOYC4mkjiwqK89h" alt="Rescue impact photo" class="dog-photo" onerror="this.style.display='none'">
+            <img src="https://lh3.googleusercontent.com/d/1e5M3QVYJK-OPwkChfn7-FrMnBWCXtLYX" alt="Dog in a flower crown" class="dog-photo" onerror="this.style.display='none'">
+          </div>
         </div>
         <div class="rescue-text">
           <p>Dahlias are a hobby. Every single floral arrangement crafted from my cut garden goes directly toward making a difference. I sell seasonal handcrafted bouquets locally, and <strong>100% of the profits are donated monthly to the senior fund of local Golden Retriever Rescue organizations</strong> to help fund medical care, supplies, and housing pipelines for senior dogs in need.</p>
@@ -327,6 +384,9 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
               <a class="network-link" href="https://www.rozaviewfarm.com" target="_blank">Roza View Farm Website</a>
               <span style="color: var(--muted); margin: 0 0.3rem;">&amp;</span>
               <svg class="ig-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              <a class="network-link" href="https://www.rozaviewfarm.com" target="_blank">Roza View Farm Website</a>
+              <span style="color: var(--muted); margin: 0 0.3rem;">&amp;</span>
+              <svg class="ig-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
               <a class="network-link" href="https://www.instagram.com/rozaviewfarm/" target="_blank">Instagram</a>
             </li>
           </ul>
@@ -339,7 +399,7 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
 <div class="container-layout" id="collection">
   <div id="controls">
     <div class="search"><input id="search" type="text" placeholder="Search by name or notes…" oninput="applyFilters()"></div>
-    <div class="fg" id="location-fg"></div>
+    <div class="fg" id="garden-fg"></div>
     <div class="fg" id="status-fg"></div>
     <div class="fg" id="form-fg"></div>
     <div class="fg" id="color-fg"></div>
@@ -348,6 +408,8 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
       <select id="srt" onchange="applyFilters()">
         <option value="name">Sort: Name A–Z</option>
         <option value="nz">Name Z–A</option>
+        <option value="loc_az">Location A–Z</option>
+        <option value="loc_za">Location Z–A</option>
         <option value="ha">Height ↑</option>
         <option value="hd">Height ↓</option>
       </select>
@@ -379,14 +441,14 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ==========================================================================
-   LIVE REPOSITORY PIPE - PAIRED TO APPS SCRIPT PAYLOAD
+   LIVE REPOSITORY PIPE
    ========================================================================== */
-let all=[],favs=new Set(),aSt=new Set(),aForm=new Set(),aLoc=new Set(),aColor=new Set(),favOnly=false,scriptUrl='https://script.google.com/macros/s/AKfycbzPyvyJZRKNBf3017gse-cNz2wBfSDRQbGMGd-lHHm0TmSMPvQjshigcY0q1s0RccFS/exec';
+let all=[],favs=new Set(),aSt=new Set(),aForm=new Set(),aGarden=new Set(),aColor=new Set(),favOnly=false,scriptUrl='https://script.google.com/macros/s/AKfycbzPyvyJZRKNBf3017gse-cNz2wBfSDRQbGMGd-lHHm0TmSMPvQjshigcY0q1s0RccFS/exec';
 
 const gv=(d,k)=>String(d[k]??'').trim();
 const name=d=>gv(d,'Variety');
 const status=d=>gv(d,'CurrentYearStatus');
-const garden=d=>gv(d,'Garden2026');
+const gardenName=d=>gv(d,'Garden2026');
 const locNum=d=>gv(d,'LocNum2026');
 const formType=d=>gv(d,'Form');
 const height=d=>gv(d,'EstHeight');
@@ -452,16 +514,8 @@ function buildFilters(){
     if(s.includes('tuber'))return 'Tuber';
     return null;
   }));
-  mkPills('location-fg','Garden Location:',uniq(all.map(d=>garden(d))),aLoc);
-  mkPills('status-fg','Filter Status:',statuses,aSt,d=>{
-    const s=status(d).toLowerCase();
-    if(s.includes('culled')||s.includes('virus'))return 'Culled';
-    if(s.includes('died'))return 'Died';
-    if(s.includes('planted')||s.includes('sprout'))return 'Active';
-    if(s.includes('cutting'))return 'Cutting';
-    if(s.includes('tuber'))return 'Tuber';
-    return '';
-  });
+  mkPills('garden-fg','Garden:',uniq(all.map(d=>gardenName(d))),aGarden);
+  mkPills('status-fg','Filter Status:',statuses,aSt);
   mkPills('form-fg','Filter Form:',uniq(all.map(d=>formType(d))),aForm);
   mkPills('color-fg','Filter Color:',uniq(all.map(d=>colorFamily(d))),aColor);
 }
@@ -489,7 +543,7 @@ function applyFilters(){
   let res=all.filter(d=>{
     const n=name(d).toLowerCase();
     const s=status(d).toLowerCase();
-    const g=garden(d);
+    const g=gardenName(d);
     let stCat='';
     if(s.includes('culled')||s.includes('virus'))stCat='Culled';
     else if(s.includes('died'))stCat='Died';
@@ -498,7 +552,7 @@ function applyFilters(){
     else if(s.includes('tuber'))stCat='Tuber';
 
     if(q&&!n.includes(q)&&!obs(d).toLowerCase().includes(q)&&!locNum(d).toLowerCase().includes(q))return false;
-    if(aLoc.size&&!aLoc.has(g))return false;
+    if(aGarden.size&&!aGarden.has(g))return false;
     if(aSt.size&&!aSt.has(stCat))return false;
     if(aForm.size&&!aForm.has(formType(d)))return false;
     if(aColor.size&&!aColor.has(colorFamily(d)))return false;
@@ -509,6 +563,8 @@ function applyFilters(){
   res=[...res].sort((a,b)=>{
     if(srt==='name')return name(a).localeCompare(name(b));
     if(srt==='nz')return name(b).localeCompare(name(a));
+    if(srt==='loc_az') return locNum(a).localeCompare(locNum(b), undefined, {numeric: true, sensitivity: 'base'}) || name(a).localeCompare(name(b));
+    if(srt==='loc_za') return locNum(b).localeCompare(locNum(a), undefined, {numeric: true, sensitivity: 'base'}) || name(a).localeCompare(name(b));
     if(srt==='ha')return num(height(a))-num(height(b));
     if(srt==='hd')return num(height(b))-num(height(a));
     return 0;
@@ -537,7 +593,7 @@ function render(list){
     const bg=cardBg(n);
     
     const field1_status = status(d);
-    const field2_garden = garden(d);
+    const field2_garden = gardenName(d);
     const field3_locNum = locNum(d);
     const field4_form = formType(d);
     const field5_height = height(d);
@@ -545,22 +601,38 @@ function render(list){
     const field7_notes = obs(d);
     const field8_credit = photoCredit(d);
 
-    const sc=statusClass(field1_status);
-
     return `<div class="card" onclick="openModal(${oi})">
       <button class="fbtn" onclick="event.stopPropagation();toggleFav(${oi},this)">${fv?'❤️':'🤍'}</button>
       <div class="cph" style="background:${bg};${img?'display:none':''}">🌸</div>
       ${img?`<img class="cimg" src="${esc(img)}" alt="${esc(n)}" loading="lazy" onerror="this.style.display='none';this.previousSibling.style.display='flex'">`:''}
       <div class="cbody">
         <div class="cname">${esc(n)}</div>
-        <div class="ctags">
-          ${field1_status?`<span class="tag ${sc}">${esc(statusLabel(field1_status))}</span>`:''}
-          ${field2_garden?`<span class="tag loc-tag">📍 ${esc(field2_garden)}</span>`:''}
-          ${field3_locNum?`<span class="tag tid">#${esc(field3_locNum)}</span>`:''}
-          ${field4_form?`<span class="tag tl">${esc(field4_form)}</span>`:''}
-          ${field5_height?`<span class="tag ty">📏 ${esc(field5_height)}</span>`:''}
+        
+        <!-- Field 1 (Status) and Field 6 (Confirmed) remain unconstrained at top of body -->
+        <div style="display:flex; gap:.35rem; justify-content:center; flex-wrap:wrap; width:100%;">
+          ${field1_status?`<span class="tag ${statusClass(field1_status)}">${esc(statusLabel(field1_status))}</span>`:''}
           ${field6_confirmed?`<span class="tag confirmed-tag">✔ ${esc(field6_confirmed)}</span>`:''}
         </div>
+
+        <div class="ctags">
+          <!-- Line 1: Garden -->
+          <div class="tag-row-1">
+            ${field2_garden?`<span class="tag loc-tag">📍 ${esc(field2_garden)}</span>`:'<span style="visibility:hidden;" class="tag">&nbsp;</span>'}
+          </div>
+          
+          <!-- Line 2: 2026 Location Row-Pos -->
+          <div class="tag-row-2">
+            ${field3_locNum?`<div class="loc-badge"><span class="loc-lbl">2026 Loc # [Row-Pos]</span><span class="loc-val">${esc(field3_locNum)}</span></div>`:'<span style="visibility:hidden;" class="tag">&nbsp;</span>'}
+          </div>
+          
+          <!-- Line 3: Form & Height Combined -->
+          <div class="tag-row-3">
+            ${field4_form?`<span class="tag tl">${esc(field4_form)}</span>`:''}
+            ${field5_height?`<span class="tag ty">📏 ${esc(field5_height)}</span>`:''}
+            ${!field4_form && !field5_height?`<span style="visibility:hidden;" class="tag">&nbsp;</span>`:''}
+          </div>
+        </div>
+
         ${field7_notes?`<div class="card-notes">${esc(field7_notes)}</div>`:''}
         ${field8_credit?`<div class="card-credit">📸 ${esc(field8_credit)}</div>`:''}
       </div>
@@ -576,28 +648,24 @@ function toggleFav(i,btn){
 
 function openModal(i){
   const d=all[i];if(!d)return;
-  const n=name(d);
   
   const rows=[
     ['Current Year Status (2026)', status(d)],
-    ['2026 Garden', garden(d)],
-    ['2026 Loc #', locNum(d)],
+    ['Garden', gardenName(d)],
+    ['2026 Location # [Row-Pos]', locNum(d)],
     ['Form', formType(d)],
     ['Est. Height', height(d)],
     ['Confirmed?', confirmed(d)],
     ['Primary Color Family', colorFamily(d)]
   ].filter(r=>r[1]);
 
-  const notesField = obs(d);
-  const creditField = photoCredit(d);
-
   document.getElementById('modal').innerHTML=`
     <button class="mclose" onclick="closeModal()">✕</button>
     <div class="mbody">
-      <div class="mname">${esc(n)}</div>
+      <div class="mname">${esc(name(d))}</div>
       <div class="mgrid">${rows.map(([k,v])=>`<div><div class="ml">${esc(k)}</div><div class="mv">${esc(v)}</div></div>`).join('')}</div>
-      ${notesField?`<div style="font-size:0.95rem; color:var(--muted); font-style:italic; line-height:1.6; margin-top:1rem; border-top:1px solid var(--surface2); padding-top:1rem;"><strong>2026 Notes:</strong><br>${esc(notesField)}</div>`:''}
-      ${creditField?`<div style="font-size:0.8rem; color:#a0aab5; margin-top:0.8rem; text-transform:uppercase; font-family:sans-serif;"><strong>Photo Credit:</strong> ${esc(creditField)}</div>`:''}
+      ${obs(d)?`<div style="font-size:1.36rem; color:var(--muted); font-style:italic; line-height:1.6; margin-top:1rem; border-top:1px solid var(--surface2); padding-top:1rem;"><strong>2026 Notes:</strong><br>${esc(obs(d))}</div>`:''}
+      ${photoCredit(d)?`<div style="font-size:1.21rem; color:#a0aab5; margin-top:0.8rem; text-transform:uppercase; font-family:sans-serif;"><strong>Photo Credit:</strong> ${esc(photoCredit(d))}</div>`:''}
     </div>`;
   document.getElementById('overlay').classList.add('open');
 }

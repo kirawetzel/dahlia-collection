@@ -207,7 +207,6 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.2rem;max-w
 .cph{width:100%;height:210px;display:flex;align-items:center;justify-content:center;font-size:4rem;flex-shrink:0}
 .cimg{width:100%;height:210px;object-fit:cover;display:block;flex-shrink:0}
 
-/* Balanced grid content layout with strict top alignment */
 .cbody{padding:1.2rem;flex:1;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;text-align:center;gap:.6rem}
 .cname{font-size:1.25rem;font-weight:bold;font-style:italic;color:var(--text);line-height:1.3; width: 100%; text-align: center;}
 .ctags{display:flex;flex-wrap:wrap;gap:.35rem;justify-content:center;align-items:center; width: 100%;}
@@ -285,7 +284,6 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
     <img src="https://lh3.googleusercontent.com/d/1isKRxCmOnNgHMxmNmyN3QkwC7gUZsIF-" alt="Kira Profile Image" class="profile-photo" onerror="this.style.display='none'">
     <div class="header-text">
       <h1>Blooms with a Purpose</h1>
-      <p></p>
     </div>
   </div>
 </header>
@@ -299,8 +297,7 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
     
     <div id="tab-ab" class="tab-content active">
       <p style="margin-bottom: 20px;">As a certified Master Gardener through the University of California, my passion centers around educating my community on sustainable home horticulture. More specifically, my interests are in sustainable regional cultivation, trial garden tracking, and maximizing soil health to produce fruit, vegetable, and flower crops. 2026 kicks off my journey in dahlia hybridizing.</p>
-        
-        <p>I'm also a partner to a wonderful husband, a dog mom, traveler, book reader, and during the day I work in technology leading a team of amazing engineers while also teaching Machine Learning to graduate students at UC Berkeley.</p>
+      <p>I'm also a partner to a wonderful husband, a dog mom, traveler, book reader, and during the day I work in technology leading a team of amazing engineers while also teaching Machine Learning to graduate students at UC Berkeley.</p>
     </div>
     
     <div id="tab-re" class="tab-content">
@@ -381,10 +378,11 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ==========================================================================
-   LIVE REPOSITORY PIPE - PAIRED TO APPS SCRIPT PAYLOAD
+   LIVE REPOSITORY PIPE
    ========================================================================== */
 let all=[],favs=new Set(),aSt=new Set(),aForm=new Set(),aGarden=new Set(),aColor=new Set(),favOnly=false,scriptUrl='https://script.google.com/macros/s/AKfycbzPyvyJZRKNBf3017gse-cNz2wBfSDRQbGMGd-lHHm0TmSMPvQjshigcY0q1s0RccFS/exec';
 
+// Direct robust column evaluation
 const gv=(d,k)=>String(d[k]??'').trim();
 const name=d=>gv(d,'Variety');
 const status=d=>gv(d,'CurrentYearStatus');
@@ -447,7 +445,7 @@ function uniq(arr){return[...new Set(arr.filter(Boolean))].sort();}
 function buildFilters(){
   const statuses=uniq(all.map(d=>{
     const s=status(d).toLowerCase();
-    if(s.includes('culled')||sl.includes('virus'))return 'Culled';
+    if(s.includes('culled')||s.includes('virus'))return 'Culled';
     if(s.includes('died'))return 'Died';
     if(s.includes('planted')||s.includes('sprout'))return 'Active';
     if(s.includes('cutting'))return 'Cutting';
@@ -455,15 +453,7 @@ function buildFilters(){
     return null;
   }));
   mkPills('garden-fg','Garden:',uniq(all.map(d=>gardenName(d))),aGarden);
-  mkPills('status-fg','Filter Status:',statuses,aSt,d=>{
-    const s=status(d).toLowerCase();
-    if(s.includes('culled')||s.includes('virus'))return 'Culled';
-    if(s.includes('died'))return 'Died';
-    if(s.includes('planted')||s.includes('sprout'))return 'Active';
-    if(s.includes('cutting'))return 'Cutting';
-    if(s.includes('tuber'))return 'Tuber';
-    return '';
-  });
+  mkPills('status-fg','Filter Status:',statuses,aSt);
   mkPills('form-fg','Filter Form:',uniq(all.map(d=>formType(d))),aForm);
   mkPills('color-fg','Filter Color:',uniq(all.map(d=>colorFamily(d))),aColor);
 }
@@ -508,18 +498,11 @@ function applyFilters(){
     return true;
   });
 
-  // Alphanumeric Natural Sort implementation for Loc # values (e.g. "1A", "2B", "10A")
   res=[...res].sort((a,b)=>{
     if(srt==='name')return name(a).localeCompare(name(b));
     if(srt==='nz')return name(b).localeCompare(name(a));
-    
-    if(srt==='loc_az') {
-      return locNum(a).localeCompare(locNum(b), undefined, {numeric: true, sensitivity: 'base'}) || name(a).localeCompare(name(b));
-    }
-    if(srt==='loc_za') {
-      return locNum(b).localeCompare(locNum(a), undefined, {numeric: true, sensitivity: 'base'}) || name(a).localeCompare(name(b));
-    }
-    
+    if(srt==='loc_az') return locNum(a).localeCompare(locNum(b), undefined, {numeric: true, sensitivity: 'base'}) || name(a).localeCompare(name(b));
+    if(srt==='loc_za') return locNum(b).localeCompare(locNum(a), undefined, {numeric: true, sensitivity: 'base'}) || name(a).localeCompare(name(b));
     if(srt==='ha')return num(height(a))-num(height(b));
     if(srt==='hd')return num(height(b))-num(height(a));
     return 0;
@@ -556,8 +539,6 @@ function render(list){
     const field7_notes = obs(d);
     const field8_credit = photoCredit(d);
 
-    const sc=statusClass(field1_status);
-
     return `<div class="card" onclick="openModal(${oi})">
       <button class="fbtn" onclick="event.stopPropagation();toggleFav(${oi},this)">${fv?'❤️':'🤍'}</button>
       <div class="cph" style="background:${bg};${img?'display:none':''}">🌸</div>
@@ -565,9 +546,9 @@ function render(list){
       <div class="cbody">
         <div class="cname">${esc(n)}</div>
         <div class="ctags">
-          ${field1_status?`<span class="tag ${sc}">${esc(statusLabel(field1_status))}</span>`:''}
+          ${field1_status?`<span class="tag ${statusClass(field1_status)}">${esc(statusLabel(field1_status))}</span>`:''}
           ${field2_garden?`<span class="tag loc-tag">📍 ${esc(field2_garden)}</span>`:''}
-          ${field3_locNum?`<span class="tag tid">#${esc(field3_locNum)}</span>`:''}
+          ${field3_locNum?`<span class="tag tid"># ${esc(field3_locNum)}</span>`:''}
           ${field4_form?`<span class="tag tl">${esc(field4_form)}</span>`:''}
           ${field5_height?`<span class="tag ty">📏 ${esc(field5_height)}</span>`:''}
           ${field6_confirmed?`<span class="tag confirmed-tag">✔ ${esc(field6_confirmed)}</span>`:''}
@@ -587,7 +568,6 @@ function toggleFav(i,btn){
 
 function openModal(i){
   const d=all[i];if(!d)return;
-  const n=name(d);
   
   const rows=[
     ['Current Year Status (2026)', status(d)],
@@ -599,16 +579,13 @@ function openModal(i){
     ['Primary Color Family', colorFamily(d)]
   ].filter(r=>r[1]);
 
-  const notesField = obs(d);
-  const creditField = photoCredit(d);
-
   document.getElementById('modal').innerHTML=`
     <button class="mclose" onclick="closeModal()">✕</button>
     <div class="mbody">
-      <div class="mname">${esc(n)}</div>
+      <div class="mname">${esc(name(d))}</div>
       <div class="mgrid">${rows.map(([k,v])=>`<div><div class="ml">${esc(k)}</div><div class="mv">${esc(v)}</div></div>`).join('')}</div>
-      ${notesField?`<div style="font-size:0.95rem; color:var(--muted); font-style:italic; line-height:1.6; margin-top:1rem; border-top:1px solid var(--surface2); padding-top:1rem;"><strong>2026 Notes:</strong><br>${esc(notesField)}</div>`:''}
-      ${creditField?`<div style="font-size:0.8rem; color:#a0aab5; margin-top:0.8rem; text-transform:uppercase; font-family:sans-serif;"><strong>Photo Credit:</strong> ${esc(creditField)}</div>`:''}
+      ${obs(d)?`<div style="font-size:0.95rem; color:var(--muted); font-style:italic; line-height:1.6; margin-top:1rem; border-top:1px solid var(--surface2); padding-top:1rem;"><strong>2026 Notes:</strong><br>${esc(obs(d))}</div>`:''}
+      ${photoCredit(d)?`<div style="font-size:0.8rem; color:#a0aab5; margin-top:0.8rem; text-transform:uppercase; font-family:sans-serif;"><strong>Photo Credit:</strong> ${esc(photoCredit(d))}</div>`:''}
     </div>`;
   document.getElementById('overlay').classList.add('open');
 }

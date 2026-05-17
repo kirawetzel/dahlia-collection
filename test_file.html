@@ -21,7 +21,7 @@ body{font-family:Georgia,serif;background:var(--surface);min-height:100vh;font-s
 
 /* ==========================================================================
    TINKER BENCH: YOUR CUSTOM TUNING STATION
-   ========================================================================== */
+   ========================================================================= */
 .rescue-layout {
   display: flex;
   gap: 2rem;       
@@ -339,7 +339,7 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
 <div class="container-layout" id="collection">
   <div id="controls">
     <div class="search"><input id="search" type="text" placeholder="Search by name or notes…" oninput="applyFilters()"></div>
-    <div class="fg" id="location-fg"></div>
+    <div class="fg" id="garden-fg"></div>
     <div class="fg" id="status-fg"></div>
     <div class="fg" id="form-fg"></div>
     <div class="fg" id="color-fg"></div>
@@ -348,8 +348,8 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
       <select id="srt" onchange="applyFilters()">
         <option value="name">Sort: Name A–Z</option>
         <option value="nz">Name Z–A</option>
-        <option value="loc_az">Location A–Z</option>
-        <option value="loc_za">Location Z–A</option>
+        <option value="loc_az">2026 Location # A–Z</option>
+        <option value="loc_za">2026 Location # Z–A</option>
         <option value="ha">Height ↑</option>
         <option value="hd">Height ↓</option>
       </select>
@@ -383,12 +383,12 @@ window.addEventListener("DOMContentLoaded", () => {
 /* ==========================================================================
    LIVE REPOSITORY PIPE - PAIRED TO APPS SCRIPT PAYLOAD
    ========================================================================== */
-let all=[],favs=new Set(),aSt=new Set(),aForm=new Set(),aLoc=new Set(),aColor=new Set(),favOnly=false,scriptUrl='https://script.google.com/macros/s/AKfycbzPyvyJZRKNBf3017gse-cNz2wBfSDRQbGMGd-lHHm0TmSMPvQjshigcY0q1s0RccFS/exec';
+let all=[],favs=new Set(),aSt=new Set(),aForm=new Set(),aGarden=new Set(),aColor=new Set(),favOnly=false,scriptUrl='https://script.google.com/macros/s/AKfycbzPyvyJZRKNBf3017gse-cNz2wBfSDRQbGMGd-lHHm0TmSMPvQjshigcY0q1s0RccFS/exec';
 
 const gv=(d,k)=>String(d[k]??'').trim();
 const name=d=>gv(d,'Variety');
 const status=d=>gv(d,'CurrentYearStatus');
-const garden=d=>gv(d,'Garden2026');
+const gardenName=d=>gv(d,'Garden2026');
 const locNum=d=>gv(d,'LocNum2026');
 const formType=d=>gv(d,'Form');
 const height=d=>gv(d,'EstHeight');
@@ -447,14 +447,14 @@ function uniq(arr){return[...new Set(arr.filter(Boolean))].sort();}
 function buildFilters(){
   const statuses=uniq(all.map(d=>{
     const s=status(d).toLowerCase();
-    if(s.includes('culled')||s.includes('virus'))return 'Culled';
+    if(s.includes('culled')||sl.includes('virus'))return 'Culled';
     if(s.includes('died'))return 'Died';
     if(s.includes('planted')||s.includes('sprout'))return 'Active';
     if(s.includes('cutting'))return 'Cutting';
     if(s.includes('tuber'))return 'Tuber';
     return null;
   }));
-  mkPills('location-fg','Garden Location:',uniq(all.map(d=>garden(d))),aLoc);
+  mkPills('garden-fg','Garden:',uniq(all.map(d=>gardenName(d))),aGarden);
   mkPills('status-fg','Filter Status:',statuses,aSt,d=>{
     const s=status(d).toLowerCase();
     if(s.includes('culled')||s.includes('virus'))return 'Culled';
@@ -491,7 +491,7 @@ function applyFilters(){
   let res=all.filter(d=>{
     const n=name(d).toLowerCase();
     const s=status(d).toLowerCase();
-    const g=garden(d);
+    const g=gardenName(d);
     let stCat='';
     if(s.includes('culled')||s.includes('virus'))stCat='Culled';
     else if(s.includes('died'))stCat='Died';
@@ -500,7 +500,7 @@ function applyFilters(){
     else if(s.includes('tuber'))stCat='Tuber';
 
     if(q&&!n.includes(q)&&!obs(d).toLowerCase().includes(q)&&!locNum(d).toLowerCase().includes(q))return false;
-    if(aLoc.size&&!aLoc.has(g))return false;
+    if(aGarden.size&&!aGarden.has(g))return false;
     if(aSt.size&&!aSt.has(stCat))return false;
     if(aForm.size&&!aForm.has(formType(d)))return false;
     if(aColor.size&&!aColor.has(colorFamily(d)))return false;
@@ -508,11 +508,18 @@ function applyFilters(){
     return true;
   });
 
+  // Alphanumeric Natural Sort implementation for Loc # values (e.g. "1A", "2B", "10A")
   res=[...res].sort((a,b)=>{
     if(srt==='name')return name(a).localeCompare(name(b));
     if(srt==='nz')return name(b).localeCompare(name(a));
-    if(srt==='loc_az')return garden(a).localeCompare(garden(b)) || name(a).localeCompare(name(b));
-    if(srt==='loc_za')return garden(b).localeCompare(garden(a)) || name(a).localeCompare(name(b));
+    
+    if(srt==='loc_az') {
+      return locNum(a).localeCompare(locNum(b), undefined, {numeric: true, sensitivity: 'base'}) || name(a).localeCompare(name(b));
+    }
+    if(srt==='loc_za') {
+      return locNum(b).localeCompare(locNum(a), undefined, {numeric: true, sensitivity: 'base'}) || name(a).localeCompare(name(b));
+    }
+    
     if(srt==='ha')return num(height(a))-num(height(b));
     if(srt==='hd')return num(height(b))-num(height(a));
     return 0;
@@ -541,7 +548,7 @@ function render(list){
     const bg=cardBg(n);
     
     const field1_status = status(d);
-    const field2_garden = garden(d);
+    const field2_garden = gardenName(d);
     const field3_locNum = locNum(d);
     const field4_form = formType(d);
     const field5_height = height(d);
@@ -584,8 +591,8 @@ function openModal(i){
   
   const rows=[
     ['Current Year Status (2026)', status(d)],
-    ['2026 Garden', garden(d)],
-    ['2026 Loc #', locNum(d)],
+    ['Garden', gardenName(d)],
+    ['2026 Location #', locNum(d)],
     ['Form', formType(d)],
     ['Est. Height', height(d)],
     ['Confirmed?', confirmed(d)],

@@ -6,18 +6,35 @@
 <title>Kira's Garden & Dahlia Collection - Zone 9B - San Jose, CA</title>
 <style>
 :root{
-  --bg: #2F3538;          /* Deep Charcoal */
-  --surface: #F8F9FA;     /* Off-White / Alabaster main background */
-  --surface2: #E1D5E7;    /* Soft Lavender section background */
-  --pink: #D4A5A5;        /* Dusty Rose primary brand accent */
-  --green: #707A8A;       /* Slate Gray structural headers/borders */
-  --text: #2F3538;        /* Deep Charcoal readable text */
-  --muted: #707A8A;       /* Slate Gray secondary text */
-  --mint: #BFF2E2;        /* Pastel Mint highlight/badge pop */
+  --bg: #2F3538;
+  --surface: #F8F9FA;
+  --surface2: #E1D5E7;
+  --pink: #D4A5A5;
+  --green: #707A8A;
+  --text: #2F3538;
+  --muted: #707A8A;
+  --mint: #BFF2E2;
   --shadow: 0 4px 18px rgba(47,53,56,.06);
 }
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Georgia,serif;background:var(--surface);min-height:100vh;font-size:23.32px;color:var(--text);scroll-behavior: smooth;}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+/* Controls all rem sizing site-wide */
+html{
+  font-size:14px;
+}
+
+body{
+  font-family:Georgia,serif;
+  background:var(--surface);
+  min-height:100vh;
+  color:var(--text);
+  scroll-behavior:smooth;
+}
 
 /* ==========================================================================
    TINKER BENCH: CUSTOM TUNING STATION
@@ -246,8 +263,63 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.6rem;max-w
 }
 #main { padding: 2rem; flex: 1; }
 #count { font-family: sans-serif; font-size: 1.41rem; color: var(--muted); margin-bottom: 1.1rem; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.5rem; }
+/* ==========================================================================
+   COLLECTION REPOSITORY INTERFACE GRID
+   ========================================================================== */
 
+.container-layout {
+  display:flex;
+  background:var(--surface);
+  border-top:2px solid var(--surface2);
+}
+
+#controls{
+  width:340px;
+  padding:2rem 1.5rem;
+  display:flex;
+  flex-direction:column;
+  gap:1.5rem;
+  border-right:2px solid var(--surface2);
+  flex-shrink:0;
+}
+
+#main{
+  padding:2rem;
+  flex:1;
+}
+
+#count{
+  font-family:sans-serif;
+  font-size:1.41rem;
+  color:var(--muted);
+  margin-bottom:1.1rem;
+}
+
+/* DESKTOP: force 4 cards */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1.5rem;
+}
+
+/* Responsive behavior */
+@media(max-width:1200px){
+  .grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+@media(max-width:920px){
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:600px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+}
 .card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);
   cursor:pointer;position:relative;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column;border:1px solid var(--surface2)}
 .card:hover{transform:translateY(-3px);box-shadow:0 8px 26px rgba(47,53,56,.12)}
@@ -430,8 +502,8 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
         </div>
         <div class="rescue-text">
           <p>Dahlias are a hobby for me. Every single floral arrangement crafted from my cut garden goes directly toward making a difference. I sell seasonal handcrafted bouquets locally, and <strong>100% of the profits are donated monthly to the senior fund of local Golden Retriever Rescue organizations</strong> to help fund medical care, supplies, and housing pipelines for senior dogs in need.</p>
-          <p>Many people ask me if I sell or trade dahlias. Since this is a hobby, I don't sell or trade dahlia tubers or cuttings throughout the season, however, at the end of the season, I dig & divide my tubers for a one time fall tuber sale of things I won't grow anymore or have excess of. Profits of this tuber sale also go to charity. Look out for that tuber sale each November (zone 9B).</p>
-          <p>For excellent dahlia sellers, please shop with either of these two wonderful women:</p>
+          <p>Many people ask me if I sell or trade dahlias. Since this is a hobby, I don't sell dahlia tubers or cuttings throughout the year, however, at the end of the season, I dig & divide my tubers for a one time fall tuber sale of things I won't grow anymore or have excess of. Profits of this tuber sale also go to charity. Look out for that tuber sale each November (zone 9B).</p>
+          <p>For excellent dahlia sellers, please shop with two wonderful women:</p>
           
           <ul class="garden-network">
             <li class="network-item">

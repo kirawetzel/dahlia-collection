@@ -20,7 +20,7 @@
 body{font-family:Georgia,serif;background:var(--surface);min-height:100vh;font-size:23.32px;color:var(--text);scroll-behavior: smooth;}
 
 /* ==========================================================================
-   TINKER BENCH: YOUR CUSTOM TUNING STATION
+   TINKER BENCH: CUSTOM TUNING STATION
    ========================================================================= */
 .rescue-layout {
   display: flex;
@@ -29,16 +29,17 @@ body{font-family:Georgia,serif;background:var(--surface);min-height:100vh;font-s
 }
 .rescue-images {
   display: flex;
-  flex-direction: column;   /* Vertical structural flow for images */
+  flex-direction: column;   
   gap: 1.2rem;            
   flex-shrink: 0;        
+  align-items: center;      /* Keeps the vertical image stack perfectly centered */
 }
 .rescue-gallery-row {
   display: flex;
   gap: 1.2rem;
 }
 .dog-photo-hero {
-  width: 462px;             /* Balanced to match total row width */
+  width: 466px;             /* Exact width calculated: 225px + 225px + 16px (1.2rem gap) */
   max-width: 100%;
   height: auto;
   border-radius: 12px;   
@@ -63,29 +64,41 @@ body{font-family:Georgia,serif;background:var(--surface);min-height:100vh;font-s
 .rescue-text p:last-child {
   margin-bottom: 0;
 }
+
+/* Redesigned Network List for perfect linear tracking alignment */
 .garden-network {
-  margin-top: 1rem;
-  padding-left: 0.2rem;
+  margin-top: 1.2rem;
   list-style-type: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 .network-item {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
   align-items: center;
-  gap: 0.6rem;
-  margin-bottom: 0.6rem;
+  justify-content: start;
+  gap: 0.5rem;
   font-size: 1.46rem;
+  line-height: 1;
 }
 .network-link {
   color: var(--text);
   font-weight: bold;
   text-decoration: underline;
   text-decoration-color: var(--pink);
-  text-underline-offset: 3px;
+  text-underline-offset: 4px;
   transition: color 0.2s;
+  display: inline-block;
 }
 .network-link:hover { color: var(--green); }
-.ig-icon { width: 22px; height: 22px; fill: currentColor; color: #e1306c; display: inline-block; vertical-align: middle; }
-.web-icon { width: 22px; height: 22px; fill: currentColor; color: var(--green); display: inline-block; vertical-align: middle; }
+.network-amp {
+  color: var(--muted);
+  padding: 0 0.1rem;
+}
+.ig-icon { width: 22px; height: 22px; fill: currentColor; color: #e1306c; display: block; }
+.web-icon { width: 22px; height: 22px; fill: currentColor; color: var(--green); display: block; }
 
 /* ==========================================================================
    NAVIGATION BAR STYLES
@@ -221,7 +234,22 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.6rem;max-w
 .cimg{width:100%;height:210px;object-fit:cover;display:block;flex-shrink:0}
 
 .cbody{padding:1.2rem;flex:1;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;text-align:center;gap:.6rem}
-.cname{font-size:1.66rem;font-weight:bold;font-style:italic;color:var(--text);line-height:1.3; width: 100%; text-align: center;}
+
+/* FORCE EXACTLY TWO LINES FOR ALL CARD TITLES */
+.cname{
+  font-size:1.66rem;
+  font-weight:bold;
+  font-style:italic;
+  color:var(--text);
+  line-height:1.3; 
+  width: 100%; 
+  text-align: center;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: calc(1.66rem * 1.3 * 2); /* Locks container height perfectly to exactly two vertical text lines */
+}
 
 /* STRUCTURED TAG STACKS DEFINED BY LINE REQUIREMENTS */
 .ctags {display:flex;flex-direction:column;gap:.5rem;justify-content:center;align-items:stretch; width: 100%;}
@@ -269,7 +297,7 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.6rem;max-w
 
 .confirmed-tag { background: #e0f7fa; color: #006064; font-weight: bold; }
 .card-notes { font-size: 1.26rem; color: var(--muted); font-style: italic; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-top: 0.25rem; line-height: 1.4; width: 100%; text-align: center; }
-.card-credit { font-size: 1.11rem; color: #a0aab5; font-family: sans-serif; text-transform: uppercase; margin-top: 0.2rem; width: 100%; text-align: center; }
+.card-credit { font-size: 1.11rem; color: #a0aab5; font-family: sans-serif; text-transform: uppercase; margin-top: 0.2rem; margin-bottom: 0.3rem; width: 100%; text-align: center; }
 
 /* ==========================================================================
    MODAL DIALOG CHANNELS
@@ -313,12 +341,14 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
   .rescue-layout { flex-direction: column; gap: 1.5rem; align-items: center; text-align: center; }
   .rescue-images { justify-content: center; align-items: center; width: 100%; }
   .rescue-gallery-row { justify-content: center; width: 100%; }
-  .dog-photo-hero { max-width: 225px; } /* Scales look beautiful inline with square thumbnails on mobile */
+  .dog-photo-hero { max-width: 225px; } 
   .tab-content { border-radius: 0 0 12px 12px; padding: 1.5rem; }
   
   /* Force text centering for About Me and Golden Hour copy on mobile views */
   .tab-content p { text-align: center; }
-  .garden-network { padding-left: 0; display: inline-block; text-align: left; margin: 1rem auto 0; }
+  
+  /* Centers the inline grid blocks elegantly under centered paragraph text on mobile devices */
+  .garden-network { justify-content: center; align-items: center; margin: 1.2rem auto 0; }
 }
 </style>
 </head>
@@ -357,36 +387,32 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
     <div id="tab-re" class="tab-content">
       <div class="rescue-layout">
         <div class="rescue-images">
-          <!-- Your new highlighted image placed cleanly on top -->
+          <!-- Perfectly sized structural top hero image slot -->
           <img src="https://lh3.googleusercontent.com/d/1Sms0-9WNWU6fYNo5-DePr_GrGl0as4Mm" alt="Golden Hour primary image" class="dog-photo-hero" onerror="this.style.display='none'">
           
-          <!-- The existing row of two square photo slots underneath -->
           <div class="rescue-gallery-row">
             <img src="https://lh3.googleusercontent.com/d/1ovYb5d0FQAPJVVqUdWOYC4mkjiwqK89h" alt="Rescue impact photo" class="dog-photo" onerror="this.style.display='none'">
             <img src="https://lh3.googleusercontent.com/d/1e5M3QVYJK-OPwkChfn7-FrMnBWCXtLYX" alt="Dog in a flower crown" class="dog-photo" onerror="this.style.display='none'">
           </div>
         </div>
         <div class="rescue-text">
-          <p>Dahlias are a hobby. Every single floral arrangement crafted from my cut garden goes directly toward making a difference. I sell seasonal handcrafted bouquets locally, and <strong>100% of the profits are donated monthly to the senior fund of local Golden Retriever Rescue organizations</strong> to help fund medical care, supplies, and housing pipelines for senior dogs in need.</p>
-          <p>Since this is a hobby, I don't sell throughout the year, however, at the end of the season, I dig & divide my tubers, doing a one time fall tuber sale, with proceeds that also go to a charity.</p>
+          <p>Dahlias are a hobby for me. Every single floral arrangement crafted from my cut garden goes directly toward making a difference. I sell seasonal handcrafted bouquets locally, and <strong>100% of the profits are donated monthly to the senior fund of local Golden Retriever Rescue organizations</strong> to help fund medical care, supplies, and housing pipelines for senior dogs in need.</p>
+          <p>Many people ask me if I sell or trade dahlias. Since this is a hobby, I don't sell dahlia tubers or cuttings throughout the year, however, at the end of the season, I dig & divide my tubers for a one time fall tuber sale of things I won't grow anymore or have excess of. Profits of this tuber sale also go to charity. Look out for that tuber sale each November (zone 9B).</p>
           <p>For excellent dahlia sellers, please shop with two wonderful women:</p>
           
           <ul class="garden-network">
             <li class="network-item">
               <svg class="web-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.53c-.26-.81-1-1.4-1.9-1.4h-1v-3c0-.55-.45-1-1-1h-6v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
               <a class="network-link" href="https://www.dandelionlanedahlias.com" target="_blank">Dandelion Lane Website</a>
-              <span style="color: var(--muted); margin: 0 0.3rem;">&amp;</span>
+              <span class="network-amp">&amp;</span>
               <svg class="ig-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
               <a class="network-link" href="https://www.instagram.com/dandelion_lane_dahlias/" target="_blank">Instagram</a>
             </li>
             <li class="network-item">
               <svg class="web-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.53c-.26-.81-1-1.4-1.9-1.4h-1v-3c0-.55-.45-1-1-1h-6v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
               <a class="network-link" href="https://www.rozaviewfarm.com" target="_blank">Roza View Farm Website</a>
-              <span style="color: var(--muted); margin: 0 0.3rem;">&amp;</span>
-              <svg class="ig-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-              <a class="network-link" href="https://www.rozaviewfarm.com" target="_blank">Roza View Farm Website</a>
-              <span style="color: var(--muted); margin: 0 0.3rem;">&amp;</span>
-              <svg class="ig-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              <span class="network-amp">&amp;</span>
+              <svg class="ig-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0 3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
               <a class="network-link" href="https://www.instagram.com/rozaviewfarm/" target="_blank">Instagram</a>
             </li>
           </ul>
@@ -406,10 +432,10 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
     <div class="fg">
       <span class="flbl">Sort Sequence</span>
       <select id="srt" onchange="applyFilters()">
-        <option value="name">Sort: Name A–Z</option>
-        <option value="nz">Name Z–A</option>
-        <option value="loc_az">Location A–Z</option>
-        <option value="loc_za">Location Z–A</option>
+        <option value="name" selected>Sort: Cultivar Name A–Z</option>
+        <option value="nz">Cultivar Name Z–A</option>
+        <option value="loc_az">2026 Location [Row-Pos] A–Z</option>
+        <option value="loc_za">2026 Location [Row-Pos] Z–A</option>
         <option value="ha">Height ↑</option>
         <option value="hd">Height ↓</option>
       </select>
@@ -561,13 +587,12 @@ function applyFilters(){
   });
 
   res=[...res].sort((a,b)=>{
-    if(srt==='name')return name(a).localeCompare(name(b));
-    if(srt==='nz')return name(b).localeCompare(name(a));
     if(srt==='loc_az') return locNum(a).localeCompare(locNum(b), undefined, {numeric: true, sensitivity: 'base'}) || name(a).localeCompare(name(b));
     if(srt==='loc_za') return locNum(b).localeCompare(locNum(a), undefined, {numeric: true, sensitivity: 'base'}) || name(a).localeCompare(name(b));
+    if(srt==='nz')return name(b).localeCompare(name(a));
     if(srt==='ha')return num(height(a))-num(height(b));
     if(srt==='hd')return num(height(b))-num(height(a));
-    return 0;
+    return name(a).localeCompare(name(b));
   });
 
   render(res);
@@ -597,7 +622,6 @@ function render(list){
     const field3_locNum = locNum(d);
     const field4_form = formType(d);
     const field5_height = height(d);
-    const field6_confirmed = confirmed(d);
     const field7_notes = obs(d);
     const field8_credit = photoCredit(d);
 
@@ -608,24 +632,19 @@ function render(list){
       <div class="cbody">
         <div class="cname">${esc(n)}</div>
         
-        <!-- Field 1 (Status) and Field 6 (Confirmed) remain unconstrained at top of body -->
         <div style="display:flex; gap:.35rem; justify-content:center; flex-wrap:wrap; width:100%;">
           ${field1_status?`<span class="tag ${statusClass(field1_status)}">${esc(statusLabel(field1_status))}</span>`:''}
-          ${field6_confirmed?`<span class="tag confirmed-tag">✔ ${esc(field6_confirmed)}</span>`:''}
         </div>
 
         <div class="ctags">
-          <!-- Line 1: Garden -->
           <div class="tag-row-1">
             ${field2_garden?`<span class="tag loc-tag">📍 ${esc(field2_garden)}</span>`:'<span style="visibility:hidden;" class="tag">&nbsp;</span>'}
           </div>
           
-          <!-- Line 2: 2026 Location Row-Pos -->
           <div class="tag-row-2">
             ${field3_locNum?`<div class="loc-badge"><span class="loc-lbl">2026 Loc # [Row-Pos]</span><span class="loc-val">${esc(field3_locNum)}</span></div>`:'<span style="visibility:hidden;" class="tag">&nbsp;</span>'}
           </div>
           
-          <!-- Line 3: Form & Height Combined -->
           <div class="tag-row-3">
             ${field4_form?`<span class="tag tl">${esc(field4_form)}</span>`:''}
             ${field5_height?`<span class="tag ty">📏 ${esc(field5_height)}</span>`:''}
@@ -633,8 +652,8 @@ function render(list){
           </div>
         </div>
 
-        ${field7_notes?`<div class="card-notes">${esc(field7_notes)}</div>`:''}
         ${field8_credit?`<div class="card-credit">📸 ${esc(field8_credit)}</div>`:''}
+        ${field7_notes?`<div class="card-notes">${esc(field7_notes)}</div>`:''}
       </div>
     </div>`;
   }).join('');
@@ -649,10 +668,11 @@ function toggleFav(i,btn){
 function openModal(i){
   const d=all[i];if(!d)return;
   
+  /* EXPLICIT TABLE SORT LOGIC FOR OVERLAY PAGE DETAILS */
   const rows=[
-    ['Current Year Status (2026)', status(d)],
-    ['Garden', gardenName(d)],
     ['2026 Location # [Row-Pos]', locNum(d)],
+    ['Garden', gardenName(d)],
+    ['Current Year Status (2026)', status(d)],
     ['Form', formType(d)],
     ['Est. Height', height(d)],
     ['Confirmed?', confirmed(d)],

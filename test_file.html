@@ -6,18 +6,27 @@
 <title>Kira's Garden & Dahlia Collection - Zone 9B - San Jose, CA</title>
 <style>
 :root{
-  --bg: #2F3538;          /* Deep Charcoal */
-  --surface: #F8F9FA;     /* Off-White / Alabaster main background */
-  --surface2: #E1D5E7;    /* Soft Lavender section background */
-  --pink: #D4A5A5;        /* Dusty Rose primary brand accent */
-  --green: #707A8A;       /* Slate Gray structural headers/borders */
-  --text: #2F3538;        /* Deep Charcoal readable text */
-  --muted: #707A8A;       /* Slate Gray secondary text */
-  --mint: #BFF2E2;        /* Pastel Mint highlight/badge pop */
+  --bg: #2F3538;
+  --surface: #F8F9FA;
+  --surface2: #E1D5E7;
+  --pink: #D4A5A5;
+  --green: #707A8A;
+  --text: #2F3538;
+  --muted: #707A8A;
+  --mint: #BFF2E2;
   --shadow: 0 4px 18px rgba(47,53,56,.06);
 }
+
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Georgia,serif;background:var(--surface);min-height:100vh;font-size:23.32px;color:var(--text);scroll-behavior: smooth;}
+
+body{
+  font-family:Georgia,serif;
+  background:var(--surface);
+  min-height:100vh;
+  font-size:20.65px;
+  color:var(--text);
+  scroll-behavior:smooth;
+}
 
 /* ==========================================================================
    TINKER BENCH: CUSTOM TUNING STATION
@@ -246,8 +255,63 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.6rem;max-w
 }
 #main { padding: 2rem; flex: 1; }
 #count { font-family: sans-serif; font-size: 1.41rem; color: var(--muted); margin-bottom: 1.1rem; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.5rem; }
+/* ==========================================================================
+   COLLECTION REPOSITORY INTERFACE GRID
+   ========================================================================== */
 
+.container-layout {
+  display:flex;
+  background:var(--surface);
+  border-top:2px solid var(--surface2);
+}
+
+#controls{
+  width:340px;
+  padding:2rem 1.5rem;
+  display:flex;
+  flex-direction:column;
+  gap:1.5rem;
+  border-right:2px solid var(--surface2);
+  flex-shrink:0;
+}
+
+#main{
+  padding:2rem;
+  flex:1;
+}
+
+#count{
+  font-family:sans-serif;
+  font-size:1.41rem;
+  color:var(--muted);
+  margin-bottom:1.1rem;
+}
+
+/* DESKTOP: force 4 cards */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1.5rem;
+}
+
+/* Responsive behavior */
+@media(max-width:1200px){
+  .grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+@media(max-width:920px){
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:600px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+}
 .card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);
   cursor:pointer;position:relative;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column;border:1px solid var(--surface2)}
 .card:hover{transform:translateY(-3px);box-shadow:0 8px 26px rgba(47,53,56,.12)}

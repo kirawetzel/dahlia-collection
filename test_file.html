@@ -20,7 +20,7 @@
 body{font-family:Georgia,serif;background:var(--surface);min-height:100vh;font-size:23.32px;color:var(--text);scroll-behavior: smooth;}
 
 /* ==========================================================================
-   TINKER BENCH: YOUR CUSTOM TUNING STATION
+   TINKER BENCH: CUSTOM TUNING STATION
    ========================================================================= */
 .rescue-layout {
   display: flex;
@@ -381,11 +381,10 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
           </div>
         </div>
         <div class="rescue-text">
-          <p>Dahlias are a hobby. Every single floral arrangement crafted from my cut garden goes directly toward making a difference. I sell seasonal handcrafted bouquets locally, and <strong>100% of the profits are donated monthly to the senior fund of local Golden Retriever Rescue organizations</strong> to help fund medical care, supplies, and housing pipelines for senior dogs in need.</p>
-          <p>Since this is a hobby, I don't sell throughout the year, however, at the end of the season, I dig & divide my tubers, doing a one time fall tuber sale, with proceeds that also go to a charity.</p>
+          <p>Dahlias are a hobby for me. Every single floral arrangement crafted from my cut garden goes directly toward making a difference. I sell seasonal handcrafted bouquets locally, and <strong>100% of the profits are donated monthly to the senior fund of local Golden Retriever Rescue organizations</strong> to help fund medical care, supplies, and housing pipelines for senior dogs in need.</p>
+          <p>Many people ask me if I sell or trade dahlias. Since this is a hobby, I don't sell dahlia tubers or cuttings throughout the year, however, at the end of the season, I dig & divide my tubers for a one time fall tuber sale, donating the profits to a charity. Look out for that tuber sale in October (zone 9B)</p>
           <p>For excellent dahlia sellers, please shop with two wonderful women:</p>
           
-          <!-- Explicit structured layout elements replacing messy standard bullets -->
           <ul class="garden-network">
             <li class="network-item">
               <svg class="web-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.53c-.26-.81-1-1.4-1.9-1.4h-1v-3c0-.55-.45-1-1-1h-6v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
@@ -418,7 +417,7 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
     <div class="fg">
       <span class="flbl">Sort Sequence</span>
       <select id="srt" onchange="applyFilters()">
-        <option value="name">Sort: Name A–Z</option>
+        <option value="name" selected>Sort: Name A–Z</option>
         <option value="nz">Name Z–A</option>
         <option value="loc_az">Location A–Z</option>
         <option value="loc_za">Location Z–A</option>
@@ -573,13 +572,13 @@ function applyFilters(){
   });
 
   res=[...res].sort((a,b)=>{
-    if(srt==='name')return name(a).localeCompare(name(b));
-    if(srt==='nz')return name(b).localeCompare(name(a));
     if(srt==='loc_az') return locNum(a).localeCompare(locNum(b), undefined, {numeric: true, sensitivity: 'base'}) || name(a).localeCompare(name(b));
     if(srt==='loc_za') return locNum(b).localeCompare(locNum(a), undefined, {numeric: true, sensitivity: 'base'}) || name(a).localeCompare(name(b));
+    if(srt==='nz')return name(b).localeCompare(name(a));
     if(srt==='ha')return num(height(a))-num(height(b));
     if(srt==='hd')return num(height(b))-num(height(a));
-    return 0;
+    // Default system sequence handles Name A-Z beautifully
+    return name(a).localeCompare(name(b));
   });
 
   render(res);
@@ -609,7 +608,6 @@ function render(list){
     const field3_locNum = locNum(d);
     const field4_form = formType(d);
     const field5_height = height(d);
-    const field6_confirmed = confirmed(d);
     const field7_notes = obs(d);
     const field8_credit = photoCredit(d);
 
@@ -622,7 +620,6 @@ function render(list){
         
         <div style="display:flex; gap:.35rem; justify-content:center; flex-wrap:wrap; width:100%;">
           ${field1_status?`<span class="tag ${statusClass(field1_status)}">${esc(statusLabel(field1_status))}</span>`:''}
-          ${field6_confirmed?`<span class="tag confirmed-tag">✔ ${esc(field6_confirmed)}</span>`:''}
         </div>
 
         <div class="ctags">

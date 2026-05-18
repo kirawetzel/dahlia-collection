@@ -38,9 +38,9 @@ body{font-family:Georgia,serif;background:var(--surface);min-height:100vh;font-s
   display: flex;
   gap: 1.2rem;
 }
+/* 1. Base Desktop Styles: Solid, fixed pixel sizes so they stay exactly the size you want */
 .dog-photo-hero {
-  width: 466px;             /* Exact width calculated: 225px + 225px + 16px (1.2rem gap) */
-  max-width: 100%;
+  width: 466px;             
   height: auto;
   border-radius: 12px;   
   border: 4px solid #fff;
@@ -54,6 +54,27 @@ body{font-family:Georgia,serif;background:var(--surface);min-height:100vh;font-s
   border: 4px solid #fff;
   object-fit: cover;     
   box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+/* 2. Mobile Responsive Correction: Only shrinks them when the screen gets small */
+@media (max-width: 520px) {
+  .rescue-images {
+    width: 100%;
+    padding: 0 1rem;
+  }
+  .rescue-gallery-row {
+    width: 100%;
+    justify-content: center;
+  }
+  .dog-photo-hero {
+    width: 100%;
+    max-width: 466px;
+  }
+  .dog-photo {
+    width: calc(50% - 0.6rem);
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
 }
 .rescue-text {
   flex: 1;              
@@ -75,13 +96,13 @@ body{font-family:Georgia,serif;background:var(--surface);min-height:100vh;font-s
   gap: 0.8rem;
 }
 .network-item {
-  display: grid;
-  grid-template-columns: auto auto auto auto auto;
+  display: flex;
+  flex-wrap: wrap;       /* Lets elements drop down safely if space runs out */
   align-items: center;
   justify-content: start;
-  gap: 0.5rem;
+  gap: 0.5rem 0.8rem;    /* Generates safe breathing room vertically and horizontally */
   font-size: 1.46rem;
-  line-height: 1;
+  line-height: 1.3;
 }
 .network-link {
   color: var(--text);
@@ -349,6 +370,18 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
   
   /* Centers the inline grid blocks elegantly under centered paragraph text on mobile devices */
   .garden-network { justify-content: center; align-items: center; margin: 1.2rem auto 0; }
+
+  /* Mobile tracking stack for grower referrals */
+  .network-item {
+    justify-content: center; /* Centers the lines on mobile */
+    text-align: center;
+    padding: 0.4rem 0;
+  }
+  .network-amp {
+    display: block;
+    width: 100%;             /* Forces the ampersand to act as a soft line-break separator */
+    margin: 0.2rem 0;
+  }
 }
 </style>
 </head>

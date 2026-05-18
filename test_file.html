@@ -17,13 +17,21 @@
   --shadow: 0 4px 18px rgba(47,53,56,.06);
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+/* Controls all rem sizing site-wide */
+html{
+  font-size:14px;
+}
 
 body{
   font-family:Georgia,serif;
   background:var(--surface);
   min-height:100vh;
-  font-size:20.65px;
   color:var(--text);
   scroll-behavior:smooth;
 }

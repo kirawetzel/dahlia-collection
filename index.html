@@ -5,30 +5,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kira's Garden & Dahlia Collection - Zone 9B - San Jose, CA</title>
 <style>
+/* ==========================================================================
+   COLOR PALETTE & VARIABLES
+   Change these hex codes to completely alter the website's theme colors.
+   ========================================================================= */
 :root{
-  --bg: #2F3538;
-  --surface: #F8F9FA;
-  --surface2: #E1D5E7;
-  --pink: #D4A5A5;
-  --green: #707A8A;
-  --text: #2F3538;
-  --muted: #707A8A;
-  --mint: #BFF2E2;
-  --shadow: 0 4px 18px rgba(47,53,56,.06);
+  --bg: #2F3538;          /* Primary dark color (Navbar, Footer backgrounds) */
+  --surface: #F8F9FA;     /* Page background color */
+  --surface2: #E1D5E7;    /* Secondary background container color (Tabs body background) */
+  --pink: #D4A5A5;        /* Accents, borders, and active underlines */
+  --green: #707A8A;       /* Standard green/gray muted treatment */
+  --text: #2F3538;        /* Core text color */
+  --muted: #707A8A;       /* Subtitles, notes, and labels */
+  --mint: #BFF2E2;        /* Bright highlight accent color */
+  --shadow: 0 4px 18px rgba(47,53,56,.06); /* Drop shadows for cards */
 }
 
+/* Base resets across all web viewports */
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
 }
 
-/* Controls all rem sizing site-wide */
 html{
-  font-size:13px; /* global scale down */
+  font-size:13px; /* Controls default scaling size across elements */
 }
 
-/* Reset body so it doesn't compound rem sizing */
 body{
   font-family:Georgia,serif;
   background:var(--surface);
@@ -39,7 +42,8 @@ body{
 }
 
 /* ==========================================================================
-   TINKER BENCH: CUSTOM TUNING STATION
+   THE "GOLDEN HOUR" TAB: LAYOUT STYLES
+   Controls sizes and behavior of the dog rescue gallery rows.
    ========================================================================= */
 .rescue-layout {
   display: flex;
@@ -51,15 +55,14 @@ body{
   flex-direction: column;   
   gap: 1.2rem;            
   flex-shrink: 0;        
-  align-items: center;      /* Keeps the vertical image stack perfectly centered */
+  align-items: center;      
 }
 .rescue-gallery-row {
   display: flex;
   gap: 1.2rem;
 }
-/* 1. Base Desktop Styles: Solid, fixed pixel sizes so they stay exactly the size you want */
 .dog-photo-hero {
-  width: 466px;             
+  width: 466px;             /* Width of the top landscape-oriented hero dog image */
   height: auto;
   border-radius: 12px;   
   border: 4px solid #fff;
@@ -67,7 +70,7 @@ body{
   box-shadow: 0 6px 20px rgba(0,0,0,0.08);
 }
 .dog-photo {
-  width: 225px;          
+  width: 225px;          /* Width of the 2 secondary square images below the hero */
   height: 225px;         
   border-radius: 12px;   
   border: 4px solid #fff;
@@ -75,7 +78,7 @@ body{
   box-shadow: 0 6px 20px rgba(0,0,0,0.08);
 }
 
-/* 2. Mobile Responsive Correction: Only shrinks them when the screen gets small */
+/* Responsive adjustment for small/mobile devices */
 @media (max-width: 520px) {
   .rescue-images {
     width: 100%;
@@ -105,7 +108,9 @@ body{
   margin-bottom: 0;
 }
 
-/* Redesigned Network List for perfect linear tracking alignment */
+/* ==========================================================================
+   GARDEN NETWORK LINKS LIST (Dandelion & Rozaview Layout)
+   ========================================================================= */
 .garden-network {
   margin-top: 1.2rem;
   list-style-type: none;
@@ -116,10 +121,10 @@ body{
 }
 .network-item {
   display: flex;
-  flex-wrap: wrap;       /* Lets elements drop down safely if space runs out */
+  flex-wrap: wrap;       
   align-items: center;
   justify-content: start;
-  gap: 0.5rem 0.8rem;    /* Generates safe breathing room vertically and horizontally */
+  gap: 0.5rem 0.8rem;    
   font-size: 1.46rem;
   line-height: 1.3;
 }
@@ -137,8 +142,86 @@ body{
   color: var(--muted);
   padding: 0 0.1rem;
 }
+/* Social Icon Dimensions & Fill Colors */
 .ig-icon { width: 22px; height: 22px; fill: currentColor; color: #e1306c; display: block; }
 .web-icon { width: 22px; height: 22px; fill: currentColor; color: var(--green); display: block; }
+
+/* ==========================================================================
+   BOUQUET CAROUSEL / GALLERY STYLES
+   ========================================================================== */
+.gallery-intro {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.carousel-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 950px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.carousel-container {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  display: flex;
+  gap: 1.2rem;
+  padding: 0.5rem;
+  width: 100%;
+  scrollbar-width: thin;
+}
+.carousel-container::-webkit-scrollbar {
+  height: 6px;
+}
+.carousel-container::-webkit-scrollbar-thumb {
+  background-color: var(--pink);
+  border-radius: 10px;
+}
+.carousel-item {
+  flex: 0 0 260px; /* Width of each image thumbnail box in the horizontal scroller */
+  height: 340px;
+  background: #fff;
+  border-radius: 12px;
+  border: 4px solid #fff;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.carousel-img {
+  width: 100%;
+  height: 270px;
+  object-fit: cover;
+}
+.carousel-caption {
+  padding: 0.6rem;
+  font-size: 1.2rem;
+  font-style: italic;
+  text-align: center;
+  color: var(--text);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.carousel-btn {
+  background: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  user-select: none;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.carousel-btn:hover { transform: scale(1.1); }
 
 /* ==========================================================================
    NAVIGATION BAR STYLES
@@ -155,11 +238,34 @@ body{
   justify-content: space-between;
   align-items: center;
 }
+.nav-logo-group {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
 .nav-logo {
   color: #F8F9FA;
   font-size: 1.6rem;
   font-weight: bold;
   letter-spacing: 0.05em;
+}
+.nav-ig-link {
+  display: flex;
+  align-items: center;
+  color: #E1D5E7;
+  text-decoration: none;
+  font-family: sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  gap: 0.4rem;
+  background: rgba(255,255,255,0.08);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+.nav-ig-link:hover {
+  color: var(--mint);
+  background: rgba(255,255,255,0.15);
 }
 .nav-links {
   display: flex;
@@ -176,7 +282,7 @@ body{
 .nav-links a:hover { color: var(--mint); }
 
 /* ==========================================================================
-   HEADER HERO
+   HEADER / HERO SECTION
    ========================================================================== */
 header {
   background-image: linear-gradient(rgba(47, 53, 56, 0.5), rgba(47, 53, 56, 0.5)), url('https://lh3.googleusercontent.com/d/1CnOTNUbZYTDzdN1YsJLW2JmID00YtFqf');
@@ -204,7 +310,7 @@ header h1{color:#F8F9FA;font-size: 3.26rem;font-weight:normal;letter-spacing:.03
 header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.6rem;max-width:800px;line-height:1.4}
 
 /* ==========================================================================
-   TABBED CONTAINER COMPONENT
+   TABBED PANELS AREA
    ========================================================================== */
 .info-section { 
   background: var(--surface); 
@@ -219,6 +325,7 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.6rem;max-w
   gap: 0.5rem;
   border-bottom: 2px solid var(--surface2);
   margin-bottom: 0rem; 
+  flex-wrap: wrap; 
 }
 .tab-btn {
   padding: 0.75rem 1.5rem;
@@ -250,12 +357,23 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.6rem;max-w
 .tab-content p { line-height: 1.8; font-size: 1.46rem; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
+.map-placeholder {
+  border: 2px dashed var(--muted);
+  border-radius: 8px;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  background: rgba(255,255,255,0.4);
+  font-style: italic;
+  font-size: 1.4rem;
+  color: var(--muted);
+}
+
 /* ==========================================================================
-   COLLECTION REPOSITORY INTERFACE GRID
+   MAIN SYSTEM LAYOUT & FILTER SIDEBAR
    ========================================================================== */
 .container-layout { display: flex; background: var(--surface); border-top: 2px solid var(--surface2); }
 #controls {
-  width: 340px;
+  width: 340px;               /* Sidebar desktop width */
   padding: 2rem 1.5rem;
   display: flex;
   flex-direction: column;
@@ -265,63 +383,30 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.6rem;max-w
 }
 #main { padding: 2rem; flex: 1; }
 #count { font-family: sans-serif; font-size: 1.41rem; color: var(--muted); margin-bottom: 1.1rem; }
+
 /* ==========================================================================
-   COLLECTION REPOSITORY INTERFACE GRID
+   DAHLIA CARD GRID SYSTEM
+   Responsive settings controlling card counts per row.
    ========================================================================== */
-
-.container-layout {
-  display:flex;
-  background:var(--surface);
-  border-top:2px solid var(--surface2);
-}
-
-#controls{
-  width:340px;
-  padding:2rem 1.5rem;
-  display:flex;
-  flex-direction:column;
-  gap:1.5rem;
-  border-right:2px solid var(--surface2);
-  flex-shrink:0;
-}
-
-#main{
-  padding:2rem;
-  flex:1;
-}
-
-#count{
-  font-family:sans-serif;
-  font-size:1.41rem;
-  color:var(--muted);
-  margin-bottom:1.1rem;
-}
-
-/* DESKTOP: force 4 cards */
 .grid{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(4,1fr); /* Default: 4 items per row */
   gap:1.5rem;
 }
 
-/* Responsive behavior */
 @media(max-width:1200px){
-  .grid{
-    grid-template-columns:repeat(3,1fr);
-  }
+  .grid{ grid-template-columns:repeat(3,1fr); } /* Window shrinking: 3 items per row */
 }
 
 @media(max-width:920px){
-  .grid{
-    grid-template-columns:repeat(2,1fr);
-  }
+  .grid{ grid-template-columns:repeat(2,1fr); } /* Tablet mode: 2 items per row */
 }
 
 @media(max-width:600px){
-  .grid{
-    grid-template-columns:1fr;
-  }
+  .grid{ grid-template-columns:1fr; }          /* Smartphone mode: 1 item per row */
 }
+
+/* Core styling configurations for individual cultivar display cards */
 .card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);
   cursor:pointer;position:relative;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column;border:1px solid var(--surface2)}
 .card:hover{transform:translateY(-3px);box-shadow:0 8px 26px rgba(47,53,56,.12)}
@@ -330,7 +415,6 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.6rem;max-w
 
 .cbody{padding:1.2rem;flex:1;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;text-align:center;gap:.6rem}
 
-/* FORCE EXACTLY TWO LINES FOR ALL CARD TITLES */
 .cname{
   font-size:1.35rem;
   font-weight:bold;
@@ -340,13 +424,12 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.6rem;max-w
   width: 100%; 
   text-align: center;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 2;         /* Max name lines allowed before clamping with '...' */
   -webkit-box-orient: vertical;
   overflow: hidden;
-  height: calc(1.66rem * 1.3 * 2); /* Locks container height perfectly to exactly two vertical text lines */
+  height: calc(1.66rem * 1.3 * 2); 
 }
 
-/* STRUCTURED TAG STACKS DEFINED BY LINE REQUIREMENTS */
 .ctags {display:flex;flex-direction:column;gap:.5rem;justify-content:center;align-items:stretch; width: 100%;}
 .tag-row-1, .tag-row-2, .tag-row-3 { display:flex; justify-content:center; align-items:stretch; gap:.35rem; width:100%; }
 
@@ -358,7 +441,7 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.6rem;max-w
   border-radius:50%;width:38px;height:38px;font-size:1.51rem;cursor:pointer;
   display:flex;align-items:center;justify-content:center;z-index:2}
 
-/* EXPLICIT FORMATTING INSTRUCTIONAL BADGE */
+/* Color codes mapping badge rules for Location Number fields on individual cards */
 .loc-badge {
   background: #f0e6ff;
   color: #4b0082;
@@ -383,6 +466,7 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.6rem;max-w
   font-weight: bold;
 }
 
+/* Color codes mapping active cultivation states */
 .loc-tag {background:var(--mint);color:#1c3d33;font-weight:bold; width:100%;}
 .planted{background:#e6f4e6;color:#1a5c1a}
 .died{background:#fce8e8;color:#8c1a1a}
@@ -392,10 +476,10 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.6rem;max-w
 
 .confirmed-tag { background: #e0f7fa; color: #006064; font-weight: bold; }
 .card-notes { font-size: 1.05rem; color: var(--muted); font-style: italic; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-top: 0.25rem; line-height: 1.4; width: 100%; text-align: center; }
-.card-credit { font-size: 1.11rem; color: #a0aab5; font-family: sans-serif; text-transform: uppercase; margin-top: 0.2rem; margin-bottom: 0.3rem; width: 100%; text-align: center; }
+.card-credits { font-size: 1.11rem; color: #a0aab5; font-family: sans-serif; text-transform: uppercase; margin-top: 0.2rem; margin-bottom: 0.3rem; width: 100%; text-align: center; }
 
 /* ==========================================================================
-   MODAL DIALOG CHANNELS
+   MODAL WINDOW STYLES (Light-box Popup)
    ========================================================================== */
 .overlay{display:none;position:fixed;inset:0;background:rgba(47,53,56,.6);z-index:100;align-items:center;justify-content:center;padding:1rem}
 .overlay.open{display:flex}
@@ -408,7 +492,7 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.6rem;max-w
 .mclose{position:absolute;top:.7rem;right:.7rem;background:rgba(255,255,255,.92);border:none;border-radius:50%;width:42px;height:42px;font-size:1.61rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}
 
 /* ==========================================================================
-   FILTER ENGINE FRAMEWORKS
+   FILTER BUTTONS, INPUTS & LOADER SPIN ANIMATION
    ========================================================================== */
 #loading{text-align:center;padding:5rem 2rem;font-family:sans-serif;color:var(--muted);width:100%}
 .spin{width:42px;height:42px;border:3px solid var(--surface2);border-top-color:var(--pink);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1.2rem}
@@ -426,35 +510,55 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.6rem;max-w
 select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);border-radius:8px;font-size:1.31rem;font-family:inherit;background:#fff;color:var(--text);outline:none}
 
 /* ==========================================================================
-   RESPONSIVE DESIGN BREAKPOINTS & MOBILE OVERRIDES
+   FOOTER SECTION
    ========================================================================== */
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: var(--bg);
+  color: #E1D5E7;
+  font-family: sans-serif;
+  font-size: 1.1rem;
+  border-top: 3px solid var(--pink);
+}
+.tracker-box {
+  display: inline-block;
+  margin-top: 0.8rem;
+  padding: 0.4rem 1rem;
+  background: rgba(255,255,255,0.1);
+  border-radius: 15px;
+  font-size: 1.05rem;
+  letter-spacing: 0.05em;
+  color: var(--mint);
+}
+
+/* Layout overrides for mobile devices */
 @media(max-width:920px){
   .container-layout { flex-direction: column; }
   #controls { width: 100%; border-right: none; border-bottom: 2px solid var(--surface2); }
   
-  /* Stack layouts and force text centering inside tab blocks */
   .rescue-layout { flex-direction: column; gap: 1.5rem; align-items: center; text-align: center; }
   .rescue-images { justify-content: center; align-items: center; width: 100%; }
   .rescue-gallery-row { justify-content: center; width: 100%; }
   .dog-photo-hero { max-width: 225px; } 
   .tab-content { border-radius: 0 0 12px 12px; padding: 1.5rem; }
   
-  /* Force text centering for About Me and Golden Hour copy on mobile views */
   .tab-content p { text-align: center; }
-  
-  /* Centers the inline grid blocks elegantly under centered paragraph text on mobile devices */
   .garden-network { justify-content: center; align-items: center; margin: 1.2rem auto 0; }
 
-  /* Mobile tracking stack for grower referrals */
   .network-item {
-    justify-content: center; /* Centers the lines on mobile */
+    justify-content: center; 
     text-align: center;
     padding: 0.4rem 0;
   }
   .network-amp {
     display: block;
-    width: 100%;             /* Forces the ampersand to act as a soft line-break separator */
+    width: 100%;             
     margin: 0.2rem 0;
+  }
+  .nav-container {
+    flex-direction: column;
+    gap: 0.8rem;
   }
 }
 </style>
@@ -463,7 +567,13 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
 
 <nav class="navbar">
   <div class="nav-container">
-    <div class="nav-logo">Kira's Zone 9B Garden</div>
+    <div class="nav-logo-group">
+      <div class="nav-logo">Kira's Zone 9B Garden</div>
+      <a href="https://www.instagram.com/willow_glen_flower_girl" target="_blank" class="nav-ig-link">
+        <svg style="width:16px; height:16px; fill:currentColor;" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0 3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+         flower lessons & bouquets: @willow_glen_flower_girl 
+      </a>
+    </div>
     <ul class="nav-links">
       <li><a href="#collection">2026 Dahlia Collection</a></li>
     </ul>
@@ -481,12 +591,20 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
 
 <section class="info-section">
   <div class="info-container">
+    
     <div class="tab-container">
-      <button class="tab-btn active" onclick="setTab('tab-ab', this)">About Me</button>
+      <button class="tab-btn active" onclick="setTab('tab-welcome', this)">Welcome!</button>
+      <button class="tab-btn" onclick="setTab('tab-ab', this)">About Me</button>
       <button class="tab-btn" onclick="setTab('tab-re', this)">The "Golden Hour": Flowers for Floofs</button>
+      <button class="tab-btn" onclick="setTab('tab-gallery', this)">Bouquet Gallery</button>
+      <button class="tab-btn" onclick="setTab('tab-map', this)">Map / Layout</button>
     </div>
     
-    <div id="tab-ab" class="tab-content active">
+    <div id="tab-welcome" class="tab-content active">
+      <p>You're probably here because you've attended one of my Master Gardener workshops, scanned the QR code outside of my garden, or are on a tour of one of my gardens. Welcome! Feel free to explore the interactive directory below to see live locations, tracking statuses, and detailed notes on all the active cultivars currently blooming in the collection.</p>
+    </div>
+
+    <div id="tab-ab" class="tab-content">
       <p style="margin-bottom: 20px;">As a certified Master Gardener through the University of California, my passion centers around educating my community on sustainable home horticulture. More specifically, my interests are in sustainable regional cultivation, trial garden tracking, and maximizing soil health to produce fruit, vegetable, and flower crops. 2026 kicks off my journey in dahlia hybridizing.</p>
       <p>I'm also a partner to a wonderful husband, a dog mom, traveler, book reader, and during the day I work in technology leading a team of amazing engineers while also teaching Machine Learning to graduate students at UC Berkeley.</p>
     </div>
@@ -494,7 +612,6 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
     <div id="tab-re" class="tab-content">
       <div class="rescue-layout">
         <div class="rescue-images">
-          <!-- Perfectly sized structural top hero image slot -->
           <img src="https://lh3.googleusercontent.com/d/1Sms0-9WNWU6fYNo5-DePr_GrGl0as4Mm" alt="Golden Hour primary image" class="dog-photo-hero" onerror="this.style.display='none'">
           
           <div class="rescue-gallery-row">
@@ -508,34 +625,82 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
           <p>For excellent dahlia sellers, please shop with two wonderful women:</p>
           
           <ul class="garden-network">
+            
             <li class="network-item">
               <svg class="web-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.53c-.26-.81-1-1.4-1.9-1.4h-1v-3c0-.55-.45-1-1-1h-6v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
               <a class="network-link" href="https://www.dandelionlanedahlias.com" target="_blank">Dandelion Lane Website</a>
-              <span class="network-amp">&amp;</span>
-              <svg class="ig-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              
+              <span class="network-amp">&</span>
+              
+              <svg class="ig-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0 3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
               <a class="network-link" href="https://www.instagram.com/dandelion_lane_dahlias/" target="_blank">Instagram</a>
             </li>
+            
             <li class="network-item">
               <svg class="web-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.53c-.26-.81-1-1.4-1.9-1.4h-1v-3c0-.55-.45-1-1-1h-6v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
               <a class="network-link" href="https://www.rozaviewfarm.com" target="_blank">Roza View Farm Website</a>
-              <span class="network-amp">&amp;</span>
+              <span class="network-amp">&</span>
               <svg class="ig-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0 3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
               <a class="network-link" href="https://www.instagram.com/rozaviewfarm/" target="_blank">Instagram</a>
             </li>
           </ul>
+          </div>
+      </div>
+    </div>
+
+    <div id="tab-gallery" class="tab-content">
+      <div class="gallery-intro">
+        <p style="margin-bottom: 10px;"><strong>Seasonal Arrangements & Garden Snapshots</strong></p>
+        <p>Examples of bouquets and important garden notes.</p>
+      </div>
+      
+      <div class="carousel-wrapper">
+        <button class="carousel-btn" onclick="scrollCarousel(-1)">❮</button>
+        <div class="carousel-container" id="bouquet-carousel">
+          
+          <div class="carousel-item">
+            <img src="https://lh3.googleusercontent.com/d/1-agNiTZRhyTrpDULKTspvPu-LJLzL6RJ?w=400&auto=format&fit=crop" class="carousel-img" alt="Bouquet 1">
+            <div class="carousel-caption">$18 Bouquet</div>
+          </div>
+          
+          <div class="carousel-item">
+            <img src="https://lh3.googleusercontent.com/d/1g4OD3tIqo-BGEUYjYl3ZJFJpoBgaTMyX?w=400&auto=format&fit=crop" class="carousel-img" alt="Bouquet 2">
+            <div class="carousel-caption">$18 Bouquet</div>
+          </div>
+          
+          <div class="carousel-item">
+            <img src="https://lh3.googleusercontent.com/d/1lAwpCyrj6eSSIKk8ajBXodXL0XjY_Wgj?w=400&auto=format&fit=crop" class="carousel-img" alt="Bouquet 3">
+            <div class="carousel-caption">My Partner, Paul</div>
+          </div>
+          
+          <div class="carousel-item">
+            <img src="https://lh3.googleusercontent.com/d/1TCGrQOAhctQ-ltBCsHBhnTA2qmCrMel1?w=400&auto=format&fit=crop" class="carousel-img" alt="Bouquet 4">
+            <div class="carousel-caption">Samus, our senior Golden</div>
+          </div>
+
         </div>
+        <button class="carousel-btn" onclick="scrollCarousel(1)">❯</button>
+      </div>
+    </div>
+
+    <div id="tab-map" class="tab-content">
+      <div class="map-placeholder">
+        <p>🗺️ Garden map configuration coming soon!</p>
       </div>
     </div>
   </div>
 </section>
 
 <div class="container-layout" id="collection">
+  
   <div id="controls">
     <div class="search"><input id="search" type="text" placeholder="Search by name or notes…" oninput="applyFilters()"></div>
+    
     <div class="fg" id="garden-fg"></div>
     <div class="fg" id="status-fg"></div>
     <div class="fg" id="form-fg"></div>
     <div class="fg" id="color-fg"></div>
+    
     <div class="fg">
       <span class="flbl">Sort Sequence</span>
       <select id="srt" onchange="applyFilters()">
@@ -561,7 +726,15 @@ select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);bord
   <div class="modal" id="modal"></div>
 </div>
 
+<footer>
+  <div>© 2026 Kira's Garden. All rights reserved.</div>
+  <div class="tracker-box">
+    🌿 Garden Visitors: <span id="visitor-count">...</span>
+  </div>
+</footer>
+
 <script>
+/* Controls Tab Switching State swaps across UI panels */
 function setTab(tabId, btn) {
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -569,15 +742,43 @@ function setTab(tabId, btn) {
   btn.classList.add('active');
 }
 
+/* Horizontal Scroll logic step sizing commands for Bouquet Scroller arrows */
+function scrollCarousel(direction) {
+  const container = document.getElementById('bouquet-carousel');
+  const scrollAmount = 280; // Item pixel thumbnail box width value + gaps
+  container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+}
+
+/* Initial Core Setup Launcher once background processes complete document trees */
 window.addEventListener("DOMContentLoaded", () => {
-  load();
+  load();                  /* Establish syncing connections out to target web app data repository */
+  initVisitorCounter();    /* Launch metrics tracker updates */
 });
 
-/* ==========================================================================
-   LIVE REPOSITORY PIPE
-   ========================================================================== */
-let all=[],favs=new Set(),aSt=new Set(),aForm=new Set(),aGarden=new Set(),aColor=new Set(),favOnly=false,scriptUrl='https://script.google.com/macros/s/AKfycbzPyvyJZRKNBf3017gse-cNz2wBfSDRQbGMGd-lHHm0TmSMPvQjshigcY0q1s0RccFS/exec';
+/* Controls Visitor Metric API tracking hooks setup structures */
+function initVisitorCounter() {
+  const namespace = "kiras-garden-zone9b"; 
+  const key = "home-visits";
+  
+  fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
+    .then(res => res.json())
+    .then(data => {
+      if(data && data.value) {
+        document.getElementById('visitor-count').textContent = data.value;
+      } else {
+        document.getElementById('visitor-count').textContent = "Active";
+      }
+    })
+    .catch(() => {
+      document.getElementById('visitor-count').textContent = "Active";
+    });
+}
 
+/* Core local memory arrays housing active dataset references generated by Cloud Sheets queries */
+let all=[],favs=new Set(),aSt=new Set(),aForm=new Set(),aGarden=new Set(),aColor=new Set(),favOnly=false,
+scriptUrl='https://script.google.com/macros/s/AKfycbzPyvyJZRKNBf3017gse-cNz2wBfSDRQbGMGd-lHHm0TmSMPvQjshigcY0q1s0RccFS/exec';
+
+/* Mappings parsing cell values extracted out from standard Sheet Columns */
 const gv=(d,k)=>String(d[k]??'').trim();
 const name=d=>gv(d,'Variety');
 const status=d=>gv(d,'CurrentYearStatus');
@@ -591,6 +792,7 @@ const photoCredit=d=>gv(d,'PhotoCredit');
 const colorFamily=d=>gv(d,'ColorFamily');
 const photo=d=>{const p=d['PhotoUrl'];return(typeof p==='string'&&p.startsWith('http'))?p:'';}
 
+/* Maps targeted color highlights dynamically to tags depending upon Active Status state classifications */
 function statusClass(s){
   const sl=s.toLowerCase();
   if(sl.includes('culled')||sl.includes('virus'))return 'culled';
@@ -609,9 +811,10 @@ function statusLabel(s){
   if(sl.includes('tuber'))return '🥔 Tuber';
   return s;
 }
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function esc(s){return String(s).replace(/&/g,'&').replace(/</g,'<').replace(/>/g,'>').replace(/"/g,'"')}
 function num(s){const m=String(s||'').match(/(\d+\.?\d*)/);return m?parseFloat(m[1]):0}
 
+/* JSONP Cloud Fetch handler mechanism querying external spreadsheet data sheets */
 function load(){
   document.getElementById('loading').style.display='block';
   document.getElementById('grid').innerHTML='';
@@ -637,6 +840,7 @@ function showErr(){
 }
 function uniq(arr){return[...new Set(arr.filter(Boolean))].sort();}
 
+/* Automatically generates the multi-select sidebar navigation filter option pills on screen dynamically */
 function buildFilters(){
   const statuses=uniq(all.map(d=>{
     const s=status(d).toLowerCase();
@@ -669,6 +873,7 @@ function mkPills(id,lbl,vals,set){
 
 function toggleFavFilter(){favOnly=!favOnly;document.getElementById('favbtn').classList.toggle('fon',favOnly);applyFilters();}
 
+/* Core Evaluation Sorting Engine that calculates search checks and displays filtered results cards */
 function applyFilters(){
   const q=document.getElementById('search').value.toLowerCase();
   const srt=document.getElementById('srt').value;
@@ -706,11 +911,13 @@ function applyFilters(){
   document.getElementById('count').textContent = "Displaying " + res.length + " of " + all.length + " registered varieties";
 }
 
+/* Generates temporary background colors for flower placeholders if image links break or are missing */
 function cardBg(n){
   let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))%360;
   return `hsl(${h},30%,90%)`;
 }
 
+/* Dynamically outputs HTML card strings matching query results directly onto the layout screen view */
 function render(list){
   const g=document.getElementById('grid');
   if(!list.length){
@@ -745,37 +952,39 @@ function render(list){
 
         <div class="ctags">
           <div class="tag-row-1">
-            ${field2_garden?`<span class="tag loc-tag">📍 ${esc(field2_garden)}</span>`:'<span style="visibility:hidden;" class="tag">&nbsp;</span>'}
+            ${field2_garden?`<span class="tag loc-tag">📍 ${esc(field2_garden)}</span>`:'<span style="visibility:hidden;" class="tag"> </span>'}
           </div>
           
           <div class="tag-row-2">
-            ${field3_locNum?`<div class="loc-badge"><span class="loc-lbl">2026 Loc # [Row-Pos]</span><span class="loc-val">${esc(field3_locNum)}</span></div>`:'<span style="visibility:hidden;" class="tag">&nbsp;</span>'}
+            ${field3_locNum?`<div class="loc-badge"><span class="loc-lbl">2026 Loc # [Row-Pos]</span><span class="loc-val">${esc(field3_locNum)}</span></div>`:'<span style="visibility:hidden;" class="tag"> </span>'}
           </div>
           
           <div class="tag-row-3">
             ${field4_form?`<span class="tag tl">${esc(field4_form)}</span>`:''}
             ${field5_height?`<span class="tag ty">📏 ${esc(field5_height)}</span>`:''}
-            ${!field4_form && !field5_height?`<span style="visibility:hidden;" class="tag">&nbsp;</span>`:''}
+            ${!field4_form && !field5_height?`<span style="visibility:hidden;" class="tag"> </span>`:''}
           </div>
         </div>
 
-        ${field8_credit?`<div class="card-credit">📸 ${esc(field8_credit)}</div>`:''}
-        ${field7_notes?`<div class="card-notes">${esc(field7_notes)}</div>`:''}
+        ${field8_credit?`<div class="card-credits">📸 ${esc(field8_credit)}</div>`:''}
+        
+        ${field7_notes?`<div class="card-notes">${field7_notes.split(',').map(item => esc(item.trim())).join('<br>')}</div>`:''}
       </div>
     </div>`;
   }).join('');
 }
 
+/* Manages individual user Favorites bookmark selections toggling updates */
 function toggleFav(i,btn){
   const n=name(all[i]);
   favs.has(n)?(favs.delete(n),btn.textContent='🤍'):(favs.add(n),btn.textContent='❤️');
   if(favOnly)applyFilters();
 }
 
+/* Renders popup window content layout data blocks whenever a cultivar card is clicked */
 function openModal(i){
   const d=all[i];if(!d)return;
   
-  /* EXPLICIT TABLE SORT LOGIC FOR OVERLAY PAGE DETAILS */
   const rows=[
     ['2026 Location # [Row-Pos]', locNum(d)],
     ['Garden', gardenName(d)],
@@ -791,11 +1000,14 @@ function openModal(i){
     <div class="mbody">
       <div class="mname">${esc(name(d))}</div>
       <div class="mgrid">${rows.map(([k,v])=>`<div><div class="ml">${esc(k)}</div><div class="mv">${esc(v)}</div></div>`).join('')}</div>
-      ${obs(d)?`<div style="font-size:1.36rem; color:var(--muted); font-style:italic; line-height:1.6; margin-top:1rem; border-top:1px solid var(--surface2); padding-top:1rem;"><strong>2026 Notes:</strong><br>${esc(obs(d))}</div>`:''}
+      
+      ${obs(d)?`<div style="font-size:1.36rem; color:var(--muted); font-style:italic; line-height:1.6; margin-top:1rem; border-top:1px solid var(--surface2); padding-top:1rem;"><strong>2026 Notes:</strong><br>${obs(d).split(',').map(item => esc(item.trim())).join('<br>')}</div>`:''}
+      
       ${photoCredit(d)?`<div style="font-size:1.21rem; color:#a0aab5; margin-top:0.8rem; text-transform:uppercase; font-family:sans-serif;"><strong>Photo Credit:</strong> ${esc(photoCredit(d))}</div>`:''}
     </div>`;
   document.getElementById('overlay').classList.add('open');
 }
+/* Closes popup detail layout viewport states */
 function closeModal(){document.getElementById('overlay').classList.remove('open');}
 </script>
 </body>

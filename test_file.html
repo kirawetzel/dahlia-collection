@@ -6,270 +6,691 @@
 <title>Kira's Garden & Dahlia Collection - Zone 9B - San Jose, CA</title>
 <style>
 /* ==========================================================================
-   COLOR PALETTE & VARIABLES (MINIMALIST PORTFOLIO)
+   COLOR PALETTE & VARIABLES
+   Change these hex codes to completely alter the website's theme colors.
    ========================================================================= */
-:root {
-  --bg: #2F3538;          
-  --surface: #ffffff;     
-  --surface2: #F8F9FA;    
-  --surface-alt: #F3F4F6; 
-  --pink: #D4A5A5;        
-  --green: #707A8A;       
-  --text: #2F3538;        
-  --muted: #8A92A3;       
-  --mint: #BFF2E2;        
-  --border: #E5E7EB;
-  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+:root{
+  --bg: #2F3538;          /* Primary dark color (Navbar, Footer backgrounds) */
+  --surface: #F8F9FA;     /* Page background color */
+  --surface2: #E1D5E7;    /* Secondary background container color (Tabs body background) */
+  --pink: #D4A5A5;        /* Accents, borders, and active underlines */
+  --green: #707A8A;       /* Standard green/gray muted treatment */
+  --text: #2F3538;        /* Core text color */
+  --muted: #707A8A;       /* Subtitles, notes, and labels */
+  --mint: #BFF2E2;        /* Bright highlight accent color */
+  --shadow: 0 4px 18px rgba(47,53,56,.06); /* Drop shadows for cards */
 }
 
-/* Base Resets */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 14px; }
-body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background: var(--surface);
-  min-height: 100vh;
-  font-size: 1rem;
-  color: var(--text);
-  scroll-behavior: smooth;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
+/* Base resets across all web viewports */
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  font-size:13px; /* Controls default scaling size across elements */
+}
+
+body{
+  font-family:Georgia,serif;
+  background:var(--surface);
+  min-height:100vh;
+  font-size:1rem;
+  color:var(--text);
+  scroll-behavior:smooth;
 }
 
 /* ==========================================================================
-   NAVIGATION
+   THE "GOLDEN HOUR" TAB: LAYOUT STYLES
+   Controls sizes and behavior of the dog rescue gallery rows.
+   ========================================================================= */
+.rescue-layout {
+  display: flex;
+  gap: 2rem;       
+  align-items: flex-start;
+}
+.rescue-images {
+  display: flex;
+  flex-direction: column;   
+  gap: 1.2rem;            
+  flex-shrink: 0;        
+  align-items: center;      
+}
+.rescue-gallery-row {
+  display: flex;
+  gap: 1.2rem;
+}
+.dog-photo-hero {
+  width: 466px;             /* Width of the top landscape-oriented hero dog image */
+  height: auto;
+  border-radius: 12px;   
+  border: 4px solid #fff;
+  object-fit: cover;     
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+.dog-photo {
+  width: 225px;          /* Width of the 2 secondary square images below the hero */
+  height: 225px;         
+  border-radius: 12px;   
+  border: 4px solid #fff;
+  object-fit: cover;     
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+/* Responsive adjustment for small/mobile devices */
+@media (max-width: 520px) {
+  .rescue-images {
+    width: 100%;
+    padding: 0 1rem;
+  }
+  .rescue-gallery-row {
+    width: 100%;
+    justify-content: center;
+  }
+  .dog-photo-hero {
+    width: 100%;
+    max-width: 466px;
+  }
+  .dog-photo {
+    width: calc(50% - 0.6rem);
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+}
+.rescue-text {
+  flex: 1;              
+}
+.rescue-text p {
+  margin-bottom: 1rem;
+}
+.rescue-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
+   GARDEN NETWORK LINKS LIST (Dandelion & Rozaview Layout)
+   ========================================================================= */
+.garden-network {
+  margin-top: 1.2rem;
+  list-style-type: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.network-item {
+  display: flex;
+  flex-wrap: wrap;       
+  align-items: center;
+  justify-content: start;
+  gap: 0.5rem 0.8rem;    
+  font-size: 1.46rem;
+  line-height: 1.3;
+}
+.network-link {
+  color: var(--text);
+  font-weight: bold;
+  text-decoration: underline;
+  text-decoration-color: var(--pink);
+  text-underline-offset: 4px;
+  transition: color 0.2s;
+  display: inline-block;
+}
+.network-link:hover { color: var(--green); }
+.network-amp {
+  color: var(--muted);
+  padding: 0 0.1rem;
+}
+/* Social Icon Dimensions & Fill Colors */
+.ig-icon { width: 22px; height: 22px; fill: currentColor; color: #e1306c; display: block; }
+.web-icon { width: 22px; height: 22px; fill: currentColor; color: var(--green); display: block; }
+
+/* ==========================================================================
+   BOUQUET CAROUSEL / GALLERY STYLES
+   ========================================================================== */
+.gallery-intro {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.carousel-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 950px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.carousel-container {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  display: flex;
+  gap: 1.2rem;
+  padding: 0.5rem;
+  width: 100%;
+  scrollbar-width: thin;
+}
+.carousel-container::-webkit-scrollbar {
+  height: 6px;
+}
+.carousel-container::-webkit-scrollbar-thumb {
+  background-color: var(--pink);
+  border-radius: 10px;
+}
+.carousel-item {
+  flex: 0 0 260px; /* Width of each image thumbnail box in the horizontal scroller */
+  height: 340px;
+  background: #fff;
+  border-radius: 12px;
+  border: 4px solid #fff;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.carousel-img {
+  width: 100%;
+  height: 270px;
+  object-fit: cover;
+}
+.carousel-caption {
+  padding: 0.6rem;
+  font-size: 1.2rem;
+  font-style: italic;
+  text-align: center;
+  color: var(--text);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.carousel-btn {
+  background: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  user-select: none;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.carousel-btn:hover { transform: scale(1.1); }
+
+/* ==========================================================================
+   NAVIGATION BAR STYLES
    ========================================================================== */
 .navbar {
-  background: var(--surface);
-  padding: 2rem 5%;
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 50;
+  background: var(--bg);
+  border-bottom: 3px solid var(--pink);
+  padding: 0.8rem 2rem;
 }
 .nav-container {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+.nav-logo-group {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
 .nav-logo {
-  color: var(--text);
-  font-size: 1.4rem;
-  font-weight: 500;
+  color: #F8F9FA;
+  font-size: 1.6rem;
+  font-weight: bold;
   letter-spacing: 0.05em;
-  text-transform: uppercase;
+}
+.nav-ig-link {
+  display: flex;
+  align-items: center;
+  color: #E1D5E7;
+  text-decoration: none;
+  font-family: sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  gap: 0.4rem;
+  background: rgba(255,255,255,0.08);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+.nav-ig-link:hover {
+  color: var(--mint);
+  background: rgba(255,255,255,0.15);
 }
 .nav-links {
   display: flex;
   gap: 2rem;
-  align-items: center;
   list-style: none;
 }
 .nav-links a {
-  color: var(--text);
+  color: #E1D5E7;
   text-decoration: none;
-  font-size: 1rem;
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  transition: var(--transition);
+  font-family: sans-serif;
+  font-size: 1.36rem;
+  font-weight: 600;
 }
-.nav-links a:hover { color: var(--pink); }
-.nav-ig-link {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--text);
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-.nav-ig-link:hover { color: var(--pink); }
+.nav-links a:hover { color: var(--mint); }
 
 /* ==========================================================================
-   HERO SECTION
+   HEADER / HERO SECTION
    ========================================================================== */
 header {
-  background-color: var(--surface2);
-  padding: 6rem 5%;
-  text-align: center;
-  border-bottom: 1px solid var(--border);
+  background-image: linear-gradient(rgba(47, 53, 56, 0.5), rgba(47, 53, 56, 0.5)), url('https://lh3.googleusercontent.com/d/1CnOTNUbZYTDzdN1YsJLW2JmID00YtFqf');
+  background-size: cover;
+  background-position: center;
+  padding: 3.0rem 2rem;
+  border-bottom: 4px solid var(--pink);
 }
 .header-container {
-  max-width: 900px;
-  margin: 0 auto;
   display: flex;
-  flex-direction: column;
   align-items: center;
   gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 .profile-photo {
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
+  border: 3px solid var(--surface);
   object-fit: cover;
+  flex-shrink: 0;
 }
-header h1 {
-  font-size: 3rem;
-  font-weight: 300;
-  letter-spacing: -0.01em;
-  color: var(--text);
-}
+header h1{color:#F8F9FA;font-size: 3.26rem;font-weight:normal;letter-spacing:.03em}
+header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.6rem;max-width:800px;line-height:1.4}
 
 /* ==========================================================================
-   TABBED PANELS (MINIMALIST)
+   TABBED PANELS AREA
    ========================================================================== */
-.info-section { padding: 4rem 5%; background: var(--surface); }
-.info-container { max-width: 1000px; margin: 0 auto; }
+.info-section { 
+  background: var(--surface); 
+  padding: 2.5rem 2rem 2.5rem; 
+}
+.info-container { 
+  max-width: 1200px; 
+  margin: 0 auto; 
+}
 .tab-container {
   display: flex;
-  gap: 2rem;
-  margin-bottom: 3rem;
-  border-bottom: 1px solid var(--border);
-  overflow-x: auto;
-  scrollbar-width: none;
+  gap: 0.5rem;
+  border-bottom: 2px solid var(--surface2);
+  margin-bottom: 0rem; 
+  flex-wrap: wrap; 
 }
-.tab-container::-webkit-scrollbar { display: none; }
 .tab-btn {
-  padding: 1rem 0;
+  padding: 0.75rem 1.5rem;
   background: transparent;
   border: none;
-  border-bottom: 2px solid transparent;
-  font-family: inherit;
-  font-size: 1.1rem;
-  font-weight: 400;
-  color: var(--muted);
+  font-family: sans-serif;
+  font-size: 1.41rem;
   cursor: pointer;
-  transition: var(--transition);
-  white-space: nowrap;
+  color: var(--muted);
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
 }
 .tab-btn:hover { color: var(--text); }
 .tab-btn.active {
   color: var(--text);
-  border-bottom-color: var(--text);
+  border-bottom-color: var(--pink);
+  font-weight: bold;
 }
-.tab-content { display: none; animation: fadeIn 0.5s ease; }
+.tab-content { 
+  display: none; 
+  padding: 2rem;               
+  background: var(--surface2); 
+  border-radius: 0 12px 12px 12px;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.02);
+  animation: fadeIn 0.3s ease; 
+}
 .tab-content.active { display: block; }
-.tab-content p { margin-bottom: 1.5rem; font-size: 1.1rem; color: #4A5056; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+.tab-content p { line-height: 1.8; font-size: 1.46rem; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
-/* The Golden Hour Layout */
-.rescue-layout { display: flex; gap: 3rem; align-items: flex-start; }
-.rescue-images { display: flex; flex-direction: column; gap: 1rem; width: 40%; flex-shrink: 0; }
-.dog-photo-hero { width: 100%; height: auto; object-fit: cover; border-radius: 4px; }
-.rescue-gallery-row { display: flex; gap: 1rem; }
-.dog-photo { width: calc(50% - 0.5rem); aspect-ratio: 1/1; object-fit: cover; border-radius: 4px; }
-.rescue-text { flex: 1; }
-
-.garden-network { list-style: none; padding-top: 1rem; display: flex; flex-direction: column; gap: 1rem; }
-.network-item { display: flex; align-items: center; gap: 0.8rem; font-size: 1.05rem; }
-.network-link { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--pink); transition: var(--transition); }
-.network-link:hover { color: var(--pink); border-bottom-color: transparent; }
-
-/* Bouquet Gallery */
-.carousel-wrapper { position: relative; width: 100%; display: flex; align-items: center; gap: 1rem; }
-.carousel-container { display: flex; gap: 1.5rem; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; padding-bottom: 1rem; }
-.carousel-container::-webkit-scrollbar { display: none; }
-.carousel-item { flex: 0 0 300px; display: flex; flex-direction: column; gap: 0.8rem; }
-.carousel-img { width: 100%; height: 400px; object-fit: cover; border-radius: 4px; }
-.carousel-caption { font-size: 0.95rem; color: var(--muted); text-align: center; font-style: italic; }
-.carousel-btn { background: var(--surface2); border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); color: var(--text); }
-.carousel-btn:hover { background: var(--border); }
-
-.map-placeholder { padding: 4rem 1rem; text-align: center; color: var(--muted); font-style: italic; background: var(--surface2); border-radius: 4px; }
-
-/* ==========================================================================
-   MAIN COLLECTION SYSTEM (FILTER & GRID)
-   ========================================================================= */
-.container-layout {
-  display: flex;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 4rem 5%;
-  gap: 4rem;
-  border-top: 1px solid var(--border);
+.map-placeholder {
+  border: 2px dashed var(--muted);
+  border-radius: 8px;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  background: rgba(255,255,255,0.4);
+  font-style: italic;
+  font-size: 1.4rem;
+  color: var(--muted);
 }
-#controls { width: 280px; flex-shrink: 0; display: flex; flex-direction: column; gap: 2.5rem; }
-#main { flex: 1; }
-#count { font-size: 0.9rem; color: var(--muted); margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.05em; }
-
-/* Filter Controls */
-.search { position: relative; width: 100%; }
-.search input { width: 100%; padding: 1rem 1rem 1rem 2.5rem; border: 1px solid var(--border); border-radius: 4px; font-size: 1rem; font-family: inherit; outline: none; background: var(--surface2); transition: var(--transition); }
-.search input:focus { background: var(--surface); border-color: var(--text); }
-.search::before { content: '🔍'; position: absolute; left: 0.8rem; top: 50%; transform: translateY(-50%); font-size: 1rem; opacity: 0.5; }
-
-.fg { display: flex; flex-direction: column; gap: 1rem; }
-.flbl { font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; }
-.fg-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-.pill { padding: 0.4rem 0.8rem; border: 1px solid var(--border); background: transparent; border-radius: 20px; font-size: 0.85rem; cursor: pointer; color: var(--text); transition: var(--transition); }
-.pill:hover { border-color: var(--text); }
-.pill.on { background: var(--text); color: var(--surface); border-color: var(--text); }
-.pill.fon { background: var(--pink); color: var(--surface); border-color: var(--pink); }
-
-select#srt { width: 100%; padding: 0.8rem; border: 1px solid var(--border); border-radius: 4px; font-size: 0.95rem; font-family: inherit; outline: none; background: transparent; cursor: pointer; }
-
-/* Grid & Cards */
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 3rem 2rem; }
-.card { display: flex; flex-direction: column; cursor: pointer; position: relative; group; }
-.card:hover .cimg { transform: scale(1.03); }
-.cimg-wrap { width: 100%; aspect-ratio: 4/5; overflow: hidden; border-radius: 4px; background: var(--surface2); position: relative; margin-bottom: 1rem; }
-.cph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 3rem; background: var(--surface2); }
-.cimg { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); }
-
-.cbody { display: flex; flex-direction: column; gap: 0.4rem; }
-.cname { font-size: 1.15rem; font-weight: 500; color: var(--text); line-height: 1.3; }
-.ctags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.2rem; }
-
-/* Elegant Minimal Tags */
-.tag { font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 3px; font-weight: 500; letter-spacing: 0.02em; text-transform: uppercase; background: var(--surface-alt); color: var(--text); }
-.loc-tag { background: transparent; border: 1px solid var(--border); }
-.status-tag.active { color: #2E7D32; }
-.status-tag.culled { color: #C62828; }
-.status-tag.tuber { color: #512DA8; }
-
-.fbtn { position: absolute; top: 0.8rem; right: 0.8rem; background: rgba(255,255,255,0.9); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2; opacity: 0; transition: var(--transition); }
-.card:hover .fbtn { opacity: 1; }
-.fbtn.active { opacity: 1; }
-
-.card-notes { font-size: 0.9rem; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-top: 0.5rem; line-height: 1.5; }
 
 /* ==========================================================================
-   MODAL (LIGHTBOX)
+   GARDEN TAB: INFO CARDS (used in  Garden & Community Garden tabs)
    ========================================================================== */
-.overlay { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.95); z-index: 100; align-items: center; justify-content: center; padding: 2rem; opacity: 0; transition: opacity 0.3s; }
-.overlay.open { display: flex; opacity: 1; }
-.modal { background: var(--surface); width: 100%; max-width: 800px; max-height: 90vh; overflow-y: auto; position: relative; padding: 4rem; display: flex; flex-direction: column; gap: 2rem; }
-.mname { font-size: 2.5rem; font-weight: 300; line-height: 1.2; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; }
-.mgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 1rem; }
-.ml { font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.3rem; }
-.mv { font-size: 1.1rem; color: var(--text); }
-.mclose { position: absolute; top: 2rem; right: 2rem; background: transparent; border: none; font-size: 1.5rem; color: var(--muted); cursor: pointer; transition: var(--transition); }
-.mclose:hover { color: var(--text); transform: rotate(90deg); }
-
-/* Loaders & Empties */
-#loading { text-align: center; padding: 5rem 0; color: var(--muted); width: 100%; }
-.spin { width: 30px; height: 30px; border: 2px solid var(--border); border-top-color: var(--text); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 1rem; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.empty { grid-column: 1/-1; text-align: center; padding: 5rem 0; color: var(--muted); font-size: 1.1rem; }
+.garden-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  margin-top: 1.4rem;
+}
+@media (max-width: 700px) {
+  .garden-info-grid { grid-template-columns: 1fr; }
+}
+.garden-info-card {
+  background: rgba(255,255,255,0.6);
+  border-radius: 10px;
+  padding: 1.2rem 1.4rem;
+  border-left: 4px solid var(--pink);
+}
+.garden-info-card h3 {
+  font-family: sans-serif;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+.garden-info-card p,
+.garden-info-card li {
+  font-size: 1.36rem;
+  line-height: 1.75;
+}
+.garden-info-card ul {
+  padding-left: 1.2rem;
+}
+.garden-intro-block {
+  background: rgba(255,255,255,0.5);
+  border-radius: 10px;
+  padding: 1.3rem 1.6rem;
+  margin-bottom: 0.4rem;
+  font-size: 1.46rem;
+  line-height: 1.8;
+}
 
 /* ==========================================================================
-   FOOTER
+   GARDEN PRACTICES TAB: SECTION STYLING
    ========================================================================== */
-footer { text-align: center; padding: 4rem 5%; background: var(--surface2); color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border); }
-.tracker-box { margin-top: 1rem; font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase; }
+.practice-section {
+  margin-bottom: 2rem;
+}
+.practice-section:last-child {
+  margin-bottom: 0;
+}
+.practice-heading {
+  font-family: sans-serif;
+  font-size: 1.55rem;
+  font-weight: bold;
+  color: var(--text);
+  border-bottom: 2px solid var(--pink);
+  padding-bottom: 0.4rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.practice-body {
+  font-size: 1.41rem;
+  line-height: 1.85;
+  color: var(--text);
+}
+.practice-body p {
+  margin-bottom: 0.8rem;
+}
+.practice-body p:last-child {
+  margin-bottom: 0;
+}
+.practice-callout {
+  background: rgba(255,255,255,0.55);
+  border-radius: 10px;
+  padding: 1rem 1.4rem;
+  margin-top: 0.8rem;
+  border-left: 4px solid var(--mint);
+  font-size: 1.36rem;
+  line-height: 1.75;
+}
+.practice-callout ul {
+  padding-left: 1.2rem;
+  margin-top: 0.4rem;
+}
+.practice-callout li {
+  margin-bottom: 0.3rem;
+}
 
-/* Responsive adjustments */
-@media (max-width: 900px) {
-  .container-layout { flex-direction: column; padding: 2rem 5%; gap: 2rem; }
-  #controls { width: 100%; flex-direction: row; flex-wrap: wrap; border-bottom: 1px solid var(--border); padding-bottom: 2rem; }
-  .rescue-layout { flex-direction: column; }
-  .rescue-images { width: 100%; }
-  .nav-container { flex-direction: column; gap: 1rem; }
-  .nav-links { flex-wrap: wrap; justify-content: center; }
-  .modal { padding: 2rem; }
-  .mgrid { grid-template-columns: 1fr; gap: 1rem; }
+/* ==========================================================================
+   MAIN SYSTEM LAYOUT & FILTER SIDEBAR
+   ========================================================================== */
+.container-layout { display: flex; background: var(--surface); border-top: 2px solid var(--surface2); }
+#controls {
+  width: 340px;               /* Sidebar desktop width */
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border-right: 2px solid var(--surface2);
+  flex-shrink: 0;
+}
+#main { padding: 2rem; flex: 1; }
+#count { font-family: sans-serif; font-size: 1.41rem; color: var(--muted); margin-bottom: 1.1rem; }
+
+/* ==========================================================================
+   DAHLIA CARD GRID SYSTEM
+   Responsive settings controlling card counts per row.
+   ========================================================================== */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr); /* Default: 4 items per row */
+  gap:1.5rem;
+}
+
+@media(max-width:1200px){
+  .grid{ grid-template-columns:repeat(3,1fr); } /* Window shrinking: 3 items per row */
+}
+
+@media(max-width:920px){
+  .grid{ grid-template-columns:repeat(2,1fr); } /* Tablet mode: 2 items per row */
+}
+
+@media(max-width:600px){
+  .grid{ grid-template-columns:1fr; }          /* Smartphone mode: 1 item per row */
+}
+
+/* Core styling configurations for individual cultivar display cards */
+.card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);
+  cursor:pointer;position:relative;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column;border:1px solid var(--surface2)}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 26px rgba(47,53,56,.12)}
+.cph{width:100%;height:210px;display:flex;align-items:center;justify-content:center;font-size:4.75rem;flex-shrink:0}
+.cimg{width:100%;height:210px;object-fit:cover;display:block;flex-shrink:0}
+
+.cbody{padding:1.2rem;flex:1;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;text-align:center;gap:.6rem}
+
+.cname{
+  font-size:1.35rem;
+  font-weight:bold;
+  font-style:italic;
+  color:var(--text);
+  line-height:1.3; 
+  width: 100%; 
+  text-align: center;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;         /* Max name lines allowed before clamping with '...' */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: calc(1.66rem * 1.3 * 2); 
+}
+
+.ctags {display:flex;flex-direction:column;gap:.5rem;justify-content:center;align-items:stretch; width: 100%;}
+.tag-row-1, .tag-row-2, .tag-row-3 { display:flex; justify-content:center; align-items:stretch; gap:.35rem; width:100%; }
+
+.tag{padding:.25rem .7rem;border-radius:12px;font-size:1.21rem;font-family:sans-serif;display:inline-flex;align-items:center;justify-content:center;text-align:center;}
+
+.tl{background:var(--surface2);color:var(--text)}
+.ty{background:#fff3e0;color:#7a4a00}
+.fbtn{position:absolute;top:.55rem;right:.55rem;background:rgba(255,255,255,.92);border:none;
+  border-radius:50%;width:38px;height:38px;font-size:1.51rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;z-index:2}
+
+/* Color codes mapping badge rules for Location Number fields on individual cards */
+.loc-badge {
+  background: #f0e6ff;
+  color: #4b0082;
+  padding: .3rem .8rem;
+  border-radius: 12px;
+  font-family: sans-serif;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+  width: 100%;
+}
+.loc-lbl {
+  font-size: 1.01rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  opacity: 0.85;
+}
+.loc-val {
+  font-size: 1.36rem;
+  font-weight: bold;
+}
+
+/* Color codes mapping active cultivation states */
+.loc-tag {background:var(--mint);color:#1c3d33;font-weight:bold; width:100%;}
+.planted{background:#e6f4e6;color:#1a5c1a}
+.died{background:#fce8e8;color:#8c1a1a}
+.culled{background:#fdf3e6;color:#7a4a00}
+.cutting{background:#e8f0fc;color:#1a3a7a}
+.tuber{background:#f3eafc;color:#4a1a7a}
+
+.confirmed-tag { background: #e0f7fa; color: #006064; font-weight: bold; }
+.card-notes { font-size: 1.05rem; color: var(--muted); font-style: italic; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-top: 0.25rem; line-height: 1.4; width: 100%; text-align: center; }
+.card-credits { font-size: 1.11rem; color: #a0aab5; font-family: sans-serif; text-transform: uppercase; margin-top: 0.2rem; margin-bottom: 0.3rem; width: 100%; text-align: center; }
+
+/* ==========================================================================
+   MODAL WINDOW STYLES (Light-box Popup)
+   ========================================================================== */
+.overlay{display:none;position:fixed;inset:0;background:rgba(47,53,56,.6);z-index:100;align-items:center;justify-content:center;padding:1rem}
+.overlay.open{display:flex}
+.modal{background:#fff;border-radius:16px;max-width:600px;width:100%;max-height:92vh;overflow-y:auto;position:relative}
+.mbody{padding:1.5rem 2rem 2rem}
+.mname{font-size:2.26rem;font-style:italic;margin-bottom:.7rem;line-height:1.3}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;background:var(--surface2);border-radius:10px;padding:1.1rem;margin-bottom:1rem;font-family:sans-serif}
+.ml{font-size:1.21rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.mv{font-weight:bold;font-size:1.41rem;margin-top:.1rem}
+.mclose{position:absolute;top:.7rem;right:.7rem;background:rgba(255,255,255,.92);border:none;border-radius:50%;width:42px;height:42px;font-size:1.61rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+
+/* ==========================================================================
+   FILTER BUTTONS, INPUTS & LOADER SPIN ANIMATION
+   ========================================================================== */
+#loading{text-align:center;padding:5rem 2rem;font-family:sans-serif;color:var(--muted);width:100%}
+.spin{width:42px;height:42px;border:3px solid var(--surface2);border-top-color:var(--pink);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1.2rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty{grid-column:1/-1;text-align:center;padding:4rem 2rem;font-family:sans-serif;color:var(--muted)}
+.search{position:relative;width:100%}
+.search input{width:100%;padding:.6rem 1rem .6rem 2.2rem;border:2px solid var(--surface2);border-radius:25px;font-size:1.41rem;font-family:inherit;outline:none;color:var(--text)}
+.search::before{content:'🔍';position:absolute;left:.7rem;top:50%;transform:translateY(-50%);font-size:1.31rem}
+.fg{display:flex;flex-direction:column;gap:.4rem;align-items:flex-start;width:100%}
+.fg-pills {display:flex;flex-wrap:wrap;gap:.4rem;align-items:stretch;}
+.flbl{font-size:1.24rem;color:var(--muted);font-family:sans-serif;text-transform:uppercase;letter-spacing:.05em;font-weight:bold}
+.pill{padding:.4rem .9rem;border-radius:20px;border:2px solid var(--surface2);background:#fff;font-size:1.28rem;cursor:pointer;transition:all .15s;font-family:sans-serif;color:var(--text);display:inline-flex;align-items:center;justify-content:center;}
+.pill.on{background:var(--pink);color:#fff;border-color:var(--pink)}
+.pill.fon{background:var(--bg);color:#fff;border-color:var(--bg)}
+select#srt{width:100%;padding:.5rem .65rem;border:2px solid var(--surface2);border-radius:8px;font-size:1.31rem;font-family:inherit;background:#fff;color:var(--text);outline:none}
+
+/* ==========================================================================
+   FOOTER SECTION
+   ========================================================================== */
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: var(--bg);
+  color: #E1D5E7;
+  font-family: sans-serif;
+  font-size: 1.1rem;
+  border-top: 3px solid var(--pink);
+}
+.tracker-box {
+  display: inline-block;
+  margin-top: 0.8rem;
+  padding: 0.4rem 1rem;
+  background: rgba(255,255,255,0.1);
+  border-radius: 15px;
+  font-size: 1.05rem;
+  letter-spacing: 0.05em;
+  color: var(--mint);
+}
+
+/* ==========================================================================
+   FILTER NOTICE BANNER (shown at bottom of garden-specific tabs)
+   ========================================================================== */
+.filter-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 1.6rem;
+  padding: 0.9rem 1.3rem;
+  background: rgba(191,242,226,0.35);
+  border: 1.5px solid var(--mint);
+  border-radius: 10px;
+  font-family: sans-serif;
+  font-size: 1.31rem;
+  color: var(--text);
+}
+.filter-notice a {
+  color: var(--text);
+  font-weight: bold;
+  text-decoration-color: var(--pink);
+  text-underline-offset: 3px;
+}
+.filter-notice-clear {
+  padding: 0.3rem 0.9rem;
+  background: #fff;
+  border: 1.5px solid var(--muted);
+  border-radius: 15px;
+  font-size: 1.18rem;
+  font-family: sans-serif;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.filter-notice-clear:hover { border-color: var(--text); color: var(--text); }
+
+/* Layout overrides for mobile devices */
+@media(max-width:920px){
+  .container-layout { flex-direction: column; }
+  #controls { width: 100%; border-right: none; border-bottom: 2px solid var(--surface2); }
+  
+  .rescue-layout { flex-direction: column; gap: 1.5rem; align-items: center; text-align: center; }
+  .rescue-images { justify-content: center; align-items: center; width: 100%; }
+  .rescue-gallery-row { justify-content: center; width: 100%; }
+  .dog-photo-hero { max-width: 225px; } 
+  .tab-content { border-radius: 0 0 12px 12px; padding: 1.5rem; }
+  
+  .tab-content p { text-align: center; }
+  .garden-network { justify-content: center; align-items: center; margin: 1.2rem auto 0; }
+
+  .network-item {
+    justify-content: center; 
+    text-align: center;
+    padding: 0.4rem 0;
+  }
+  .network-amp {
+    display: block;
+    width: 100%;             
+    margin: 0.2rem 0;
+  }
+  .nav-container {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
 }
 </style>
 </head>
@@ -277,164 +698,460 @@ footer { text-align: center; padding: 4rem 5%; background: var(--surface2); colo
 
 <nav class="navbar">
   <div class="nav-container">
-    <div class="nav-logo">Kira's Garden</div>
+    <div class="nav-logo-group">
+      <div class="nav-logo">Kira's Zone 9B Garden</div>
+      <a href="https://www.instagram.com/willow_glen_flower_girl" target="_blank" class="nav-ig-link">
+        <svg style="width:16px; height:16px; fill:currentColor;" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0 3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+         flower lessons & bouquets: @willow_glen_flower_girl 
+      </a>
+    </div>
     <ul class="nav-links">
-      <li><a href="#collection">Collection</a></li>
-      <li>
-        <a href="https://www.instagram.com/willow_glen_flower_girl" target="_blank" class="nav-ig-link">
-          <svg style="width:16px; height:16px; fill:currentColor;" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0 3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          Instagram
-        </a>
-      </li>
+      <li><a href="#collection">2026 Dahlia Collection</a></li>
     </ul>
   </div>
 </nav>
 
 <header>
   <div class="header-container">
-    <img src="https://lh3.googleusercontent.com/d/1isKRxCmOnNgHMxmNmyN3QkwC7gUZsIF-" alt="Kira Profile" class="profile-photo" onerror="this.style.display='none'">
-    <h1>Blooms with a Purpose</h1>
+    <img src="https://lh3.googleusercontent.com/d/1isKRxCmOnNgHMxmNmyN3QkwC7gUZsIF-" alt="Kira Profile Image" class="profile-photo" onerror="this.style.display='none'">
+    <div class="header-text">
+      <h1>Blooms with a Purpose</h1>
+    </div>
   </div>
 </header>
 
 <section class="info-section">
   <div class="info-container">
     
+    <!-- =====================================================================
+         TAB BUTTONS — 8 tabs in new organized order
+         ===================================================================== -->
     <div class="tab-container">
-      <button class="tab-btn active" onclick="setTab('tab-welcome', this)">Welcome</button>
-      <button class="tab-btn" onclick="setTab('tab-ab', this)">About</button>
-      <button class="tab-btn" onclick="setTab('tab-re', this)">Purpose</button>
-      <button class="tab-btn" onclick="setTab('tab-gallery', this)">Gallery</button>
-      <button class="tab-btn" onclick="setTab('tab-map', this)">Map</button>
+      <!-- NOTE: setTab 3rd param controls auto-filter. 'Home'/'CG' must match your Garden2026 column values exactly. -->
+      <button class="tab-btn active" onclick="setTab('tab-welcome', this, null)">Welcome!</button>
+      <button class="tab-btn" onclick="setTab('tab-home', this, 'Home')">Home Garden</button>
+      <button class="tab-btn" onclick="setTab('tab-cg', this, 'CG')">Community Garden</button>
+      <button class="tab-btn" onclick="setTab('tab-practices', this, null)">Garden Practices</button>
+      <button class="tab-btn" onclick="setTab('tab-re', this, null)">The "Golden Hour": Flowers for Floofs</button>
+      <button class="tab-btn" onclick="setTab('tab-gallery', this, null)">Bouquet Gallery</button>
+      <button class="tab-btn" onclick="setTab('tab-map', this, null)">Map / Layout</button>
+      <button class="tab-btn" onclick="setTab('tab-ab', this, null)">About Me</button>
     </div>
     
+    <!-- =====================================================================
+         TAB 1: WELCOME (shortened — orientation only)
+         ===================================================================== -->
     <div id="tab-welcome" class="tab-content active">
-      <p>You're probably here because you've attended one of my Master Gardener workshops, scanned the QR code outside of my garden, or are on a tour of one of my gardens. Welcome! Feel free to explore the interactive directory below to see live locations, tracking statuses, and detailed notes on all the active cultivars currently blooming in the collection.</p>
+      <p>Welcome! If you've scanned a QR code, stopped by from a Master Gardener workshop, or are on a garden tour — you're in the right place.</p>
+      <br>
+      <p>This site is your guide to what's growing. Use the tabs above to learn about whichever garden you're visiting — there's a dedicated tab for the <strong>Home Garden</strong> and the <strong>Community Garden</strong>, each with its own layout notes and tour tips. The <strong>Garden Practices</strong> tab covers my growing philosophy and how I manage the collection.</p>
+      <br>
+      <p>The dahlia collection grid below lets you search, filter by garden, status, form, and color, and explore every registered variety. Tap any card for full details. Have fun!</p>
     </div>
 
-    <div id="tab-ab" class="tab-content">
-      <p>As a certified Master Gardener through the University of California, my passion centers around educating my community on sustainable home horticulture. More specifically, my interests are in sustainable regional cultivation, trial garden tracking, and maximizing soil health to produce fruit, vegetable, and flower crops. 2026 kicks off my journey in dahlia hybridizing.</p>
-      <p>I'm also a partner to a wonderful husband, a dog mom, traveler, book reader, and during the day I work in technology leading a team of amazing engineers while also teaching Machine Learning to graduate students at UC Berkeley.</p>
-    </div>
-    
-    <div id="tab-re" class="tab-content">
-      <div class="rescue-layout">
-        <div class="rescue-images">
-          <img src="https://lh3.googleusercontent.com/d/1Sms0-9WNWU6fYNo5-DePr_GrGl0as4Mm" alt="Golden Hour" class="dog-photo-hero" onerror="this.style.display='none'">
-          <div class="rescue-gallery-row">
-            <img src="https://lh3.googleusercontent.com/d/1ovYb5d0FQAPJVVqUdWOYC4mkjiwqK89h" alt="Rescue" class="dog-photo" onerror="this.style.display='none'">
-            <img src="https://lh3.googleusercontent.com/d/1e5M3QVYJK-OPwkChfn7-FrMnBWCXtLYX" alt="Flower crown" class="dog-photo" onerror="this.style.display='none'">
-          </div>
+    <!-- =====================================================================
+         TAB 2: HOME GARDEN (new)
+         ===================================================================== -->
+    <div id="tab-home" class="tab-content">
+      <p class="garden-intro-block">You're standing at (or virtually visiting) my home garden in Willow Glen, San Jose — a Zone 9B plot I've been cultivating for several years. The garden wraps the house and spills out to the sidewalk strip, so there's quite a bit to take in.</p>
+
+      <div class="garden-info-grid">
+        <div class="garden-info-card">
+          <h3>What's Growing</h3>
+          <ul>
+            <li>Dahlias (front beds, sideyard (on the right) and grow bags)</li>
+                         <li>Zinnias, Celosia, Mums, Roses, Cosmos</li>
+            <li>Fruit trees — Giant Fuyu Persimmon, Violette de Bordeau Fig, and Miss Figgy figs</li>
+            <li>Purple blauhide pole beans</li>
+            <li>Sidewalk strip: sunflowers, low-water natives, and dragonfruit</li>
+          </ul>
         </div>
-        <div class="rescue-text">
-          <p>Dahlias are a hobby for me. Every floral arrangement crafted from my cut garden goes directly toward making a difference. I sell seasonal handcrafted bouquets locally, and <strong>100% of the profits are donated monthly to the senior fund of local Golden Retriever Rescue organizations</strong>.</p>
-          <p>Since this is a hobby, I don't sell tubers or cuttings throughout the year, however, at the end of the season, I hold a one-time fall tuber sale of things I won't grow anymore. Profits of this sale also go to charity.</p>
-          <p>For excellent dahlia sellers, please shop with two wonderful women:</p>
-          <ul class="garden-network">
-            <li class="network-item"><a class="network-link" href="https://www.dandelionlanedahlias.com" target="_blank">Dandelion Lane</a></li>
-            <li class="network-item"><a class="network-link" href="https://www.rozaviewfarm.com" target="_blank">Roza View Farm</a></li>
+
+        <div class="garden-info-card">
+          <h3>How to Orient Yourself</h3>
+          <ul>
+            <li>The street-facing strip is lower-water and pollinator-focused</li>
+            <li>Dahlias are in the front beds and run along the side yard</li>
+            <li>Backyard has the fruit trees and vegetable beds</li>
+            <li>Each dahlia has a small stake label with the variety name</li>
+          </ul>
+        </div>
+
+        <div class="garden-info-card">
+          <h3>🔍 Using the Collection Below</h3>
+          <ul>
+            <li>The collection grid is <strong>automatically filtered</strong> to Home Garden varieties when you're on this tab</li>
+            <li>Sort by <strong>2026 Location [Row-Pos]</strong> to walk the beds in order</li>
+            <li>Tap any card for full notes on that variety</li>
+          </ul>
+        </div>
+
+        <div class="garden-info-card">
+          <h3>A Few Requests</h3>
+          <ul>
+            <li>Please stay on the sidewalk</li>
+            <li>Feel free to photograph anything you see!</li>
+            <li>Please do not take any blooms</li>
           </ul>
         </div>
       </div>
+
+      <div class="filter-notice">
+        <span>The dahlia collection below is filtered to <strong>Home Garden</strong> varieties — <a href="#collection">scroll down to browse ↓</a></span>
+        <button class="filter-notice-clear" onclick="clearGardenFilter()">Show all gardens</button>
+      </div>
     </div>
 
+    <!-- =====================================================================
+         TAB 3: COMMUNITY GARDEN (new)
+         ===================================================================== -->
+    <div id="tab-cg" class="tab-content">
+      <p class="garden-intro-block">The community garden plot is where the dahlia collection really expands. With more square footage and full sun from morning to evening, it's home to over 115 dahlia varieties alongside a rotating mix of vegetables and annual flowers.</p>
+
+      <div class="garden-info-grid">
+        <div class="garden-info-card">
+          <h3>Dahlias</h3>
+          <p>115+ varieties spanning dinner plates, decoratives, balls, pompons, waterlilies, and more. This is the trial garden — some are established favorites, others are first-year experiments.</p>
+        </div>
+
+        <div class="garden-info-card">
+          <h3>Vegetables & Flowers</h3>
+          <ul>
+            <li>Tomatoes, eggplant, peppers</li>
+            <li>Kabocha squash, Korean cucumber, zucchini</li>
+            <li>Sweet corn and bulbing onions</li>
+            <li>Annual companion flowers throughout, like yarrow, french marigolds and sweet alyssum</li>
+            <li>Dahlias, Zinnias, Snapdragons, Sunflowers, statice, celosia, and cosmos</li>
+          </ul>
+        </div>
+
+        <div class="garden-info-card">
+          <h3>Navigating the Rows</h3>
+          <ul>
+            <li>Dahlia rows run north–south; Row 1, position A is near the corn, and row 9, position L is near the hose reel  markers are at the head of each bed</li>
+            <li>Each plant has a stake label — variety name is on the front, location code on the back</li>
+            <li>The collection is <strong>automatically filtered</strong> to CG — sort by Location to see the flowers in their planted order</li>
+          </ul>
+        </div>
+
+        <div class="garden-info-card">
+          <h3>Gaps & Missing Plants</h3>
+          <p>If you notice a bare spot or a plant that looks unhealthy, check the collection grid — tap that variety's card and look at the 2026 Notes for the reason. Common causes: didn't sprout, culled due to viral infection, or lost to pest pressure.</p>
+        </div>
+
+        <div class="garden-info-card">
+          <h3>A Few Requests</h3>
+          <ul>
+            <li>Please stay on the designated paths between beds</li>
+            <li>Don't deadhead or cut anything, I sanitize my clippers between each plant</li>
+            <li>Photography is welcome and encouraged!</li>
+          </ul>
+        </div>
+
+        <div class="garden-info-card">
+          <h3>Season Timeline (Zone 9B)</h3>
+          <ul>
+            <li><strong>April - May:</strong> Tuber and cuttings planted on a rolling basis, sprouts emerging</li>
+            <li><strong>June – July:</strong> First blooms, pinching complete</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="filter-notice">
+        <span>The dahlia collection below is filtered to <strong>Community Garden</strong> varieties — <a href="#collection">scroll down to browse ↓</a></span>
+        <button class="filter-notice-clear" onclick="clearGardenFilter()">Show all gardens</button>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         TAB 4: GARDEN PRACTICES (new)
+         ===================================================================== -->
+    <div id="tab-practices" class="tab-content">
+
+      <div class="practice-section">
+        <div class="practice-heading">Growing in Zone 9B</div>
+        <div class="practice-body">
+          <p>San Jose's Zone 9B is one of the best climates on earth for dahlias — long, warm summers, mild winters, and very little frost risk mean tubers can stay in the ground year-round, although I typically dig at the end of the season. I typically see the first blooms in June with peak production running August through October, and the plants keep going well into November.</p>
+          <p>The tradeoff is heat management in July and August, when temperatures can stress plants during bud formation. I mulch heavily using rice straw to maintain soil health and temperatures during heat waves.</p>
+        </div>
+      </div>
+
+      <div class="practice-section">
+        <div class="practice-heading">Integrated Pest Management (IPM)</div>
+        <div class="practice-body">
+          <p>I use only OMRI listed (Organic Materials Review Institute) products. Rather than reaching for pesticides, both gardens run on a biological IPM program. The philosophy is to build a system that manages itself — beneficial predators doing the work so I don't have to.</p>
+          <div class="practice-callout">
+            <strong>Beneficial insect releases (current program):</strong>
+            <ul>
+              <li><strong>Lacewings</strong> — generalist predators; effective against thrips, aphids, whitefly, and small caterpillars at the larval stage</li>
+              <li><strong>Minute pirate bugs</strong> — highly aggressive thrips predators; faster-acting than lacewings and effective across all thrip life stages</li>
+               <li><strong>AzaMax</strong> — a systemic miticide, entering the plants cells where pests with sucking mouthparts feed (primarily mites). This disrupts the reproductive system of the pest.</li>
+              <li>Releases run on a <strong>3-4 week cadence</strong> throughout the season, timed to pest pressure rather than a fixed calendar</li>
+            </ul>
+          </div>
+          <p style="margin-top:0.8rem;">I don't mulch my squash to minimize squash vine borers, there is nowhere to hide. The goal is threshold-based management: intervene when counts are trending up, not on autopilot.</p>
+        </div>
+      </div>
+
+      <div class="practice-section">
+        <div class="practice-heading">Soil Health</div>
+        <div class="practice-body">
+          <p>Everything starts underground. Each spring I incorporate compost, about 200 pounds of alfalfa pellets, and bone meal into dahlia beds, and amend throughout the season as needed. I avoid synthetic fertilizers in favor of slow-release organics and compost teas during the growing season. My dahlias get Alaska Fish Emulsion 1x monthly until they begin to bloom, and once they're green lush they're able to support bloom production so I stop feeding them.</p>
+          <p>When a plant shows signs of viral infection — mosaic patterns, stunted growth, color breaking on blooms — it gets removed immediately and it goes into the trash can, not the compost. I treat viral pressure seriously because it spreads through tubers and tools.</p>
+          <p>In the community garden, I rotate non-dahlia crops through beds between seasons to prevent nutrient depletion and reduce soilborne disease pressure.</p>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-heading">Dahlia Culture Practices</div>
+        <div class="practice-body">
+          <div class="practice-callout">
+            <ul>
+              <li><strong>Pinching:</strong> All plants are pinched after the 3rd or 4th node pair to encourage branching. This produces more stems and better vase-life flowers versus letting a single leader run.</li>
+              <li><strong>Staking:</strong>Most of the dahlias require heavy staking and I rely on them to support each other.</li>
+              <li><strong>Disbudding:</strong> I disbud to one terminal bud per stem.</li>
+              <li><strong>Cutting:</strong> I cut very deeply to the bud union on every harvest to keep the plant productive. It can hurt to cut so deeply, but you get more flowers in the long run!</li>
+              <li><strong>Water:</strong> Deep, infrequent watering through drip irrigation. Dahlias hate sitting in wet soil but also hate drying out completely during bud formation.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-section">
+        <div class="practice-heading">Data-Driven Tracking</div>
+        <div class="practice-body">
+          <p>As a UC Master Gardener, my approach is rooted in observation and evidence. When something goes wrong, I treat it as data rather than a loss. Every variety in the collection is tracked — status, location, estimated height, bloom form, and field notes — so I can make informed decisions about what to grow again, what to trial at larger scale, and what to retire.</p>
+          <p>That's what this entire website is: a living, season-by-season record. The collection grid below is pulled live from my growing spreadsheet, so what you see is current as of this season.</p>
+        </div>
+      </div>
+
+      <div class="practice-section">
+        <div class="practice-heading">Hybridizing (New in 2026!)</div>
+        <div class="practice-body">
+          <p>2026 is my first season attempting dahlia hybridization. I'm really focused on bringing more petaloids into my garden Crosses are tagged and tracked separately; seedlings won't bloom until 2027 at the earliest. Watch this space.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- =====================================================================
+         TAB 5: THE "GOLDEN HOUR" — unchanged from original
+         ===================================================================== -->
+    <div id="tab-re" class="tab-content">
+      <div class="rescue-layout">
+        <div class="rescue-images">
+          <img src="https://lh3.googleusercontent.com/d/1Sms0-9WNWU6fYNo5-DePr_GrGl0as4Mm" alt="Golden Hour primary image" class="dog-photo-hero" onerror="this.style.display='none'">
+          
+          <div class="rescue-gallery-row">
+            <img src="https://lh3.googleusercontent.com/d/1ovYb5d0FQAPJVVqUdWOYC4mkjiwqK89h" alt="Rescue impact photo" class="dog-photo" onerror="this.style.display='none'">
+            <img src="https://lh3.googleusercontent.com/d/1e5M3QVYJK-OPwkChfn7-FrMnBWCXtLYX" alt="Dog in a flower crown" class="dog-photo" onerror="this.style.display='none'">
+          </div>
+        </div>
+        <div class="rescue-text">
+          <p>Dahlias are a hobby for me. Every single floral arrangement crafted from my cut garden goes directly toward making a difference. I sell seasonal handcrafted bouquets locally, and <strong>100% of the profits are donated monthly to the senior fund of local Golden Retriever Rescue organizations</strong> to help fund medical care, supplies, and housing pipelines for senior dogs in need.</p>
+          <p>Many people ask me if I sell or trade dahlias. Since this is a hobby, I don't sell dahlia tubers or cuttings throughout the year, however, at the end of the season, I dig & divide my tubers for a one time fall tuber sale of things I won't grow anymore or have excess of. Profits of this tuber sale also go to charity. Look out for that tuber sale each November (zone 9B).</p>
+          <p>For excellent dahlia sellers, please shop with two wonderful women:</p>
+          
+          <ul class="garden-network">
+            
+            <li class="network-item">
+              <svg class="web-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.53c-.26-.81-1-1.4-1.9-1.4h-1v-3c0-.55-.45-1-1-1h-6v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+              <a class="network-link" href="https://www.dandelionlanedahlias.com" target="_blank">Dandelion Lane Website</a>
+              
+              <span class="network-amp">&</span>
+              
+              <svg class="ig-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0 3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              <a class="network-link" href="https://www.instagram.com/dandelion_lane_dahlias/" target="_blank">Instagram</a>
+            </li>
+            
+            <li class="network-item">
+              <svg class="web-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.53c-.26-.81-1-1.4-1.9-1.4h-1v-3c0-.55-.45-1-1-1h-6v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+              <a class="network-link" href="https://www.rozaviewfarm.com" target="_blank">Roza View Farm Website</a>
+              <span class="network-amp">&</span>
+              <svg class="ig-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0 3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              <a class="network-link" href="https://www.instagram.com/rozaviewfarm/" target="_blank">Instagram</a>
+            </li>
+          </ul>
+          </div>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         TAB 6: BOUQUET GALLERY — unchanged from original
+         ===================================================================== -->
     <div id="tab-gallery" class="tab-content">
+      <div class="gallery-intro">
+        <p style="margin-bottom: 10px;"><strong>Seasonal Arrangements & Garden Snapshots</strong></p>
+        <p>Examples of bouquets and important garden notes.</p>
+      </div>
+      
       <div class="carousel-wrapper">
         <button class="carousel-btn" onclick="scrollCarousel(-1)">❮</button>
         <div class="carousel-container" id="bouquet-carousel">
+          
           <div class="carousel-item">
-            <img src="https://lh3.googleusercontent.com/d/1-agNiTZRhyTrpDULKTspvPu-LJLzL6RJ?w=400&auto=format&fit=crop" class="carousel-img" alt="Bouquet">
+            <img src="https://lh3.googleusercontent.com/d/1-agNiTZRhyTrpDULKTspvPu-LJLzL6RJ?w=400&auto=format&fit=crop" class="carousel-img" alt="Bouquet 1">
             <div class="carousel-caption">$18 Bouquet</div>
           </div>
+          
           <div class="carousel-item">
-            <img src="https://lh3.googleusercontent.com/d/1g4OD3tIqo-BGEUYjYl3ZJFJpoBgaTMyX?w=400&auto=format&fit=crop" class="carousel-img" alt="Bouquet">
+            <img src="https://lh3.googleusercontent.com/d/1g4OD3tIqo-BGEUYjYl3ZJFJpoBgaTMyX?w=400&auto=format&fit=crop" class="carousel-img" alt="Bouquet 2">
             <div class="carousel-caption">$18 Bouquet</div>
           </div>
+          
           <div class="carousel-item">
-            <img src="https://lh3.googleusercontent.com/d/1lAwpCyrj6eSSIKk8ajBXodXL0XjY_Wgj?w=400&auto=format&fit=crop" class="carousel-img" alt="Partner">
+            <img src="https://lh3.googleusercontent.com/d/1lAwpCyrj6eSSIKk8ajBXodXL0XjY_Wgj?w=400&auto=format&fit=crop" class="carousel-img" alt="Bouquet 3">
             <div class="carousel-caption">My Partner, Paul</div>
           </div>
+          
           <div class="carousel-item">
-            <img src="https://lh3.googleusercontent.com/d/1TCGrQOAhctQ-ltBCsHBhnTA2qmCrMel1?w=400&auto=format&fit=crop" class="carousel-img" alt="Dog">
+            <img src="https://lh3.googleusercontent.com/d/1TCGrQOAhctQ-ltBCsHBhnTA2qmCrMel1?w=400&auto=format&fit=crop" class="carousel-img" alt="Bouquet 4">
             <div class="carousel-caption">Samus, our senior Golden</div>
           </div>
+
         </div>
         <button class="carousel-btn" onclick="scrollCarousel(1)">❯</button>
       </div>
     </div>
 
+    <!-- =====================================================================
+         TAB 7: MAP / LAYOUT — unchanged from original
+         ===================================================================== -->
     <div id="tab-map" class="tab-content">
-      <div class="map-placeholder">Map configuration coming soon.</div>
+      <div class="map-placeholder">
+        <p>🗺️ Garden map configuration coming soon!</p>
+      </div>
     </div>
-  </div>
+
+    <!-- =====================================================================
+         TAB 8: ABOUT ME — moved to end, unchanged from original
+         ===================================================================== -->
+    <div id="tab-ab" class="tab-content">
+      <p style="margin-bottom: 20px;">As a certified Master Gardener through the University of California, my passion centers around educating my community on sustainable home horticulture. More specifically, my interests are in sustainable regional cultivation, trial garden tracking, and maximizing soil health to produce fruit, vegetable, and flower crops. 2026 kicks off my journey in dahlia hybridizing.</p>
+      <p>I'm also a partner to a wonderful husband, a dog mom, traveler, book reader, and during the day I work in technology leading a team of amazing engineers while also teaching Machine Learning to graduate students at UC Berkeley.</p>
+    </div>
+
+  </div><!-- /info-container -->
 </section>
 
 <div class="container-layout" id="collection">
+  
   <div id="controls">
-    <div class="search"><input id="search" type="text" placeholder="Search collection…" oninput="applyFilters()"></div>
+    <div class="search"><input id="search" type="text" placeholder="Search by name or notes…" oninput="applyFilters()"></div>
     
-    <div class="fg">
-      <select id="srt" onchange="applyFilters()">
-        <option value="name" selected>Sort by Name (A-Z)</option>
-        <option value="nz">Sort by Name (Z-A)</option>
-        <option value="loc_az">Location (A-Z)</option>
-        <option value="loc_za">Location (Z-A)</option>
-        <option value="ha">Height (Low-High)</option>
-        <option value="hd">Height (High-Low)</option>
-      </select>
-    </div>
-
     <div class="fg" id="garden-fg"></div>
     <div class="fg" id="status-fg"></div>
     <div class="fg" id="form-fg"></div>
     <div class="fg" id="color-fg"></div>
     
-    <button class="pill" id="favbtn" onclick="toggleFavFilter()" style="margin-top:1rem;">Favorites Only</button>
+    <div class="fg">
+      <span class="flbl">Sort Sequence</span>
+      <select id="srt" onchange="applyFilters()">
+        <option value="name" selected>Sort: Cultivar Name A–Z</option>
+        <option value="nz">Cultivar Name Z–A</option>
+        <option value="loc_az">2026 Location [Row-Pos] A–Z</option>
+        <option value="loc_za">2026 Location [Row-Pos] Z–A</option>
+        <option value="ha">Height ↑</option>
+        <option value="hd">Height ↓</option>
+      </select>
+    </div>
+    <button class="pill" id="favbtn" onclick="toggleFavFilter()" style="width:100%; text-align:center; margin-top:0.5rem;">❤️ Favorites Only</button>
   </div>
 
   <div id="main">
+    <div id="loading"><div class="spin"></div><p>Syncing data from live collection repository…</p></div>
     <div id="count"></div>
-    <div id="loading"><div class="spin"></div><p>Syncing repository…</p></div>
     <div class="grid" id="grid"></div>
   </div>
 </div>
 
 <div class="overlay" id="overlay" onclick="closeModal(event)">
-  <div class="modal" id="modal" onclick="event.stopPropagation()"></div>
+  <div class="modal" id="modal"></div>
 </div>
 
 <footer>
   <div>© 2026 Kira's Garden. All rights reserved.</div>
-  <div class="tracker-box">Visitors: <span id="visitor-count">...</span></div>
+  <div class="tracker-box">
+    🌿 Garden Visitors: <span id="visitor-count">...</span>
+  </div>
 </footer>
 
 <script>
-function setTab(tabId, btn) {
+/* Controls Tab Switching State swaps across UI panels.
+   gardenFilter: pass a garden name (e.g. 'Home', 'CG') to auto-filter the collection,
+   or null to clear any active garden filter. */
+function setTab(tabId, btn, gardenFilter) {
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById(tabId).classList.add('active');
   btn.classList.add('active');
+
+  // Sync the collection grid filter whenever the garden filter param is provided
+  if (gardenFilter !== undefined) {
+    setGardenFilter(gardenFilter);
+  }
 }
 
-function scrollCarousel(dir) {
-  document.getElementById('bouquet-carousel').scrollBy({ left: dir * 320, behavior: 'smooth' });
+/* Sets or clears the garden filter and syncs the sidebar pill UI to match.
+   value: garden name string to activate, or null to show all gardens. */
+function setGardenFilter(value) {
+  aGarden.clear();
+  if (value) aGarden.add(value);
+
+  // Keep the sidebar pill buttons visually in sync
+  const pills = document.querySelectorAll('#garden-fg .pill');
+  pills.forEach(pill => {
+    if (value && pill.textContent.trim() === value) {
+      pill.classList.add('on');
+    } else {
+      pill.classList.remove('on');
+    }
+  });
+
+  applyFilters();
 }
 
+/* Called by "Show all gardens" button inside garden tabs */
+function clearGardenFilter() {
+  setGardenFilter(null);
+}
+
+/* Horizontal Scroll logic step sizing commands for Bouquet Scroller arrows */
+function scrollCarousel(direction) {
+  const container = document.getElementById('bouquet-carousel');
+  const scrollAmount = 280; // Item pixel thumbnail box width value + gaps
+  container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+}
+
+/* Initial Core Setup Launcher once background processes complete document trees */
 window.addEventListener("DOMContentLoaded", () => {
-  load();                  
-  initVisitorCounter();    
+  load();                  /* Establish syncing connections out to target web app data repository */
+  initVisitorCounter();    /* Launch metrics tracker updates */
 });
 
+/* Controls Visitor Metric API tracking hooks setup structures */
 function initVisitorCounter() {
-  fetch(`https://api.countapi.xyz/hit/kiras-garden-zone9b/home-visits`)
-    .then(r => r.json())
-    .then(d => { document.getElementById('visitor-count').textContent = d.value || "Active"; })
-    .catch(() => { document.getElementById('visitor-count').textContent = "Active"; });
+  const namespace = "kiras-garden-zone9b"; 
+  const key = "home-visits";
+  
+  fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
+    .then(res => res.json())
+    .then(data => {
+      if(data && data.value) {
+        document.getElementById('visitor-count').textContent = data.value;
+      } else {
+        document.getElementById('visitor-count').textContent = "Active";
+      }
+    })
+    .catch(() => {
+      document.getElementById('visitor-count').textContent = "Active";
+    });
 }
 
+/* Core local memory arrays housing active dataset references generated by Cloud Sheets queries */
 let all=[],favs=new Set(),aSt=new Set(),aForm=new Set(),aGarden=new Set(),aColor=new Set(),favOnly=false,
 scriptUrl='https://script.google.com/macros/s/AKfycbzPyvyJZRKNBf3017gse-cNz2wBfSDRQbGMGd-lHHm0TmSMPvQjshigcY0q1s0RccFS/exec';
 
+/* Mappings parsing cell values extracted out from standard Sheet Columns */
 const gv=(d,k)=>String(d[k]??'').trim();
 const name=d=>gv(d,'Variety');
 const status=d=>gv(d,'CurrentYearStatus');
@@ -448,23 +1165,35 @@ const photoCredit=d=>gv(d,'PhotoCredit');
 const colorFamily=d=>gv(d,'ColorFamily');
 const photo=d=>{const p=d['PhotoUrl'];return(typeof p==='string'&&p.startsWith('http'))?p:'';}
 
+/* Maps targeted color highlights dynamically to tags depending upon Active Status state classifications */
 function statusClass(s){
   const sl=s.toLowerCase();
   if(sl.includes('culled')||sl.includes('virus'))return 'culled';
-  if(sl.includes('died'))return 'culled';
-  if(sl.includes('planted')||sl.includes('sprout'))return 'active';
+  if(sl.includes('died')||sl.includes('dead'))return 'died';
+  if(sl.includes('planted')||sl.includes('sprout'))return 'planted';
+  if(sl.includes('cutting'))return 'cutting';
   if(sl.includes('tuber'))return 'tuber';
   return '';
 }
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function statusLabel(s){
+  const sl=s.toLowerCase();
+  if(sl.includes('culled')||sl.includes('virus'))return '🚫 Culled';
+  if(sl.includes('died'))return '💀 Died';
+  if(sl.includes('planted')||sl.includes('sprout'))return '🌱 Active';
+  if(sl.includes('cutting'))return '✂️ Cutting';
+  if(sl.includes('tuber'))return '🥔 Tuber';
+  return s;
+}
+function esc(s){return String(s).replace(/&/g,'&').replace(/</g,'<').replace(/>/g,'>').replace(/"/g,'"')}
 function num(s){const m=String(s||'').match(/(\d+\.?\d*)/);return m?parseFloat(m[1]):0}
 
+/* JSONP Cloud Fetch handler mechanism querying external spreadsheet data sheets */
 function load(){
   document.getElementById('loading').style.display='block';
   document.getElementById('grid').innerHTML='';
   const cb='_dl_'+Date.now();
-  let s=document.createElement('script');
-  const done=()=>{if(s.parentNode)s.parentNode.removeChild(s);delete window[cb];};
+  let s=null;
+  const done=()=>{if(s?.parentNode)s.parentNode.removeChild(s);delete window[cb];};
   const t=setTimeout(()=>{done();showErr();},12000);
 
   window[cb]=d=>{
@@ -474,13 +1203,17 @@ function load(){
     buildFilters();applyFilters();
     document.getElementById('loading').style.display='none';
   };
+  s=document.createElement('script');
   s.src=scriptUrl+(scriptUrl.includes('?')?'&':'?')+'callback='+cb;
   document.head.appendChild(s);
 }
 
-function showErr(){ document.getElementById('loading').innerHTML=`<p>Sync interrupted.</p>`; }
+function showErr(){
+  document.getElementById('loading').innerHTML=`<p><strong>Cloud sync interrupted.</strong></p><button class="pill" onclick="load()">Retry Handshake</button>`;
+}
 function uniq(arr){return[...new Set(arr.filter(Boolean))].sort();}
 
+/* Automatically generates the multi-select sidebar navigation filter option pills on screen dynamically */
 function buildFilters(){
   const statuses=uniq(all.map(d=>{
     const s=status(d).toLowerCase();
@@ -491,21 +1224,21 @@ function buildFilters(){
     if(s.includes('tuber'))return 'Tuber';
     return null;
   }));
-  mkPills('garden-fg','Location',uniq(all.map(d=>gardenName(d))),aGarden);
-  mkPills('status-fg','Status',statuses,aSt);
-  mkPills('form-fg','Form',uniq(all.map(d=>formType(d))),aForm);
-  mkPills('color-fg','Color',uniq(all.map(d=>colorFamily(d))),aColor);
+  mkPills('garden-fg','Garden:',uniq(all.map(d=>gardenName(d))),aGarden);
+  mkPills('status-fg','Filter Status:',statuses,aSt);
+  mkPills('form-fg','Filter Form:',uniq(all.map(d=>formType(d))),aForm);
+  mkPills('color-fg','Filter Color:',uniq(all.map(d=>colorFamily(d))),aColor);
 }
 
 function mkPills(id,lbl,vals,set){
   const el=document.getElementById(id);
   if(!vals.length){el.innerHTML='';return;}
   el.innerHTML=`<span class="flbl">${lbl}</span><div class="fg-pills"></div>`;
-  const pContainer=el.querySelector('.fg-pills');
+  const pContainer = el.querySelector('.fg-pills');
   vals.forEach(v=>{
     const b=document.createElement('button');
     b.className='pill';b.textContent=v;
-    if(set.has(v))b.classList.add('on');
+    if(set.has(v)) b.classList.add('on');
     b.onclick=()=>{set.has(v)?set.delete(v):set.add(v);b.classList.toggle('on');applyFilters();};
     pContainer.appendChild(b);
   });
@@ -513,6 +1246,7 @@ function mkPills(id,lbl,vals,set){
 
 function toggleFavFilter(){favOnly=!favOnly;document.getElementById('favbtn').classList.toggle('fon',favOnly);applyFilters();}
 
+/* Core Evaluation Sorting Engine that calculates search checks and displays filtered results cards */
 function applyFilters(){
   const q=document.getElementById('search').value.toLowerCase();
   const srt=document.getElementById('srt').value;
@@ -547,18 +1281,20 @@ function applyFilters(){
   });
 
   render(res);
-  document.getElementById('count').textContent = `${res.length} varieties displayed`;
+  document.getElementById('count').textContent = "Displaying " + res.length + " of " + all.length + " registered varieties";
 }
 
+/* Generates temporary background colors for flower placeholders if image links break or are missing */
 function cardBg(n){
   let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))%360;
-  return `hsl(${h}, 20%, 95%)`;
+  return `hsl(${h},30%,90%)`;
 }
 
+/* Dynamically outputs HTML card strings matching query results directly onto the layout screen view */
 function render(list){
   const g=document.getElementById('grid');
   if(!list.length){
-    g.innerHTML='<div class="empty">No cultivars match your filters.</div>';
+    g.innerHTML='<div class="empty"><p>No active cultivars map to configuration.</p></div>';
     return;
   }
   g.innerHTML=list.map(d=>{
@@ -567,62 +1303,85 @@ function render(list){
     const img=photo(d);
     const fv=favs.has(n);
     const bg=cardBg(n);
-    const sCat=statusClass(status(d));
+    
+    const field1_status = status(d);
+    const field2_garden = gardenName(d);
+    const field3_locNum = locNum(d);
+    const field4_form = formType(d);
+    const field5_height = height(d);
+    const field7_notes = obs(d);
+    const field8_credit = photoCredit(d);
 
     return `<div class="card" onclick="openModal(${oi})">
-      <div class="cimg-wrap">
-        <button class="fbtn ${fv?'active':''}" onclick="event.stopPropagation();toggleFav(${oi},this)">${fv?'♥':'♡'}</button>
-        <div class="cph" style="background:${bg};${img?'display:none':''}"></div>
-        ${img?`<img class="cimg" src="${esc(img)}" loading="lazy" onerror="this.style.display='none';this.previousSibling.style.display='flex'">`:''}
-      </div>
+      <button class="fbtn" onclick="event.stopPropagation();toggleFav(${oi},this)">${fv?'❤️':'🤍'}</button>
+      <div class="cph" style="background:${bg};${img?'display:none':''}">🌸</div>
+      ${img?`<img class="cimg" src="${esc(img)}" alt="${esc(n)}" loading="lazy" onerror="this.style.display='none';this.previousSibling.style.display='flex'">`:''}
       <div class="cbody">
         <div class="cname">${esc(n)}</div>
-        <div class="ctags">
-          ${gardenName(d)?`<span class="tag loc-tag">${esc(gardenName(d))}</span>`:''}
-          ${formType(d)?`<span class="tag">${esc(formType(d))}</span>`:''}
-          ${status(d)?`<span class="tag status-tag ${sCat}">${esc(status(d))}</span>`:''}
+        
+        <div style="display:flex; gap:.35rem; justify-content:center; flex-wrap:wrap; width:100%;">
+          ${field1_status?`<span class="tag ${statusClass(field1_status)}">${esc(statusLabel(field1_status))}</span>`:''}
         </div>
-        ${obs(d)?`<div class="card-notes">${esc(obs(d))}</div>`:''}
+
+        <div class="ctags">
+          <div class="tag-row-1">
+            ${field2_garden?`<span class="tag loc-tag">📍 ${esc(field2_garden)}</span>`:'<span style="visibility:hidden;" class="tag"> </span>'}
+          </div>
+          
+          <div class="tag-row-2">
+            ${field3_locNum?`<div class="loc-badge"><span class="loc-lbl">2026 Loc # [Row-Pos]</span><span class="loc-val">${esc(field3_locNum)}</span></div>`:'<span style="visibility:hidden;" class="tag"> </span>'}
+          </div>
+          
+          <div class="tag-row-3">
+            ${field4_form?`<span class="tag tl">${esc(field4_form)}</span>`:''}
+            ${field5_height?`<span class="tag ty">📏 ${esc(field5_height)}</span>`:''}
+            ${!field4_form && !field5_height?`<span style="visibility:hidden;" class="tag"> </span>`:''}
+          </div>
+        </div>
+
+        ${field8_credit?`<div class="card-credits">📸 ${esc(field8_credit)}</div>`:''}
+        
+        ${field7_notes?`<div class="card-notes">${field7_notes.split(',').map(item => esc(item.trim())).join('<br>')}</div>`:''}
       </div>
     </div>`;
   }).join('');
 }
 
+/* Manages individual user Favorites bookmark selections toggling updates */
 function toggleFav(i,btn){
   const n=name(all[i]);
-  if(favs.has(n)){
-    favs.delete(n); btn.textContent='♡'; btn.classList.remove('active');
-  } else {
-    favs.add(n); btn.textContent='♥'; btn.classList.add('active');
-  }
+  favs.has(n)?(favs.delete(n),btn.textContent='🤍'):(favs.add(n),btn.textContent='❤️');
   if(favOnly)applyFilters();
 }
 
+/* Renders popup window content layout data blocks whenever a cultivar card is clicked */
 function openModal(i){
   const d=all[i];if(!d)return;
+  
   const rows=[
-    ['Location #', locNum(d)],
+    ['2026 Location # [Row-Pos]', locNum(d)],
     ['Garden', gardenName(d)],
-    ['Status', status(d)],
+    ['Current Year Status (2026)', status(d)],
     ['Form', formType(d)],
-    ['Height', height(d)],
-    ['Color Family', colorFamily(d)]
+    ['Est. Height', height(d)],
+    ['Confirmed?', confirmed(d)],
+    ['Primary Color Family', colorFamily(d)]
   ].filter(r=>r[1]);
 
   document.getElementById('modal').innerHTML=`
     <button class="mclose" onclick="closeModal()">✕</button>
-    <div class="mname">${esc(name(d))}</div>
-    <div class="mgrid">${rows.map(([k,v])=>`<div><div class="ml">${esc(k)}</div><div class="mv">${esc(v)}</div></div>`).join('')}</div>
-    ${obs(d)?`<div><div class="ml">Notes</div><div class="mv" style="line-height:1.6">${obs(d).split(',').map(item => esc(item.trim())).join('<br>')}</div></div>`:''}
-    ${photoCredit(d)?`<div style="margin-top:1rem; font-size:0.85rem; color:var(--muted);">Photo Credit: ${esc(photoCredit(d))}</div>`:''}
-  `;
+    <div class="mbody">
+      <div class="mname">${esc(name(d))}</div>
+      <div class="mgrid">${rows.map(([k,v])=>`<div><div class="ml">${esc(k)}</div><div class="mv">${esc(v)}</div></div>`).join('')}</div>
+      
+      ${obs(d)?`<div style="font-size:1.36rem; color:var(--muted); font-style:italic; line-height:1.6; margin-top:1rem; border-top:1px solid var(--surface2); padding-top:1rem;"><strong>2026 Notes:</strong><br>${obs(d).split(',').map(item => esc(item.trim())).join('<br>')}</div>`:''}
+      
+      ${photoCredit(d)?`<div style="font-size:1.21rem; color:#a0aab5; margin-top:0.8rem; text-transform:uppercase; font-family:sans-serif;"><strong>Photo Credit:</strong> ${esc(photoCredit(d))}</div>`:''}
+    </div>`;
   document.getElementById('overlay').classList.add('open');
 }
-
-function closeModal(e){
-  if(e && e.target !== document.getElementById('overlay') && e.target.className !== 'mclose') return;
-  document.getElementById('overlay').classList.remove('open');
-}
+/* Closes popup detail layout viewport states */
+function closeModal(){document.getElementById('overlay').classList.remove('open');}
 </script>
 </body>
 </html>

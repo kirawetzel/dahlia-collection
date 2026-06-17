@@ -75,10 +75,12 @@ body{
   gap: 1.2rem;            
   flex-shrink: 0;        
   align-items: center;      
+  width: min(var(--dog-hero-max), 100%); /* FIX: give this column a definite width matching the hero image, otherwise the row below has no defined width to base its percentage-sized children on, and the whole column balloons to the page width, shoving the text column out of the layout */
 }
 .rescue-gallery-row {
   display: flex;
   gap: 1.2rem;
+  width: 100%; /* FIX: inherits the definite width from .rescue-images above, so the 50%-based .dog-photo widths resolve correctly */
 }
 .dog-photo-hero {
   width: min(var(--dog-hero-max), 100%); /* Width of the top landscape-oriented hero dog image */
@@ -253,11 +255,7 @@ body{
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.nav-logo-group {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
+  position: relative;
 }
 .nav-logo {
   color: #F8F9FA;
@@ -265,6 +263,39 @@ body{
   font-weight: bold;
   letter-spacing: 0.05em;
 }
+/* Collapsible menu group: holds the IG link + nav links. Inline row on desktop, toggled dropdown on mobile (see media query below) */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+/* Hamburger toggle button — hidden by default, only shown on mobile */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 2.6rem;
+  height: 2.6rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+.nav-toggle-bar {
+  display: block;
+  width: 1.6rem;
+  height: 2px;
+  background: #F8F9FA;
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+/* Animate hamburger into an X when menu is open */
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 .nav-ig-link {
   display: flex;
   align-items: center;
@@ -703,9 +734,23 @@ footer {
     width: 100%;             
     margin: 0.2rem 0;
   }
-  .nav-container {
+  /* Hamburger nav: show the toggle button, hide the menu until opened */
+  .nav-container { flex-wrap: wrap; }
+  .nav-toggle { display: flex; }
+  .nav-menu {
+    display: none;
     flex-direction: column;
-    gap: 0.8rem;
+    align-items: flex-start;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 1rem;
+  }
+  .nav-menu.open { display: flex; }
+  .nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    width: 100%;
   }
 }
 </style>
@@ -714,16 +759,25 @@ footer {
 
 <nav class="navbar">
   <div class="nav-container">
-    <div class="nav-logo-group">
-      <div class="nav-logo">Kira's Zone 9B Garden</div>
+    <div class="nav-logo">Kira's Zone 9B Garden</div>
+
+    <!-- Hamburger toggle button: hidden on desktop, shown on mobile via media query -->
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" onclick="toggleNav()">
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+    </button>
+
+    <!-- Collapsible menu: always visible inline on desktop, toggled open/closed on mobile -->
+    <div class="nav-menu" id="navMenu">
       <a href="https://www.instagram.com/willow_glen_flower_girl" target="_blank" class="nav-ig-link">
         <svg style="width:16px; height:16px; fill:currentColor;" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0 3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
          flower lessons & bouquets: @willow_glen_flower_girl 
       </a>
+      <ul class="nav-links">
+        <li><a href="#collection" onclick="closeNav()">2026 Dahlia Collection</a></li>
+      </ul>
     </div>
-    <ul class="nav-links">
-      <li><a href="#collection">2026 Dahlia Collection</a></li>
-    </ul>
   </div>
 </nav>
 
@@ -1092,6 +1146,20 @@ footer {
 </footer>
 
 <script>
+/* Mobile hamburger menu: opens/closes the collapsible nav menu and
+   flips the aria-expanded state (which also drives the icon's X animation in CSS). */
+function toggleNav() {
+  const menu = document.getElementById('navMenu');
+  const btn = document.getElementById('navToggle');
+  const isOpen = menu.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+}
+/* Closes the mobile nav menu, e.g. after a link inside it is tapped. */
+function closeNav() {
+  document.getElementById('navMenu').classList.remove('open');
+  document.getElementById('navToggle').setAttribute('aria-expanded', 'false');
+}
+
 /* Controls Tab Switching State swaps across UI panels.
    gardenFilter: pass a garden name (e.g. 'Home', 'CG') to auto-filter the collection,
    or null to clear any active garden filter. */

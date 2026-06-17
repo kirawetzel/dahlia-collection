@@ -75,10 +75,12 @@ body{
   gap: 1.2rem;            
   flex-shrink: 0;        
   align-items: center;      
+  width: min(var(--dog-hero-max), 100%); /* FIX: give this column a definite width matching the hero image, otherwise the row below has no defined width to base its percentage-sized children on, and the whole column balloons to the page width, shoving the text column out of the layout */
 }
 .rescue-gallery-row {
   display: flex;
   gap: 1.2rem;
+  width: 100%; /* FIX: inherits the definite width from .rescue-images above, so the 50%-based .dog-photo widths resolve correctly */
 }
 .dog-photo-hero {
   width: min(var(--dog-hero-max), 100%); /* Width of the top landscape-oriented hero dog image */
@@ -253,17 +255,19 @@ body{
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.nav-logo-group {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
+  position: relative;
 }
 .nav-logo {
   color: #F8F9FA;
   font-size: 1.6rem;
   font-weight: bold;
   letter-spacing: 0.05em;
+}
+/* Menu group: holds the IG link + nav links, displayed inline next to the logo */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 }
 .nav-ig-link {
   display: flex;
@@ -283,19 +287,6 @@ body{
   color: var(--mint);
   background: rgba(255,255,255,0.15);
 }
-.nav-links {
-  display: flex;
-  gap: 2rem;
-  list-style: none;
-}
-.nav-links a {
-  color: #E1D5E7;
-  text-decoration: none;
-  font-family: var(--font-ui);
-  font-size: 1.36rem;
-  font-weight: 600;
-}
-.nav-links a:hover { color: var(--mint); }
 
 /* ==========================================================================
    HEADER / HERO SECTION
@@ -360,6 +351,44 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.6rem;max-w
   color: var(--text);
   border-bottom-color: var(--pink);
   font-weight: bold;
+}
+/* Small "Menu" hamburger toggle for the tab bar — only shown on mobile (see media query below).
+   On desktop this stays hidden and the full row of tabs displays as usual. */
+.tab-menu-toggle {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 0.8rem;
+}
+.tab-toggle-bars {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+.tab-toggle-bar {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--muted);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.tab-menu-toggle[aria-expanded="true"] .tab-toggle-bar:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+.tab-menu-toggle[aria-expanded="true"] .tab-toggle-bar:nth-child(2) { opacity: 0; }
+.tab-menu-toggle[aria-expanded="true"] .tab-toggle-bar:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
+.tab-menu-label {
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 .tab-content { 
   display: none; 
@@ -703,10 +732,35 @@ footer {
     width: 100%;             
     margin: 0.2rem 0;
   }
-  .nav-container {
+  /* Top nav on mobile: stack logo above the IG link, always visible (no hamburger) */
+  .nav-container { flex-wrap: wrap; }
+  .nav-menu {
     flex-direction: column;
-    gap: 0.8rem;
+    align-items: flex-start;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 0.8rem;
   }
+
+  /* Tab bar menu: collapse the 8 tabs down to just the active one, tucked behind a "Menu" toggle */
+  .tab-menu-toggle { display: flex; }
+  .tab-container {
+    flex-direction: column;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    border-bottom: none;
+  }
+  .tab-btn { display: none; width: 100%; text-align: left; }
+  .tab-btn.active { display: block; }
+  .tab-container.tabs-open {
+    border-bottom: 2px solid var(--surface2);
+    margin-bottom: 0.5rem;
+  }
+  .tab-container.tabs-open .tab-btn {
+    display: block;
+    border-bottom: 1px solid var(--surface2);
+  }
+  .tab-container.tabs-open .tab-btn.active { border-bottom-color: var(--pink); }
 }
 </style>
 </head>
@@ -714,16 +768,14 @@ footer {
 
 <nav class="navbar">
   <div class="nav-container">
-    <div class="nav-logo-group">
-      <div class="nav-logo">Kira's Zone 9B Garden</div>
+    <div class="nav-logo">Kira's Zone 9B Garden</div>
+
+    <div class="nav-menu">
       <a href="https://www.instagram.com/willow_glen_flower_girl" target="_blank" class="nav-ig-link">
         <svg style="width:16px; height:16px; fill:currentColor;" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0 3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
          flower lessons & bouquets: @willow_glen_flower_girl 
       </a>
     </div>
-    <ul class="nav-links">
-      <li><a href="#collection">2026 Dahlia Collection</a></li>
-    </ul>
   </div>
 </nav>
 
@@ -742,7 +794,16 @@ footer {
     <!-- =====================================================================
          TAB BUTTONS — 8 tabs in new organized order
          ===================================================================== -->
-    <div class="tab-container">
+    <!-- Mobile-only "Menu" toggle: tucks all tabs except the active one behind a small hamburger control -->
+    <button class="tab-menu-toggle" id="tabMenuToggle" aria-label="Toggle tabs menu" aria-expanded="false" onclick="toggleTabMenu()">
+      <span class="tab-toggle-bars">
+        <span class="tab-toggle-bar"></span>
+        <span class="tab-toggle-bar"></span>
+        <span class="tab-toggle-bar"></span>
+      </span>
+      <span class="tab-menu-label">Menu</span>
+    </button>
+    <div class="tab-container" id="tabContainer">
       <!-- NOTE: setTab 3rd param controls auto-filter. 'Home'/'CG' must match your Garden2026 column values exactly. -->
       <button class="tab-btn active" onclick="setTab('tab-welcome', this, null)">Welcome!</button>
       <button class="tab-btn" onclick="setTab('tab-home', this, 'Home')">Home Garden</button>
@@ -1092,6 +1153,19 @@ footer {
 </footer>
 
 <script>
+/* Mobile tab "Menu" toggle: expands/collapses the full list of tabs,
+   tucked behind a small hamburger control so only the active tab shows by default. */
+function toggleTabMenu() {
+  const container = document.getElementById('tabContainer');
+  const btn = document.getElementById('tabMenuToggle');
+  const isOpen = container.classList.toggle('tabs-open');
+  btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+}
+function closeTabMenu() {
+  document.getElementById('tabContainer').classList.remove('tabs-open');
+  document.getElementById('tabMenuToggle').setAttribute('aria-expanded', 'false');
+}
+
 /* Controls Tab Switching State swaps across UI panels.
    gardenFilter: pass a garden name (e.g. 'Home', 'CG') to auto-filter the collection,
    or null to clear any active garden filter. */
@@ -1100,6 +1174,7 @@ function setTab(tabId, btn, gardenFilter) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById(tabId).classList.add('active');
   btn.classList.add('active');
+  closeTabMenu(); // collapse the mobile tab menu back down to just the newly active tab
 
   // Sync the collection grid filter whenever the garden filter param is provided
   if (gardenFilter !== undefined) {

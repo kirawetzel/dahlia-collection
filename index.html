@@ -830,7 +830,7 @@ footer {
          TAB 2: HOME GARDEN (new)
          ===================================================================== -->
     <div id="tab-home" class="tab-content">
-      <p class="garden-intro-block">You're standing at (or virtually visiting) my home garden in Willow Glen, San Jose, CA, growing zone 9B. I've been gardening here for several years, working to improve the clay soil to improve drainage. The garden is in the front yard, and if you turn around, spills out to the sidewalk strip, so there's quite a bit to take in. Although there are more flowers closer to the house, please stay on the sidewalk. All the flowers in this garden are available for purchase in bouquets!</p>
+      <p class="garden-intro-block">You're standing at (or virtually visiting) my home garden in Willow Glen, San Jose, CA, growing zone 9B. I've been gardening here for several years, working to improve the clay soil to improve drainage. The garden is in the front yard, and if you turn around, spills out to the sidewalk strip, so there's quite a bit to take in. Although there are more flowers closer to the house, please stay on the sidewalk. All of these flowers are for sale in bouquets!</p>
 
       <div class="garden-info-grid">
         <div class="garden-info-card">
@@ -856,8 +856,7 @@ footer {
         <div class="garden-info-card">
           <h3>🔍 Using the Collection Below</h3>
           <ul>
-            <li>The collection grid is <strong>automatically filtered</strong> to Home Garden varieties when you're on this tab</li>
-            <li>Sort by <strong>2026 Location [Row-Pos]</strong> to walk the beds in order</li>
+            <li>The collection grid is <strong>automatically filtered and sorted</strong> by <strong>2026 Location [Row-Pos]</strong> when you're on this tab, so you can walk the beds in order</li>
             <li>Tap any card for full notes on that variety</li>
           </ul>
         </div>
@@ -882,12 +881,14 @@ footer {
          TAB 3: COMMUNITY GARDEN (new)
          ===================================================================== -->
     <div id="tab-cg" class="tab-content">
-      <p class="garden-intro-block">The community garden plot is where the dahlia collection really expands. With more square footage and full sun from morning to evening, it's home to over 115 dahlia varieties alongside a rotating mix of vegetables and annual flowers. These dahlias are not available for bouquet purchases.</p>
+      <p class="garden-intro-block">The community garden plot is where the dahlia collection really expands. With more square footage and full sun from morning to evening, it's home to over 115 dahlia varieties alongside a rotating mix of vegetables and annual flowers. These flowers are not available for bouquet purchases.</p>
 
       <div class="garden-info-grid">
         <div class="garden-info-card">
           <h3>Dahlias</h3>
           <p>115+ varieties spanning dinner plates, decoratives, balls, pompons, waterlilies, and more. This is the trial garden, some are established favorites, others are first-year experiments for my friends.</p>
+			  
+			<p></p>It's also my place to dabble in breeding science. Also, did you know that dahlia tubers are a food source? yes, they're edible because they are potatoes! You can find dahlia beer, kimchi, and other similar potato recipes using dahlias. </p>
         </div>
 
         <div class="garden-info-card">
@@ -906,8 +907,8 @@ footer {
           <h3>Navigating the Rows</h3>
           <ul>
             <li>Dahlia rows run north–south; Row 1, position A is near the corn, and row 9, position L is near the hose reel  markers are at the head of each bed</li>
-            <li>Each plant has a stake label — variety name is on the front, location code on the back</li>
-            <li>The collection is <strong>automatically filtered</strong> to CG — sort by Location to see the flowers in their planted order</li>
+            <li>Each plant starts the season with a small label until it blooms, then I tie orange flag tape around it with the name of the cultivar. The orange flag tape is a visual indicator that the flower is true to type. It's the source of truth.</li>
+            <li>The collection is <strong>automatically filtered and sorted by Location</strong> on this tab, so the cards match the flowers' planted order</li>
           </ul>
         </div>
 
@@ -1024,7 +1025,7 @@ footer {
           </div>
         </div>
         <div class="rescue-text">
-          <p>Dahlias are a hobby for me. Every single floral arrangement crafted from my front yard garden goes directly toward making a difference. I sell seasonal handcrafted bouquets locally, and <strong>100% of the profits are donated monthly to the senior fund of local Golden Retriever Rescue organizations</strong> to help fund medical care, supplies, and housing pipelines for senior dogs in need.</p>
+          <p>Dahlias are a hobby for me. Every single floral arrangement crafted from my cut garden goes directly toward making a difference. I sell seasonal handcrafted bouquets locally, and <strong>100% of the profits are donated monthly to the senior fund of local Golden Retriever Rescue organizations</strong> to help fund medical care, supplies, and housing pipelines for senior dogs in need.</p>
           <p>Many people ask me if I sell or trade dahlias. Since this is a hobby, I don't sell dahlia tubers or cuttings throughout the year, however, at the end of the season, I dig & divide my tubers for a one time fall tuber sale of things I won't grow anymore or have excess of. Profits of this tuber sale also go to charity. Look out for that tuber sale each November (zone 9B).</p>
           <p>For excellent dahlia sellers, please shop with two wonderful women:</p>
           
@@ -1183,7 +1184,10 @@ function setTab(tabId, btn, gardenFilter) {
 }
 
 /* Sets or clears the garden filter and syncs the sidebar pill UI to match.
-   value: garden name string to activate, or null to show all gardens. */
+   value: garden name string to activate, or null to show all gardens.
+   Home Garden and Community Garden auto-sort by 2026 Location [Row-Pos] A-Z,
+   since that's the order you'd actually walk the beds in; other views fall
+   back to the default Cultivar Name A-Z sort. */
 function setGardenFilter(value) {
   aGarden.clear();
   if (value) aGarden.add(value);
@@ -1197,6 +1201,15 @@ function setGardenFilter(value) {
       pill.classList.remove('on');
     }
   });
+
+  // Auto-sort: Home Garden ('Home') and Community Garden ('CG') sort by bed location;
+  // everything else (including "show all gardens") reverts to Cultivar Name A-Z.
+  const sortSelect = document.getElementById('srt');
+  if (value === 'Home' || value === 'CG') {
+    sortSelect.value = 'loc_az';
+  } else {
+    sortSelect.value = 'name';
+  }
 
   applyFilters();
 }

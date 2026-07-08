@@ -1462,15 +1462,16 @@ function toggleFav(i,btn){
 function openModal(i){
   const d=all[i];if(!d)return;
   
-  const rows=[
-    ['2026 Location # [Row-Pos]', locNum(d)],
-    ['Garden', gardenName(d)],
-    ['Current Year Status (2026)', status(d)],
-    ['Form', formType(d)],
-    ['Est. Height', height(d)],
-    ['Confirmed?', confirmed(d)],
-    ['Primary Color Family', colorFamily(d)]
-  ].filter(r=>r[1]);
+const rows = [
+  ['2026 Location # [Row-Pos]', locNum(d)],
+  ['Garden', gardenName(d)],
+  ['Current Year Status (2026)', status(d)],
+  ['Form', formType(d)],
+  ['Est. Height', height(d)],
+  ['Confirmed?', confirmed(d)],
+  ['Primary Color Family', colorFamily(d)],
+  ['Bloom Size', d.BloomSize]
+].filter(r => r[1]);
 
   document.getElementById('modal').innerHTML=`
     <button class="mclose" onclick="closeModal()">✕</button>

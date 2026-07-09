@@ -1414,7 +1414,7 @@ function render(list){
     const field7_notes = obs(d);
     const field8_credit = photoCredit(d);
 
-    return `<div class="card" onclick="openModal(${oi})">
+     return `<div class="card" onclick="openModal(${oi})">
       <button class="fbtn" onclick="event.stopPropagation();toggleFav(${oi},this)">${fv?'❤️':'🤍'}</button>
       <div class="cph" style="background:${bg};${img?'display:none':''}">🌸</div>
       ${img?`<img class="cimg" src="${esc(img)}" alt="${esc(n)}" loading="lazy" onerror="this.style.display='none';this.previousSibling.style.display='flex'">`:''}

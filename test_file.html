@@ -569,7 +569,25 @@ header p{color:#E1D5E7;font-style:italic;margin-top:.4rem;font-size:1.6rem;max-w
 }
 
 .ctags {display:flex;flex-direction:column;gap:.5rem;justify-content:center;align-items:stretch; width: 100%;}
-.tag-row-1, .tag-row-2, .tag-row-3 { display:flex; justify-content:center; align-items:stretch; gap:.35rem; width:100%; }
+.tag-row-1, .tag-row-2, .tag-row-3, .tag-row-4 { display:flex; justify-content:center; align-items:stretch; gap:.35rem; width:100%; }
+.tag-row-3 .tag { width: 100%; }
+
+/* Split Est. Height / Bloom Size badges, each taking half the row width */
+.dim-badge {
+  flex: 1 1 50%;
+  background: #fff3e0;
+  color: #7a4a00;
+  padding: .3rem .5rem;
+  border-radius: var(--radius);
+  font-family: var(--font-ui);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+}
+.dim-lbl { font-size: .95rem; text-transform: uppercase; letter-spacing: 0.03em; opacity: 0.85; }
+.dim-val { font-size: 1.21rem; font-weight: bold; }
 
 .tag{padding:.25rem .7rem;border-radius:var(--radius);font-size:1.21rem;font-family:var(--font-ui);display:inline-flex;align-items:center;justify-content:center;text-align:center;}
 
@@ -1422,10 +1440,6 @@ function render(list){
       ${img?`<img class="cimg" src="${esc(img)}" alt="${esc(n)}" loading="lazy" onerror="this.style.display='none';this.previousSibling.style.display='flex'">`:''}
       <div class="cbody">
         <div class="cname">${esc(n)}</div>
-        
-        <div style="display:flex; gap:.35rem; justify-content:center; flex-wrap:wrap; width:100%;">
-          ${field1_status?`<span class="tag ${statusClass(field1_status)}">${esc(statusLabel(field1_status))}</span>`:''}
-        </div>
 
         <div class="ctags">
           <div class="tag-row-1">
@@ -1437,10 +1451,11 @@ function render(list){
           </div>
           
           <div class="tag-row-3">
-            ${field4_form?`<span class="tag tl">${esc(field4_form)}</span>`:''}
-            ${field5_height?`<span class="tag ty">📏 ${esc(field5_height)}</span>`:''}
-            ${field6_bloomSize?`<span class="tag tl">🌸 ${esc(field6_bloomSize)}</span>`:''}
-            ${!field4_form && !field5_height && !field6_bloomSize?`<span style="visibility:hidden;" class="tag"> </span>`:''}
+            ${field4_form?`<span class="tag tl">${esc(field4_form)}</span>`:'<span style="visibility:hidden;" class="tag"> </span>'}
+          </div>
+
+          <div class="tag-row-4">
+            ${(field5_height || field6_bloomSize)?`<div class="dim-badge"><span class="dim-lbl">Est. Height</span><span class="dim-val">${field5_height?esc(field5_height):'—'}</span></div><div class="dim-badge"><span class="dim-lbl">Bloom Size</span><span class="dim-val">${field6_bloomSize?esc(field6_bloomSize):'—'}</span></div>`:'<span style="visibility:hidden;" class="tag"> </span>'}
           </div>
         </div>
 
